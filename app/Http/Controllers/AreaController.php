@@ -134,4 +134,21 @@ class AreaController extends Controller
         $com = Area::where('id',$request->id)->delete();
         return Response()->json($com);
     }
+
+
+     /**
+     * get area Arabic names list
+     */
+    public function getAreaArabicNames(){
+        $data = City::select('id','name_local','city_id')->get();        
+        return $data;
+    }
+    /**
+     * get area Arabic names list
+     */
+    public function getAreaEnglishNames(){
+        
+        $data = City::select('id','name','city_id')->get();        
+        return $data;
+    }
 }

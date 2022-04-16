@@ -154,4 +154,20 @@ class CityController extends Controller
         }
         return response()->json($response);
     }
+
+    /**
+     * get City Arabic names list
+     */
+    public function getCityArabicNames(){
+        $data = City::select('id','name_local','country_id')->get();        
+        return $data;
+    }
+    /**
+     * get City Arabic names list
+     */
+    public function getCityEnglishNames(){
+        
+        $data = City::select('id','name','country_id')->get();        
+        return $data;
+    }
 }

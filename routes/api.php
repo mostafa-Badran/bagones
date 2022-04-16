@@ -34,7 +34,6 @@ Route::get("/countries", function(){
     $data =  Country::all();    
     $results = [];
     foreach($data as $country){
-        // $country->image = env('APP_URL') . '/uploads/country/' . $country->image;
         $country->image = asset('uploads/country/' . $country->image);
         array_push($results, $country);
     }
