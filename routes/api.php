@@ -31,7 +31,14 @@ use Faker\Extension\CountryExtension;
 
 
 Route::get("/countries", function(){    
-    return Country::all();    
+    $data =  Country::all();    
+    $results = [];
+    foreach($data as $country){
+        // $country->image = env('APP_URL') . '/uploads/country/' . $country->image;
+        $country->image = asset('uploads/country/' . $country->image);
+        array_push($results, $country);
+    }
+    return $results;
 });
 Route::get('countriesArabic', [CountryController::class,'getCountryArabicNames']);
 Route::get('countriesEnglish', [CountryController::class,'getCountryEnglishNames']);
