@@ -10,7 +10,7 @@ class Area extends Model
     public $timestamps = false;
     use HasFactory;
     protected $fillable = [
-        'name', '', 'city_id'
+        'name', 'name_local', 'city_id'
     ];
 
 
