@@ -82,6 +82,7 @@ Route::post('/dataAjax', [StateController::class, 'dataAjax'])->name('dataAjax')
 
 //City Routes
 Route::get('city', [CityController::class, 'index'])->name('city.index');
+Route::get('generate', [CityController::class, 'getCiteies'])->name('city.getCiteies');
 Route::get('city/create', [CityController::class, 'create'])->name('city.create');
 Route::post('city', [CityController::class, 'store'])->name('city.store');
 Route::get('city/{city}', [CityController::class, 'show'])->name('city.show');
