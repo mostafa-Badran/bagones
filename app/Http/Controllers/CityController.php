@@ -172,26 +172,4 @@ class CityController extends Controller
         return $data;
     }
 
-    // public function getCiteies(){
-     
-
-    //     $cities_array =  [];
-    //     foreach ($cites as $city){
-    //         $data = [
-    //             'name'=>$city['name_en'], 
-    //             'name_local'=>$city['name_local'],
-    //             'country_id'=>1
-    //         ];
-
-    //         City::create(['name'=>$city['name_en'], 
-    //         'name_local'=>$city['name_local'],
-    //         'country_id'=>1])->save();
-    //         // array_push($cities_array , $data);
-    //     };
-        // $fp = fopen('D://results.json', 'w');
-        // fwrite($fp, json_encode($cities_array ,JSON_UNESCAPED_UNICODE));
-        // fclose($fp);
-
-        // print_r('done');
-    // }
 }

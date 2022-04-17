@@ -92,7 +92,6 @@ Route::post('/dataAjax', [CityController::class, 'dataAjax'])->name('dataAjax');
 
 //Area Routes
 Route::get('area', [AreaController::class, 'index'])->name('area.index');
-Route::get('area/generate', [AreaController::class, 'genrateAreas'])->name('area.genrateAreas');
 Route::get('area/create', [AreaController::class, 'create'])->name('area.create');
 Route::post('area', [AreaController::class, 'store'])->name('area.store');
 Route::get('area/{area}', [AreaController::class, 'show'])->name('area.show');
