@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Area;
 use App\Http\Resources\Area as AreaResource;
+use Illuminate\Support\Facades\App;
 
 class AreaController extends BaseController
 {
@@ -16,8 +17,16 @@ class AreaController extends BaseController
      */
     public function index()
     {
-        $areas = Area::all();
+        // $areas = Area::all();
     
+
+        $lang = App::getLocale();
+        // dd($lang );
+        if($lang == 'en'){
+            $areas = Area::select('id','name', 'city_id' )->get();
+        }elseif($lang == 'ar'){
+            $areas = Area::select('id','name_local as name', 'city_id' )->get();
+        }
         return $this->sendResponse(AreaResource::collection($areas), 'Areas retrieved successfully.');
     }
 

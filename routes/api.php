@@ -34,7 +34,7 @@ use App\Http\Controllers\Api\AreaController;
 
 
 
-// Route::get("/countries", function(){    
+// Route::get("/countries/{id}", function(){    
 //     $data =  Country::all();    
 //     $results = [];
 //     foreach($data as $country){
@@ -47,9 +47,10 @@ use App\Http\Controllers\Api\AreaController;
 // Route::get('countriesEnglish', [CountryController::class,'getCountryEnglishNames']);
 
 
-Route::resource('countries', '\App\Http\Controllers\Api\CountryController');
-Route::resource('cities', '\App\Http\Controllers\Api\CityController');
-Route::resource('areas', '\App\Http\Controllers\Api\AreaController');
+
+Route::resource('countries', '\App\Http\Controllers\Api\CountryController')->middleware('locale.check');
+Route::resource('cities', '\App\Http\Controllers\Api\CityController')->middleware('locale.check');
+Route::resource('areas', '\App\Http\Controllers\Api\AreaController')->middleware('locale.check');
 
 
 

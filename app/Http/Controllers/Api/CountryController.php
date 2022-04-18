@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Country;
 use App\Http\Resources\Country as CountryResource;
-
+use Illuminate\Support\Facades\App;
 class CountryController extends BaseController
 {
     /**
@@ -16,7 +16,14 @@ class CountryController extends BaseController
      */
     public function index()
     {   
-        $countries = Country::all();
+        $lang = App::getLocale();
+        // dd($lang );
+        if($lang == 'en'){
+            $countries = Country::select('id','name', 'iso' , 'phone', 'image')->get();
+        }elseif($lang == 'ar'){
+            $countries = Country::select('id','name_local as name', 'iso' , 'phone', 'image')->get();
+        }
+       
 
         //add image url 
         foreach($countries as $country){

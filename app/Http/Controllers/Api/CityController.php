@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Http\Resources\City as CityResource;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\App;
 class CityController extends BaseController
 {
     /**
@@ -16,8 +16,15 @@ class CityController extends BaseController
      */
     public function index()
     {
-        $cities = City::all();
+        // $cities = City::all();
     
+        $lang = App::getLocale();
+        // dd($lang );
+        if($lang == 'en'){
+            $cities = City::select('id','name', 'country_id' )->get();
+        }elseif($lang == 'ar'){
+            $cities = City::select('id','name_local as name', 'country_id' )->get();
+        }
         return $this->sendResponse(CityResource::collection($cities), 'cities retrieved successfully.');
     }
 
