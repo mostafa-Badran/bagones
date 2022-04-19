@@ -11,6 +11,7 @@ use App\Models\Area;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\AreaController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,8 +50,13 @@ use App\Http\Controllers\Api\AreaController;
 
 
 Route::resource('countries', '\App\Http\Controllers\Api\CountryController')->middleware('locale.check');
+Route::get('/countries/{id}/cities', [CountryController::class,'getCities'])->middleware('locale.check');
+Route::get('/countries/{id}/areas', [CountryController::class,'getAreasByCountry'])->middleware('locale.check');
+Route::get('/cities/{id}/areas', [CityController::class,'getAreas'])->middleware('locale.check');
 Route::resource('cities', '\App\Http\Controllers\Api\CityController')->middleware('locale.check');
 Route::resource('areas', '\App\Http\Controllers\Api\AreaController')->middleware('locale.check');
+
+
 
 
 

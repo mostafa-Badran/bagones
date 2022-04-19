@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Http\Resources\City as CityResource;
+use App\Http\Resources\City as AreaResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 class CityController extends BaseController
@@ -98,5 +99,16 @@ class CityController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    public function getAreas($id){
+        $lang = App::getLocale();
+        $name = 'name as name' ; 
+        if($lang == 'ar'){
+            $name = 'name_local as name';
+        }
+        $cities= \Illuminate\Support\Facades\DB::table('cities')->join('areas','cities.id','=','areas.city_id')->select('areas.id as id','areas.'.$name,'city_id')->where('cities.id','=',$id)->get();
+        
+        return $this->sendResponse($cities, 'Areas retrieved successfully.');
     }
 }
