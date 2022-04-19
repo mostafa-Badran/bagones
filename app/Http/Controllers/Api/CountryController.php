@@ -74,7 +74,7 @@ class CountryController extends BaseController
         $areas= DB::table('countries')
         ->join('cities','countries.id','=','cities.country_id')
         ->join('areas','areas.city_id','=','cities.id')
-        ->select('areas.id as id','areas.'.$name,'country_id' , 'city_id')
+        ->select('areas.id as id','areas.'.$name,'city_id')
         ->where('countries.id','=',$id)->get();
 
         
