@@ -1,4 +1,4 @@
-<a href="{{ route('subCategory/show',$id) }}" class="btn btn-sm btn-clean btn-icon" title="View details">
+<a href="{{ route('subCategory',$id) }}" class="btn btn-sm btn-clean btn-icon" title="View details">
     <i class="la la-eye"></i>
 </a>
 <a href="{{ route('subCategory/edit',$id) }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">

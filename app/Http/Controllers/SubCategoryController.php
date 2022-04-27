@@ -90,7 +90,7 @@ class SubCategoryController extends Controller
     
         Category::create($input);
 
-        return redirect()->route('subCategory.index')
+        return redirect()->action([SubCategoryController::class, 'index'])
                         ->with('success','Sub Category created successfully.');
     }
 
