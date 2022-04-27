@@ -11,7 +11,7 @@
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-            <a href="{{ route('subCategory.index') }}" class="btn btn-secondary">Go Back</a>
+            <a href="{{ url('subCategory/index') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="col-lg-4"></div>
                 <div class="col-lg-8">
-                    <a href="{{ route('category.edit',$category->id) }}"  class="btn btn-primary mr-2">Edit</a>
+                    <a href="{{ url('category/edit',$category->id) }}"  class="btn btn-primary mr-2">Edit</a>
                 </div>
             </div>
         </div>
