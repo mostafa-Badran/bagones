@@ -11,7 +11,7 @@
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-                <a href="{{ route('subCategory') }}" class="btn btn-secondary">Go Back</a>
+                <a href="{{ url('subCategory') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
         </div>
     @endif
     <!--begin::Form-->
-    <form action="{{ route('category.store') }}" method="POST">
+    <form action="{{ url('category/store') }}" method="POST">
         @csrf
         <div class="card-body">
             <div class="form-group row">
