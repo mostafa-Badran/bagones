@@ -76,14 +76,15 @@ class CategoryController extends Controller
         $request->validate([
             'name' => ['required', 'unique:categories', 'max:50'],
             'name_locale' => ['required', 'unique:categories', 'max:50'],
+            // 'image' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'parent_id' => ['required'],
         ]);
        $input = $request->all();
-    //    dd($_FILES);
-       var_dump($request->file('image'));
+       //    dd($_FILES);
+    //    var_dump($request->file('image'));
        if ($image = $request->file('image')) {
         
-        dd('image');
+        // dd('image');
         $destinationPath = public_path().'uploads/category/';
          if(!File::isDirectory($destinationPath)) 
            File::makeDirectory($destinationPath, 0777, true, true);
@@ -91,9 +92,8 @@ class CategoryController extends Controller
         $image->move($destinationPath, $recordImage);
         $input['image'] = "$recordImage";
     }
-    dd(111);
+
         Category::create($input);
-        dd(0000);
         return redirect()->url('categories')
                         ->with('success','Category created successfully.');
     }

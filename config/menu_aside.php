@@ -56,6 +56,26 @@ return [
                 ],
             ]
         ],
+        [
+            'title' => 'Categories',
+            'icon' => 'media/svg/icons/Home/Book-open.svg',
+            'bullet' => 'line',
+            'root' => true,
+            'submenu' => [
+           
+                [
+                    'title' => 'Main Categories',
+                    'bullet' => 'dot',
+                    'page' => 'category',
+                ],
+                
+                [
+                    'title' => 'Sub Categories',
+                    'bullet' => 'dot',
+                    'page' => 'subCategory',
+                ],
+            ]
+        ],
         // [
         //     'title' => 'Item',
         //     'icon' => 'media/svg/icons/Home/Mirror.svg',
