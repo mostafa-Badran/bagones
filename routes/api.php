@@ -71,7 +71,7 @@ Route::resource('subCategories', '\App\Http\Controllers\Api\SubCategoryControlle
 
 
 
-// Route::post('/category/dataAjax', [CategoryController::class, 'dataAjax']);
+Route::post('/category/dataAjax', [CategoryController::class, 'dataAjax']);
 
 
 // Route::get("/cities", function(){
