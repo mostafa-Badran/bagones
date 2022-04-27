@@ -117,7 +117,7 @@ class SubCategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $category = category::find($category->city_id);
+        $category = category::find($category->id);
         $page_title = 'Edit Category';
         $page_description = 'This page is to edit record in category table';
         //
@@ -142,7 +142,7 @@ class SubCategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('subCategory.index')
+        return redirect()->action([SubCategoryController::class, 'index'])
                         ->with('success','Sub Category updated successfully');
     }
 
