@@ -119,7 +119,7 @@ Route::get('category/create', [CategoryController::class, 'create']);
 Route::post('category/store', [CategoryController::class, 'store']);
 Route::get('category/{category}', [CategoryController::class, 'show']);
 Route::get('category/edit/{category}', [CategoryController::class, 'edit']);
-Route::put('category/{category}', [CategoryController::class, 'update']);
+Route::put('category/update/{category}', [CategoryController::class, 'update']);
 Route::post('category/{category}', [CategoryController::class, 'destroy']);
 Route::post('category/dataAjax', [CategoryController::class, 'dataAjax']);
 // Route::post('category/test', [CategoryController::class, 'test']);
