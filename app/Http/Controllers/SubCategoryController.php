@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     protected $namespace = null;
     /**
@@ -20,30 +20,30 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        
         if ($request->ajax()) {
 
             $data = Category::select('id','name','name_locale','image', 'parent_id' )
-            ->where('parent_id', null) //select main categories
+            ->where('parent_id','!=', 0) //select sub categories
             ->get();
-           
+            // dd($data);
             $results = [];
             foreach($data as $category){
-                // $country->image = env('APP_URL') . '/uploads/country/' . $country->image;
                 $category->image = asset('uploads/category/' . $category->image);
                 array_push($results, $category);
             }
 
             return DataTables::of($results)->addIndexColumn()
-                ->addColumn('action', 'categories.action')
+                ->addColumn('action', 'subCategories.action')
                 ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }
 
-        $page_title = 'Categories';
-        $page_description = 'This page is to show all the records in category table';
+        $page_title = 'Sub Categories';
+        $page_description = 'This page is to show all the records in subCategory table';
 
-        return view('categories.index', compact('page_title', 'page_description'));
+        return view('subCategories.index', compact('page_title', 'page_description'));
 
 
     }
@@ -55,12 +55,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        // $categories = Category::all();
-        $page_title = 'Add New Category';
+        
+        $page_title = 'Add New Sub Category';
         $page_description = 'This page is to add new record in category table';
 
-        //
-        return view('categories.create', compact('page_title', 'page_description' ));
+        
+        return view('subCategories.create', compact('page_title', 'page_description' ));
     }
 
     /**
@@ -71,31 +71,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(111);
-        // dd($request);
+        
         $request->validate([
             'name' => ['required', 'unique:categories', 'max:50'],
             'name_locale' => ['required', 'unique:categories', 'max:50'],
-            // 'parent_id' => ['required'],
+            'parent_id' => ['required'],
         ]);
        $input = $request->all();
-    //    dd($_FILES);
-       var_dump($request->file('image'));
+
        if ($image = $request->file('image')) {
-        
-        dd('image');
+
         $destinationPath = public_path().'uploads/category/';
-         if(!File::isDirectory($destinationPath)) 
-           File::makeDirectory($destinationPath, 0777, true, true);
+        File::isDirectory($destinationPath) or File::makeDirectory($destinationPath, 0777, true, true);
         $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
         $image->move($destinationPath, $recordImage);
         $input['image'] = "$recordImage";
     }
-    dd(111);
+    
         Category::create($input);
-        dd(0000);
-        return redirect()->url('categories')
-                        ->with('success','Category created successfully.');
+
+        return redirect()->route('subCategory.index')
+                        ->with('success','Sub Category created successfully.');
     }
 
     /**
@@ -106,11 +102,11 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $city = City::find($category->city_id);
+        $category = Category::find($category->id);
         $page_title = 'Show Category';
         $page_description = 'This page is to show category details';
         //
-        return view('categories.show',compact('category', 'page_title', 'page_description','city'));
+        return view('subCategories.show',compact('category', 'page_title', 'page_description'));
     }
 
     /**
@@ -121,11 +117,11 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $category = Category::find($category->city_id);
+        $category = category::find($category->city_id);
         $page_title = 'Edit Category';
         $page_description = 'This page is to edit record in category table';
         //
-        return view('categories.edit',compact('category', 'page_title', 'page_description','category'));
+        return view('subCategories.edit',compact('category', 'page_title', 'page_description','category'));
     }
 
     /**
@@ -140,14 +136,14 @@ class CategoryController extends Controller
         //
         $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')->ignore($category), 'max:50'],
-            'name_local' => [Rule::unique('categories', 'name_local')->ignore($category), 'max:50'],
-            'city_id' => ['required'],
+            'name_locale' => [Rule::unique('categories', 'name_locale')->ignore($category), 'max:50'],
+            'parent_id' => ['required'],
         ]);
 
         $category->update($request->all());
 
-        return redirect()->route('category')
-                        ->with('success','Category updated successfully');
+        return redirect()->route('subCategory.index')
+                        ->with('success','Sub Category updated successfully');
     }
 
     
@@ -160,8 +156,8 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request)
     {
-        $com = Category::where('id',$request->id)->delete();
-        return Response()->json($com);
+        $category = Category::where('id',$request->id)->delete();
+        return Response()->json($category);
     }
 
     public function dataAjax(Request $request)

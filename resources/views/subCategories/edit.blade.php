@@ -11,7 +11,7 @@
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-            <a href="{{ route('category') }}" class="btn btn-secondary">Go Back</a>
+            <a href="{{ url('subCategory') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
         </div>
     @endif
     <!--begin::Form-->
-    <form action="{{ url('category/update',$category->id) }}" method="POST">
+    <form action="{{ url('subCategory/update',$category->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="card-body">

@@ -7,13 +7,13 @@
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
-                <h3 class="card-label">Categories
-                    <div class="text-muted pt-2 font-size-sm">All Categories Datatable</div>
+                <h3 class="card-label">Sub Categories
+                    <div class="text-muted pt-2 font-size-sm">All Sub-Categories Datatable</div>
                 </h3>
             </div>
             <div class="card-toolbar">
                 <!--begin::Button-->
-                <a href="{{ url('/category/create') }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('subCategory/create') }}" class="btn btn-primary font-weight-bolder">
                 <i class="la la-plus"></i>New Record</a>
                 <!--end::Button-->
             </div>
@@ -70,7 +70,7 @@
             var table = $('.main_datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ url('/category') }}",
+                ajax: "/subCategory",
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
@@ -83,7 +83,6 @@
                     },
                     {data: 'parent_id', name: 'parent_id'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
-                    //{data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
         });
@@ -102,7 +101,7 @@
                     // ajax
                     $.ajax({
                         type:"POST",
-                        url: "{{ url('category/delete') }}",
+                        url: "{{ url('subCategory/delete') }}",
                         data:{
                             'id': id,
                             '_token': '{{ csrf_token() }}',

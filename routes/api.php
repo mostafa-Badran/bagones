@@ -11,7 +11,10 @@ use App\Models\Area;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\AreaController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Api\CategoryController;
+// use App\Http\Controllers\CategoryController;
+
+use Database\Seeders\CategorySeeder;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,12 +55,23 @@ use App\Http\Controllers\CategoryController;
 Route::resource('countries', '\App\Http\Controllers\Api\CountryController')->middleware('locale.check');
 Route::get('/countries/{id}/cities', [CountryController::class,'getCities'])->middleware('locale.check');
 Route::get('/countries/{id}/areas', [CountryController::class,'getAreasByCountry'])->middleware('locale.check');
+
 Route::get('/cities/{id}/areas', [CityController::class,'getAreas'])->middleware('locale.check');
 Route::resource('cities', '\App\Http\Controllers\Api\CityController')->middleware('locale.check');
+
 Route::resource('areas', '\App\Http\Controllers\Api\AreaController')->middleware('locale.check');
 
+Route::resource('categories', '\App\Http\Controllers\Api\CategoryController')->middleware('locale.check');
+
+Route::get('/categories/{id}/subCategories',  [CategoryController::class,'getSubCategories' ])->middleware('locale.check');
+
+Route::get('/subCategories/{id}/parent',  [CategoryController::class,'getParentCategory' ])->middleware('locale.check');
+
+Route::resource('subCategories', '\App\Http\Controllers\Api\SubCategoryController')->middleware('locale.check');
 
 
+
+// Route::post('/category/dataAjax', [CategoryController::class, 'dataAjax']);
 
 
 // Route::get("/cities", function(){

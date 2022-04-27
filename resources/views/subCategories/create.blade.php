@@ -11,7 +11,7 @@
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-                <a href="{{ url('category') }}" class="btn btn-secondary">Go Back</a>
+                <a href="{{ route('subCategory') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
@@ -26,28 +26,34 @@
         </div>
     @endif
     <!--begin::Form-->
-    <form action="{{ url('/category/store') }}" method="POST">
+    <form action="{{ route('category.store') }}" method="POST">
         @csrf
         <div class="card-body">
             <div class="form-group row">
-               
+                <div class="col-lg-4">
+                    <label>Parent Category<span class="text-danger">*</span></label>
+                    <div class=" col-lg-12 col-md-12 col-sm-12">
+                        <select class="form-control kt-select2 category_select" id="kt_select2_1" name="parent_id">
+                            <option value="">Select Parent Category</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-lg-4">
                     <label>Name<span class="text-danger">*</span></label>
                     <input type="text" name="name" required class="form-control" placeholder="Enter Name" />
                     <span class="form-text text-muted">Please enter Name, Max 50 character allowed</span>
                 </div>
                 <div class="col-lg-4">
-                    <label>Name locale</label>
+                    <label>Name_local</label>
                     <input type="text" name="name_locale" class="form-control" placeholder="Enter Local Name" />
                     <span class="form-text text-muted">Please enter Local Name, Max 50 character allowed</span>
                 </div>
                 <!-- <div class="form-group row"> -->
                 <div class="col-lg-4">
-
+                    <label>Image<span class="text-danger">*</span></label>
                     <div class="image-input image-input-empty image-input-outline" id="kt_image_5"
-                        style="background-image: url(/media/categories/category.png)">
+                        style="background-image: url(/media/users/blank.png)">
                         <div class="image-input-wrapper"></div>
-                       
 
                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                             data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
@@ -87,69 +93,67 @@
 
 {{-- Scripts Section --}}
 @section('scripts')
-<script>
+<script type="text/javascript">
     // CSRF Token
     // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $(document).ready(function () {
 
-    var avatar5 = new KTImageInput('kt_image_5');
+        var avatar5 = new KTImageInput('kt_image_5');
 
-    avatar5.on('cancel', function (imageInput) {
-        swal.fire({
-            title: 'Image successfully changed !',
-            type: 'success',
-            buttonsStyling: false,
-            confirmButtonText: 'Awesome!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
+        avatar5.on('cancel', function (imageInput) {
+            swal.fire({
+                title: 'Image successfully changed !',
+                type: 'success',
+                buttonsStyling: false,
+                confirmButtonText: 'Awesome!',
+                confirmButtonClass: 'btn btn-primary font-weight-bold'
+            });
         });
+
+        avatar5.on('change', function (imageInput) {
+            swal.fire({
+                title: 'Image successfully changed !',
+                type: 'success',
+                buttonsStyling: false,
+                confirmButtonText: 'Awesome!',
+                confirmButtonClass: 'btn btn-primary font-weight-bold'
+            });
+        });
+
+        avatar5.on('remove', function (imageInput) {
+            swal.fire({
+                title: 'Image successfully removed !',
+                type: 'error',
+                buttonsStyling: false,
+                confirmButtonText: 'Got it!',
+                confirmButtonClass: 'btn btn-primary font-weight-bold'
+            });
+        });
+
+        $( ".category_select" ).select2({
+        ajax: {
+          url: "/api/category/dataAjax",
+          type: "post",
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            return {
+                '_token': '{{ csrf_token() }}',
+              'search' : params.term // search term
+            };
+          },
+          processResults: function (response) {
+            return {
+              results: response
+            };
+          },
+          cache: true
+        }     
+
+      });
+
     });
 
-    avatar5.on('change', function (imageInput) {
-        swal.fire({
-            title: 'Image successfully changed !',
-            type: 'success',
-            buttonsStyling: false,
-            confirmButtonText: 'Awesome!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
-    });
-
-    avatar5.on('remove', function (imageInput) {
-        swal.fire({
-            title: 'Image successfully removed !',
-            type: 'error',
-            buttonsStyling: false,
-            confirmButtonText: 'Got it!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
-    }); 
-    // $(document).ready(function () {
-
-
-
-        //     $( ".category_select" ).select2({
-        //     ajax: {
-        //       url: "/api/category/dataAjax",
-        //       type: "post",
-        //       dataType: 'json',
-        //       delay: 250,
-        //       data: function (params) {
-        //         return {
-        //             '_token': '{{ csrf_token() }}',
-        //           'search' : params.term // search term
-        //         };
-        //       },
-        //       processResults: function (response) {
-        //         return {
-        //           results: response
-        //         };
-        //       },
-        //       cache: true
-        //     }
-
-
-        //   });
-
-    // });
 
 </script>
 @endsection

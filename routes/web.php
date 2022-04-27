@@ -8,6 +8,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -78,7 +79,7 @@ Route::get('state/{state}', [StateController::class, 'show'])->name('state.show'
 Route::get('state/edit/{state}', [StateController::class, 'edit'])->name('state.edit');
 Route::put('state/{state}', [StateController::class, 'update'])->name('state.update');
 Route::post('state/{state}', [StateController::class, 'destroy'])->name('state.destroy');
-Route::post('/dataAjax', [StateController::class, 'dataAjax'])->name('dataAjax');
+// Route::post('/dataAjax', [StateController::class, 'dataAjax'])->name('dataAjax');
 
 //City Routes
 Route::get('city', [CityController::class, 'index'])->name('city.index');
@@ -88,6 +89,7 @@ Route::get('city/{city}', [CityController::class, 'show'])->name('city.show');
 Route::get('city/edit/{city}', [CityController::class, 'edit'])->name('city.edit');
 Route::put('city/{city}', [CityController::class, 'update'])->name('city.update');
 Route::post('city/{city}', [CityController::class, 'destroy'])->name('city.destroy');
+Route::post('city/dataAjax', [CityController::class, 'dataAjax'])->name('city.dataAjax');
 Route::post('/dataAjax', [CityController::class, 'dataAjax'])->name('dataAjax');
 
 //Area Routes
@@ -112,14 +114,29 @@ Route::post('language/{language}', [LanguageController::class, 'destroy'])->name
 
 
 //Category Routes
-Route::get('category', [CategoryController::class, 'index'])->name('category.index');
-Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
-Route::post('category', [CategoryController::class, 'store'])->name('category.store');
-Route::get('category/{category}', [CategoryController::class, 'show'])->name('category.show');
-Route::get('category/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
-Route::put('category/{category}', [CategoryController::class, 'update'])->name('category.update');
-Route::post('category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
-Route::post('category/dataAjax', [CategoryController::class, 'dataAjax'])->name('category.dataAjax');
+Route::get('category', [CategoryController::class, 'index']);
+Route::get('category/create', [CategoryController::class, 'create']);
+Route::post('category/store', [CategoryController::class, 'store']);
+Route::get('category/{category}', [CategoryController::class, 'show']);
+Route::get('category/edit/{category}', [CategoryController::class, 'edit']);
+Route::put('category/{category}', [CategoryController::class, 'update']);
+Route::post('category/{category}', [CategoryController::class, 'destroy']);
+Route::post('category/dataAjax', [CategoryController::class, 'dataAjax']);
+// Route::post('category/test', [CategoryController::class, 'test']);
+
+//subCategory Routes
+Route::get('subCategory', [SubCategoryController::class, 'index'])->name('subCategory.index');
+Route::get('subCategory/create', [SubCategoryController::class, 'create']);
+Route::post('subCategory/store', [SubCategoryController::class, 'store'])->name('subCategory.store');
+Route::get('subCategory/{category}', [SubCategoryController::class, 'show']);
+Route::get('subCategory/edit/{category}', [SubCategoryController::class, 'edit']);
+Route::put('subCategory/update/{category}', [SubCategoryController::class, 'update']);
+Route::post('subCategory/desrtoy/{category}', [SubCategoryController::class, 'destroy']);
+// Route::post('category/dataAjax', [CategoryController::class, 'dataAjax']);
+// Route::post('category/test', [CategoryController::class, 'test']);
+
+// Route::post('/dataAjax', [CategoryController::class, 'dataAjax'])->name('dataAjax');
+
 
 
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');

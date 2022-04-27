@@ -49,6 +49,7 @@ class CountryController extends BaseController
         if (is_null($country)) {
             return $this->sendError('Country not found.');
         }
+       
    
         return $this->sendResponse(new CountryResource($country), 'Country retrieved successfully.');
     }
