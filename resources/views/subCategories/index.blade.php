@@ -13,7 +13,7 @@
             </div>
             <div class="card-toolbar">
                 <!--begin::Button-->
-                <a href="{{ route('subCategory/create') }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ url('subCategory/create') }}" class="btn btn-primary font-weight-bolder">
                 <i class="la la-plus"></i>New Record</a>
                 <!--end::Button-->
             </div>
