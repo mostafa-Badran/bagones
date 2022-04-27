@@ -94,7 +94,7 @@ class CategoryController extends Controller
     }
 
         Category::create($input);
-        return redirect()->action([CategoryController::class, 'index'])>with('success','Category created successfully.');;
+        return redirect()->action([CategoryController::class, 'index'])->with('success','Category created successfully.');;
        
     }
 
@@ -121,7 +121,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $category = Category::find($category->city_id);
+        $category = Category::find($category->id);
         $page_title = 'Edit Category';
         $page_description = 'This page is to edit record in category table';
         //
@@ -141,12 +141,12 @@ class CategoryController extends Controller
         $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')->ignore($category), 'max:50'],
             'name_local' => [Rule::unique('categories', 'name_local')->ignore($category), 'max:50'],
-            'city_id' => ['required'],
+            'id' => ['required'],
         ]);
 
         $category->update($request->all());
-
-        return redirect()->route('category')
+       
+        return redirect()->action([CategoryController::class, 'index'])
                         ->with('success','Category updated successfully');
     }
 
