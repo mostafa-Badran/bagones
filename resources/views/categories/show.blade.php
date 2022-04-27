@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-lg-4">
                     <label>Name_locale</label>
-                    <input type="text" name="name_local" value="{{ $category->name_local }}" disabled  class="form-control" placeholder="Enter Local Name"/>
+                    <input type="text" name="name_local" value="{{ $category->name_locale }}" disabled  class="form-control" placeholder="Enter Local Name"/>
                     <span class="form-text text-muted">Please enter Local Name, Max 50 character allowed</span>
                 </div>
             </div>
