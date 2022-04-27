@@ -121,7 +121,7 @@ class SubCategoryController extends Controller
         $page_title = 'Edit Category';
         $page_description = 'This page is to edit record in category table';
         //
-        return view('subCategories.edit',compact('category', 'page_title', 'page_description','category'));
+        return view('subCategories.edit',compact('category', 'page_title', 'page_description'));
     }
 
     /**

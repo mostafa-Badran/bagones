@@ -35,7 +35,7 @@
                     <label>City<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="kt_select2_1" name="parent_id">
-                                <option value="{{$parent['id']}}">{{$parent['name']}}</option>
+                                <option value="{{$category['parent_id']}}">{{$category->get_parent->name}}</option>
                         </select>
                     </div>
                 </div>
