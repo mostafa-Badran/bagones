@@ -32,7 +32,7 @@
         <div class="card-body">
             <div class="form-group row">
                 <div class="col-lg-4">
-                    <label>PArent Category<span class="text-danger">*</span></label>
+                    <label>Parent Category<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="kt_select2_1" name="parent_id">
                                 <option value="{{$category['parent_id']}}">{{$category->get_parent->name}}</option>
@@ -76,7 +76,7 @@
 
       $( ".select2" ).select2({
         ajax: {
-          url: "{{url('category/dataAjax')}}",
+          url: "{{url('api/category/dataAjax')}}",
           type: "post",
           dataType: 'json',
           delay: 250,
