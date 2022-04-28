@@ -43,17 +43,7 @@ return [
                     'bullet' => 'dot',
                     'page' => 'country',
                 ],
-                [
-                    'title' => 'Categories',
-                    'bullet' => 'dot',
-                    'page' => 'category',
-                ],
-                
-                [
-                    'title' => 'Sub Categories',
-                    'bullet' => 'dot',
-                    'page' => 'subCategory',
-                ],
+          
             ]
         ],
         [
