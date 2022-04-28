@@ -20,7 +20,7 @@ class LocaleMiddleware
      */
     public function handle($request, Closure $next)
 {
-    // dd("sssssss");
+    
     // Locale is activated
     if (config('locale.status')) {
         if (Session::has('locale') &&
