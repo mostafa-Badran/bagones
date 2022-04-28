@@ -26,7 +26,7 @@
         </div>
     @endif
     <!--begin::Form-->
-    <form action="{{ url('subCategory/update',$category->id) }}" method="POST">
+    <form action="{{ url('subCategory/update',$category->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="card-body">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-lg-4">
                     <label>Name_local<span class="text-danger">*</span></label>
-                    <input type="text" name="name_local" value="{{ $category->name_locale }}" class="form-control"
+                    <input type="text" name="name_locale" value="{{ $category->name_locale }}" class="form-control"
                         placeholder="Enter Local Name" />
                     <span class="form-text text-muted">Please enter Local Name, Max 50 character allowed</span>
                 </div>

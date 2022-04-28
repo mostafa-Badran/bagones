@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\City;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+
 
 class CategoryController extends Controller
 {
@@ -71,27 +71,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(111);
-        // dd($request);
         $request->validate([
             'name' => ['required', 'unique:categories', 'max:50'],
             'name_locale' => ['required', 'unique:categories', 'max:50'],
-            // 'image' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'parent_id' => ['required'],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+           
         ]);
-       $input = $request->all();
-       //    dd($_FILES);
-    //    var_dump($request->file('image'));
-       if ($image = $request->file('image')) {
-        
-        // dd('image');
-        $destinationPath = public_path().'uploads/category/';
-         if(!File::isDirectory($destinationPath)) 
-           File::makeDirectory($destinationPath, 0777, true, true);
+        $input = $request->all();
+     
+  
+    if ($image = $request->file('image')) {
+        $destinationPath = 'uploads/category/';
         $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
         $image->move($destinationPath, $recordImage);
         $input['image'] = "$recordImage";
     }
+
 
         Category::create($input);
         return redirect()->action([CategoryController::class, 'index'])->with('success','Category created successfully.');;
@@ -106,11 +101,11 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $city = City::find($category->city_id);
+        $category = Category::find($category->id);
         $page_title = 'Show Category';
         $page_description = 'This page is to show category details';
         //
-        return view('categories.show',compact('category', 'page_title', 'page_description','city'));
+        return view('categories.show',compact('category', 'page_title', 'page_description'));
     }
 
     /**
@@ -138,13 +133,25 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        // dd($request);
         $request->validate([
             'name' => ['required', Rule::unique('categories', 'name')->ignore($category), 'max:50'],
-            'name_local' => [Rule::unique('categories', 'name_local')->ignore($category), 'max:50'],
-            'id' => ['required'],
+            'name_locale' => [Rule::unique('categories', 'name_locale')->ignore($category), 'max:50'],
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $category->update($request->all());
+        $input = $request->all();
+
+        if ($image = $request->file('image')) {
+            $destinationPath = 'uploads/category/';
+            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $recordImage);
+            $input['image'] = "$recordImage";
+        }else{
+            unset($input['image']);
+        }
+        // dd($request);
+        $category->update($input);
        
         return redirect()->action([CategoryController::class, 'index'])
                         ->with('success','Category updated successfully');

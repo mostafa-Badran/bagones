@@ -11,35 +11,37 @@
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-            <a href="{{ url('category') }}" class="btn btn-secondary">Go Back</a>
+                <a href="{{ url('category') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
-    @if ($errors->any())
+    @if($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
             <ul>
-                @foreach ($errors->all() as $error)
+                @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
     @endif
     <!--begin::Form-->
-    <form action="{{ url('category/update',$category->id) }}" method="POST">
+    <form action="{{ url('category/update',$category->id) }}" method="POST"  enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="card-body">
             <div class="form-group row">
-            
+
                 <div class="col-lg-4">
                     <label>Name_en<span class="text-danger">*</span></label>
-                    <input type="text" name="name" value="{{ $category->name }}" required class="form-control" placeholder="Enter Name"/>
+                    <input type="text" name="name" value="{{ $category->name }}" required class="form-control"
+                        placeholder="Enter Name" />
                     <span class="form-text text-muted">Please enter Name, Max 50 character allowed</span>
                 </div>
                 <div class="col-lg-4">
                     <label>Name_local<span class="text-danger">*</span></label>
-                    <input type="text" name="name_local" value="{{ $category->name_locale }}" class="form-control" placeholder="Enter Local Name"/>
+                    <input type="text" name="name_locale" value="{{ $category->name_locale }}" class="form-control"
+                        placeholder="Enter Local Name" />
                     <span class="form-text text-muted">Please enter Local Name, Max 50 character allowed</span>
                 </div>
                 <div class="col-lg-4">
@@ -85,65 +87,65 @@
 {{-- Scripts Section --}}
 @section('scripts')
 <script type="text/javascript">
-
     // CSRF Token
     // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-      $( ".select2" ).select2({
-        ajax: {
-          url: "{{route('dataAjax')}}",
-          type: "post",
-          dataType: 'json',
-          delay: 250,
-          data: function (params) {
-            return {
-                '_token': '{{ csrf_token() }}',
-              'search' : params.term // search term
-            };
-          },
-          processResults: function (response) {
-            return {
-              results: response
-            };
-          },
-          cache: true
-        }
+        $(".select2").select2({
+            ajax: {
+                url: "{{ route('dataAjax') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        '_token': '{{ csrf_token() }}',
+                        'search': params.term // search term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
 
-      });
+        });
 
     });
 
     var avatar4 = new KTImageInput('kt_image_4');
 
-avatar4.on('cancel', function(imageInput) {
-    swal.fire({
-        title: 'Image successfully canceled !',
-        type: 'success',
-        buttonsStyling: false,
-        confirmButtonText: 'Awesome!',
-        confirmButtonClass: 'btn btn-primary font-weight-bold'
+    avatar4.on('cancel', function (imageInput) {
+        swal.fire({
+            title: 'Image successfully canceled !',
+            type: 'success',
+            buttonsStyling: false,
+            confirmButtonText: 'Awesome!',
+            confirmButtonClass: 'btn btn-primary font-weight-bold'
+        });
     });
-});
 
-avatar4.on('change', function(imageInput) {
-    swal.fire({
-        title: 'Image successfully changed !',
-        type: 'success',
-        buttonsStyling: false,
-        confirmButtonText: 'Awesome!',
-        confirmButtonClass: 'btn btn-primary font-weight-bold'
+    avatar4.on('change', function (imageInput) {
+        swal.fire({
+            title: 'Image successfully changed !',
+            type: 'success',
+            buttonsStyling: false,
+            confirmButtonText: 'Awesome!',
+            confirmButtonClass: 'btn btn-primary font-weight-bold'
+        });
     });
-});
 
-avatar4.on('remove', function(imageInput) {
-    swal.fire({
-        title: 'Image successfully removed !',
-        type: 'error',
-        buttonsStyling: false,
-        confirmButtonText: 'Got it!',
-        confirmButtonClass: 'btn btn-primary font-weight-bold'
+    avatar4.on('remove', function (imageInput) {
+        swal.fire({
+            title: 'Image successfully removed !',
+            type: 'error',
+            buttonsStyling: false,
+            confirmButtonText: 'Got it!',
+            confirmButtonClass: 'btn btn-primary font-weight-bold'
+        });
     });
-});
+
 </script>
 @endsection

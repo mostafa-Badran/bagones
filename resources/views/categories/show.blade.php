@@ -29,6 +29,12 @@
                     <input type="text" name="name_local" value="{{ $category->name_locale }}" disabled  class="form-control" placeholder="Enter Local Name"/>
                     <span class="form-text text-muted">Please enter Local Name, Max 50 character allowed</span>
                 </div>
+                <div class="col-lg-4">
+                    <label>Image<span class="text-danger">*</span></label>
+                    <div class="image-input image-input-outline" id="kt_image_4" style="background-image: url(/media/users/blank.png)">
+                        <div class="image-input-wrapper" style="background-image: url(/uploads/category/{{ $category->image }})"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-footer">

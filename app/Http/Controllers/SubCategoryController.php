@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\City;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +28,7 @@ class SubCategoryController extends Controller
             // dd($data);
             $results = [];
             foreach($data as $category){
+                $category['parent_name']= $category->get_parent->name;
                 $category->image = asset('uploads/category/' . $category->image);
                 array_push($results, $category);
             }
@@ -80,13 +80,11 @@ class SubCategoryController extends Controller
        $input = $request->all();
 
        if ($image = $request->file('image')) {
-
-        $destinationPath = public_path().'uploads/category/';
-        File::isDirectory($destinationPath) or File::makeDirectory($destinationPath, 0777, true, true);
+        $destinationPath = 'uploads/category/';
         $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
         $image->move($destinationPath, $recordImage);
         $input['image'] = "$recordImage";
-    }
+        }
     
         Category::create($input);
 
@@ -138,9 +136,20 @@ class SubCategoryController extends Controller
             'name' => ['required', Rule::unique('categories', 'name')->ignore($category), 'max:50'],
             'name_locale' => [Rule::unique('categories', 'name_locale')->ignore($category), 'max:50'],
             'parent_id' => ['required'],
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $category->update($request->all());
+        $input = $request->all();
+        if ($image = $request->file('image')) {
+            $destinationPath = 'uploads/category/';
+            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $recordImage);
+            $input['image'] = "$recordImage";
+        }else{
+            unset($input['image']);
+        }
+
+        $category->update($input);
 
         return redirect()->action([SubCategoryController::class, 'index'])
                         ->with('success','Sub Category updated successfully');

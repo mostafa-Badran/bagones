@@ -11,7 +11,7 @@
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-            <a href="{{ url('subCategory/index') }}" class="btn btn-secondary">Go Back</a>
+            <a href="{{ url('subCategory') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
@@ -35,13 +35,19 @@
                     <input type="text" name="name_local" value="{{ $category->name_locale }}" disabled  class="form-control" />
                     <!-- <span class="form-text text-muted">Please enter Local Name, Max 50 character allowed</span> -->
                 </div>
+                <div class="col-lg-4">
+                    <label>Image<span class="text-danger">*</span></label>
+                    <div class="image-input image-input-outline" id="kt_image_4" style="background-image: url(/media/users/blank.png)">
+                        <div class="image-input-wrapper" style="background-image: url(/uploads/category/{{ $category->image }})"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-footer">
             <div class="row">
                 <div class="col-lg-4"></div>
                 <div class="col-lg-8">
-                    <a href="{{ url('category/edit',$category->id) }}"  class="btn btn-primary mr-2">Edit</a>
+                    <a href="{{ url('subCategory/edit',$category->id) }}"  class="btn btn-primary mr-2">Edit</a>
                 </div>
             </div>
         </div>

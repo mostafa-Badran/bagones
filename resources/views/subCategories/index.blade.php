@@ -81,7 +81,7 @@
                             return '<img src="' + data + '" class="avatar" width="50" height="50"/>';
                             }
                     },
-                    {data: 'parent_id', name: 'parent_id'},
+                    {data: 'parent_name', name: 'parent_name'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
