@@ -19,11 +19,17 @@ class CategoryController extends BaseController
         $lang = App::getLocale();
         // dd($lang );
         if($lang == 'en'){
-            $categories = Category::select('id','name', 'parent_id' )->where('parent_id', null)->paginate(10);
+            $categories = Category::select('id','name','image' )->where('parent_id', null)->paginate(10);
         }elseif($lang == 'ar'){
-            $categories = Category::select('id','name_locale as name', 'parent_id' )->where('parent_id', null)->paginate(10);
+            $categories = Category::select('id','name_locale as name', 'image' )->where('parent_id', null)->paginate(10);
         }
-        // dd('ssss');
+        
+
+        foreach($categories as $category){
+            $category->image = asset('uploads/category/' . $category->image);
+            // array_push($results, $category);
+        }
+
         return $this->sendResponse($categories, 'categories retrieved successfully.');
     }
 
