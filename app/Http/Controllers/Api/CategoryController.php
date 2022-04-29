@@ -40,7 +40,13 @@ class CategoryController extends BaseController
         if($lang == 'ar'){
             $name = 'name_locale as name';
         }
-        $categories = Category::select('id',$name, 'parent_id' )->where('parent_id', $id)->paginate(10);        
+        $categories = Category::select('id',$name,'image', 'parent_id' )->where('parent_id', $id)->paginate(10);   
+        
+        foreach($categories as $category){
+            $category->image = asset('uploads/category/' . $category->image);
+            // array_push($results, $category);
+        }
+     
         return $this->sendResponse($categories, 'SubCategories retrieved successfully.');
     }
 
@@ -61,7 +67,14 @@ class CategoryController extends BaseController
         if($lang == 'ar'){
             $name = 'name_locale as name';
         }
-        $categories = Category::select('id',$name, 'parent_id' )->where('id', $category->parent_id)->get();   
+        $categories = Category::select('id',$name,'image', 'parent_id' )->where('id', $category->parent_id)->get(); 
+        
+        
+        foreach($categories as $category){
+            $category->image = asset('uploads/category/' . $category->image);
+            // array_push($results, $category);
+        }
+
         $message = $categories->parent_id == null ? 'category': 'subCategory';
         return $this->sendResponse($categories, $message .' retrieved successfully.');
 
