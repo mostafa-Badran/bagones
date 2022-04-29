@@ -24,6 +24,12 @@ class SubCategoryController extends BaseController
             $categories = Category::select('id','name_locale as name', 'parent_id' )->where('parent_id','!=', null)->paginate(10);
         }
         // dd('ssss');
+        
+        foreach($categories as $category){
+            $category->image = asset('uploads/category/' . $category->image);
+            // array_push($results, $category);
+        }
+
         return $this->sendResponse($categories, 'categories retrieved successfully.');
     }
 
