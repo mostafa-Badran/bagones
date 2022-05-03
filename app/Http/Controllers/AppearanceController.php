@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appearance;
+use App\Models\Content_type;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\Rule;
 
@@ -18,10 +19,13 @@ class AppearanceController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        
         if ($request->ajax()) {
-            $data = Appearance::select('id','type')->get();
-            return DataTables::of($data)->addIndexColumn()
+            
+            $data = Appearance::join('content_types', 'appearances.content_type_id', '=', 'content_types.id')              	
+              		->get(['appearances.id', 'appearances.number','content_types.name as content_type', 'appearances.image']);
+            
+            return DataTables::of($data)->addIndexColumn()            
                 ->addColumn('action', 'appearances.action')
                 ->rawColumns(['action'])
                 ->addIndexColumn()
@@ -41,11 +45,11 @@ class AppearanceController extends Controller
      */
     public function create()
     {
+        $content_types = Content_type::all();
         $page_title = 'Add New Appearance';
         $page_description = 'This page is to add new record in appearance table';
 
-        //
-        return view('appearances.create', compact('page_title', 'page_description'));
+        return view('appearances.create', compact('page_title', 'page_description' , 'content_types'));
     }
 
     /**
@@ -55,17 +59,25 @@ class AppearanceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // dd($request);
-        // die();
-        //
+    {        
         $request->validate([
-            'type' => ['required', 'unique:appearances', 'max:50'],
+            'number' => ['required', 'unique:appearances'],
+            'content_type_id' => ['required'],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        Appearance::create($request->all());
+        $input = $request->all();
 
-        return redirect()->route('appearance.index')
+        if ($image = $request->file('image')) {
+            $destinationPath = 'uploads/appearance/';
+            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $recordImage);
+            $input['image'] = "$recordImage";
+        }
+
+        Appearance::create($input);
+
+        return redirect()->action([AppearanceController::class, 'index'])
                         ->with('success','Appearance created successfully.');
     }
 
