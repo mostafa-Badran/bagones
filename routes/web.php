@@ -138,5 +138,24 @@ Route::post('subCategory/desrtoy/{category}', [SubCategoryController::class, 'de
 // Route::post('/dataAjax', [CategoryController::class, 'dataAjax'])->name('dataAjax');
 
 
+//content_type Routes
+Route::get('content_type', [ContentTypeController::class, 'index']);
+Route::get('content_type/create', [ContentTypeController::class, 'create']);
+Route::post('content_type', [ContentTypeController::class, 'store']);
+Route::get('content_type/{content_type}', [ContentTypeController::class, 'show']);
+Route::get('content_type/edit/{content_type}', [ContentTypeController::class, 'edit']);
+Route::put('content_type/update/{content_type}', [ContentTypeController::class, 'update']);
+Route::post('content_type/destroy/{content_type}', [ContentTypeController::class, 'destroy']);
+
+//appearance Routes
+Route::get('appearance', [AppearanceController::class, 'index']);
+Route::get('appearance/create', [AppearanceController::class, 'create']);
+Route::post('appearance', [AppearanceController::class, 'store']);
+Route::get('appearance/{appearance}', [AppearanceController::class, 'show']);
+Route::get('appearance/edit/{apperance}', [AppearanceController::class, 'edit']);
+Route::put('appearance/update/{appearance}', [AppearanceController::class, 'update']);
+Route::post('appearance/destroy/{appearance}', [AppearanceController::class, 'destroy']);
+
+
 
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
