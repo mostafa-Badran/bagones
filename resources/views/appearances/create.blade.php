@@ -7,11 +7,11 @@
 <div class="card card-custom example example-compact">
     <div class="card-header">
         <h3 class="card-title">
-            Add New Category
+            Add New Appearance
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-                <a href="{{ url('category') }}" class="btn btn-secondary">Go Back</a>
+                <a href="{{ url('appearance') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
