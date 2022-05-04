@@ -66,6 +66,26 @@ return [
                 ],
             ]
         ],
+        [
+            'title' => 'Home and Appearance',
+            'icon' => 'media/svg/icons/Home/Book-open.svg',
+            'bullet' => 'line',
+            'root' => true,
+            'submenu' => [
+           
+                [
+                    'title' => 'Content Types',
+                    'bullet' => 'dot',
+                    'page' => 'content_type',
+                ],
+                
+                [
+                    'title' => 'Apprearances',
+                    'bullet' => 'dot',
+                    'page' => 'appearance',
+                ],
+            ]
+        ],
         // [
         //     'title' => 'Item',
         //     'icon' => 'media/svg/icons/Home/Mirror.svg',

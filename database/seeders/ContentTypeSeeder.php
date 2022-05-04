@@ -15,7 +15,7 @@ class ContentTypeSeeder extends Seeder
     public function run()
     {
        
-        $content_types = ['offer' , 'category' , 'sub category' , 'item' , 'store'];
+        $content_types = [ ['name' =>'offer' ], ['name' =>'category'] , ['name' =>'sub category'] , ['name' =>'item'] , ['name' =>'store']];
         $content_types = json_encode($content_types);
         $content_types = json_decode($content_types, true);
         $content_types = array_chunk($content_types, 1000);
