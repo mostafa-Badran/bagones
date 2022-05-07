@@ -117,4 +117,25 @@ class SubCategoryController extends BaseController
     {
         //
     }
+
+    public function dataAjax(Request $request)
+    {
+        
+        $search = $request->search;
+
+        if($search == ''){
+           $categories = Category::orderby('name','asc')->select('id','name' , 'name_locale') ->where('parent_id','!=', null)->limit(5)->get();
+        }else{
+           $categories = Category::orderby('name','asc')->select('id','name','name_locale')->where('name', 'like', '%' .$search . '%') ->where('parent_id','!=', null)->limit(5)->get();
+        }
+
+        // $response = array();
+        foreach($categories as $category){
+           $response[] = array(
+                "id"=>$category->id,
+                "text"=>$category->name .' - '.$category->name_locale 
+           );
+        }
+        return response()->json($response);
+    }
 }

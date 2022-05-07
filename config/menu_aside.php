@@ -84,6 +84,11 @@ return [
                     'bullet' => 'dot',
                     'page' => 'appearance',
                 ],
+                [
+                    'title' => 'Home',
+                    'bullet' => 'dot',
+                    'page' => 'home',
+                ],
             ]
         ],
         // [

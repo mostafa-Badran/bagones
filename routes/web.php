@@ -155,7 +155,15 @@ Route::get('appearance/{appearance}', [AppearanceController::class, 'show']);
 Route::get('appearance/edit/{apperance}', [AppearanceController::class, 'edit']);
 Route::put('appearance/update/{appearance}', [AppearanceController::class, 'update']);
 Route::post('appearance/destroy/{appearance}', [AppearanceController::class, 'destroy']);
+//Home Routes
+Route::get('home', [HomeController::class, 'index']);
+Route::get('home/create', [HomeController::class, 'create']);
+Route::post('home', [HomeController::class, 'store']);
+Route::get('home/{home}', [HomeController::class, 'show']);
+Route::get('home/edit/{home}', [HomeController::class, 'edit']);
+Route::put('home/update/{home}', [HomeController::class, 'update']);
+Route::post('home/destroy/{home}', [HomeController::class, 'destroy']);
 
 
 
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+// Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');

@@ -69,9 +69,20 @@ Route::get('/subCategories/{id}/parent',  [CategoryController::class,'getParentC
 
 Route::resource('subCategories', '\App\Http\Controllers\Api\SubCategoryController')->middleware('locale.check');
 
-
-
 Route::post('/category/dataAjax', [ App\Http\Controllers\CategoryController::class, 'dataAjax']);
+
+Route::get('/subcategory/dataAjax', [ App\Http\Controllers\Api\SubCategoryController::class, 'dataAjax']);
+
+
+
+
+
+Route::resource('contentTypes', '\App\Http\Controllers\Api\ContentTypeController')->middleware('locale.check');
+Route::get('home', [\App\Http\Controllers\Api\HomeController::class , 'index'])->middleware('locale.check');
+
+Route::post('/contentTypes/{id}/appearance',  [App\Http\Controllers\Api\ContentTypeController::class,'getAppearances' ])->middleware('locale.check');
+
+
 
 
 // Route::get("/cities", function(){
