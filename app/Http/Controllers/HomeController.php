@@ -21,11 +21,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        // $data = Home::leftJoin('content_types' , 'homes.content_type_id','=','content_types.id')
-        // ->leftJoin('categories' , 'homes.sub_category_id','=','categories.id')
-        // ->leftJoin('items' , 'homes.item_id','=','items.id')
-        // ->get(['homesx.id','content_types.name as content_type', 'homes.appearance_number as appearance_number' , 'categories.name as name' ]);
-        //     dd($data);
+     
         if ($request->ajax()) {
 
             $data = Home::leftJoin('content_types' , 'homes.content_type_id','=','content_types.id')
@@ -88,12 +84,26 @@ class HomeController extends Controller
                         ->with('success','home record created successfully.');
     }
 
-    public function edit() {
-
+    public function edit(Home $home) {
+        $content_types = Content_type::all();
+        // $appearances = $home->content_type->appearances;
+        $page_title = 'Edit Home';
+        $page_description = 'This page is to edit record in Home table';
+        
+        return view('home.edit',compact('home', 'page_title', 'page_description' , 'content_types'));
     }
     
-    public function update() {
+    function update(Request $request, Home $home){
+        // dd($request->all());
+        $request->validate([
+            'content_type_id' => ['required',], //not null
+            'appearance_number' => ['required', ], //not null
+        ]);
 
+        $home->update($request->all());
+       
+        return redirect()->action([HomeController::class, 'index'])
+                        ->with('success','Home record updated successfully');
     }
     public function destroy() {
 
