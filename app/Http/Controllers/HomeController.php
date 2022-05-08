@@ -84,6 +84,21 @@ class HomeController extends Controller
                         ->with('success','home record created successfully.');
     }
 
+      /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Home  $home
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Home $home)
+    {
+        // $content_types = Content_type::all();
+        $page_title = 'Show Home  Record';
+        $page_description = 'This page is to show Home record details';
+        //
+        return view('home.show',compact('home', 'page_title', 'page_description'));
+    }
+
     public function edit(Home $home) {
         $content_types = Content_type::all();
         // $appearances = $home->content_type->appearances;
