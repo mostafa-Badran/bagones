@@ -21,9 +21,17 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
+        // $data = Home::leftJoin('content_types' , 'homes.content_type_id','=','content_types.id')
+        // ->leftJoin('categories' , 'homes.sub_category_id','=','categories.id')
+        // ->leftJoin('items' , 'homes.item_id','=','items.id')
+        // ->get(['homesx.id','content_types.name as content_type', 'homes.appearance_number as appearance_number' , 'categories.name as name' ]);
+        //     dd($data);
         if ($request->ajax()) {
 
-            $data = Home::all();
+            $data = Home::leftJoin('content_types' , 'homes.content_type_id','=','content_types.id')
+            ->leftJoin('categories' , 'homes.sub_category_id','=','categories.id')
+            ->leftJoin('items' , 'homes.item_id','=','items.id')
+            ->get(['homes.id','content_types.name as content_type', 'homes.appearance_number as appearance_number' , 'categories.name as sub_category_name' , 'items.name as item_name']);
          
         
 
