@@ -62,8 +62,7 @@
                 <div class="col-lg-4">
                     <label>sub category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="subcategory_id" name="sub_category_id"
-                            >
+                        <select class="form-control kt-select2 select2" id="subcategory_id" name="sub_category_id">
                             <!-- <option value="">Select subCategory</option> -->
                         </select>
                     </div>

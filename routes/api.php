@@ -83,6 +83,9 @@ Route::get('home', [\App\Http\Controllers\Api\HomeController::class , 'index'])-
 Route::post('/contentTypes/{id}/appearance',  [App\Http\Controllers\Api\ContentTypeController::class,'getAppearances' ])->middleware('locale.check');
 
 
+Route::post('/country/cities', [App\Http\Controllers\CityController::class, 'get_city_select_list']);
+Route::post('/city/areas', [App\Http\Controllers\AreaController::class, 'get_area_select_list']);
+
 
 
 // Route::get("/cities", function(){

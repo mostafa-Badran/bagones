@@ -156,6 +156,8 @@ class CityController extends Controller
         return response()->json($response);
     }
 
+
+
     /**
      * get City Arabic names list
      */
@@ -170,6 +172,45 @@ class CityController extends Controller
         
         $data = City::select('id','name','country_id')->get();        
         return $data;
+    }
+
+
+    
+    /**
+     * Display a listing of the resource.
+     * @param  \Illuminate\Http\Request  $request
+     *
+     */
+    public function get_city_select_list(Request $request)
+    {
+        // dd($request);
+        // if ($request->ajax()) {
+        $search = $request->search;
+        $country_id = $request->country_id;
+
+        if($search == ''){
+           $cities = City::orderby('name','asc')
+           ->select('id','name')
+           ->where('country_id' , $country_id)
+           ->get();
+        }else{
+           $cities = City::orderby('name','asc')->select('id','name')
+           ->where('name', 'like', '%' .$search . '%')
+           ->where('country_id' , $country_id)           
+           ->get();
+        }
+
+        $response = array();
+        foreach($cities as $city){
+           $response[] = array(
+                "id"=>$city->id,
+                "text"=>$city->name
+           );
+        }
+        return response()->json($response);
+        // return response()->json("HHHHHHHHHH");
+    // }
+    
     }
 
 }

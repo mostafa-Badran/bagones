@@ -152,4 +152,31 @@ class AreaController extends Controller
         return $data;
     }
 
+    public function get_area_select_list(Request $request)
+    {
+        $search = $request->search;
+        $city_id = $request->city_id;
+
+        if($search == ''){
+           $areas = Area::orderby('name','asc')
+           ->select('id','name')
+           ->where('city_id' , $city_id)
+           ->get();
+        }else{
+           $areas = Area::orderby('name','asc')->select('id','name')
+           ->where('name', 'like', '%' .$search . '%')
+           ->where('city_id' , $city_id)           
+           ->get();
+        }
+
+        $response = array();
+        foreach($areas as $areas){
+           $response[] = array(
+                "id"=>$areas->id,
+                "text"=>$areas->name
+           );
+        }
+        return response()->json($response);
+    }
+
 }

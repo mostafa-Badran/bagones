@@ -92,6 +92,7 @@ Route::post('city/{city}', [CityController::class, 'destroy'])->name('city.destr
 Route::post('city/dataAjax', [CityController::class, 'dataAjax'])->name('city.dataAjax');
 Route::post('/dataAjax', [CityController::class, 'dataAjax'])->name('dataAjax');
 
+
 //Area Routes
 Route::get('area', [AreaController::class, 'index'])->name('area.index');
 Route::get('area/create', [AreaController::class, 'create'])->name('area.create');
@@ -100,6 +101,7 @@ Route::get('area/{area}', [AreaController::class, 'show'])->name('area.show');
 Route::get('area/edit/{area}', [AreaController::class, 'edit'])->name('area.edit');
 Route::put('area/{area}', [AreaController::class, 'update'])->name('area.update');
 Route::post('area/{area}', [AreaController::class, 'destroy'])->name('area.destroy');
+
 
 
 //Language Routes
@@ -155,6 +157,8 @@ Route::get('appearance/{appearance}', [AppearanceController::class, 'show']);
 Route::get('appearance/edit/{apperance}', [AppearanceController::class, 'edit']);
 Route::put('appearance/update/{appearance}', [AppearanceController::class, 'update']);
 Route::post('appearance/destroy/{appearance}', [AppearanceController::class, 'destroy']);
+
+
 //Home Routes
 Route::get('home', [HomeController::class, 'index']);
 Route::get('home/create', [HomeController::class, 'create']);
@@ -163,6 +167,16 @@ Route::get('home/{home}', [HomeController::class, 'show']);
 Route::get('home/edit/{home}', [HomeController::class, 'edit']);
 Route::put('home/update/{home}', [HomeController::class, 'update']);
 Route::post('home/destroy/{home}', [HomeController::class, 'destroy']);
+
+
+//Store Routes
+Route::get('store', [StoreController::class, 'index']);
+Route::get('store/create', [StoreController::class, 'create']);
+Route::post('store', [StoreController::class, 'store']);
+Route::get('store/{store}', [StoreController::class, 'show']);
+Route::get('store/edit/{store}', [StoreController::class, 'edit']);
+Route::put('store/update/{store}', [StoreController::class, 'update']);
+Route::post('store/destroy/{store}', [StoreController::class, 'destroy']);
 
 
 

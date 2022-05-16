@@ -19,7 +19,13 @@ class Area extends Model
      */
     public function city()
     {
-        return $this->hasOne(City::class);
+        return $this->belongsTo(City::class , 'city_id');
+    }
+
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class , AreaStore::class);
     }
 
 

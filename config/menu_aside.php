@@ -91,6 +91,22 @@ return [
                 ],
             ]
         ],
+        [
+            'title' => 'Stores and Items',
+            'icon' => 'media/svg/icons/Home/Book-open.svg',
+            'bullet' => 'line',
+            'root' => true,
+            'submenu' => [
+           
+                [
+                    'title' => 'Stores',
+                    'bullet' => 'dot',
+                    'page' => 'store',
+                ],
+                
+            
+            ]
+        ],
         // [
         //     'title' => 'Item',
         //     'icon' => 'media/svg/icons/Home/Mirror.svg',
