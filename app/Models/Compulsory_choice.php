@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attribute extends Model
+class Compulsory_choice extends Model
 {
     use HasFactory;
 
@@ -20,11 +20,11 @@ class Attribute extends Model
 
 
     public function entries(){
-        return $this->hasMany(Attribute_entry::class);
+        return $this->hasMany(Compulsory_choice_entry::class);
     }
 
     public function items()
     {
-        return $this->belongsToMany(Item::class , AttributeItem::class);
+        return $this->belongsToMany(Item::class , CompulsoryChoiceItem::class);
     }
 }

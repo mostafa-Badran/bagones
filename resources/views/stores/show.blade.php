@@ -35,7 +35,7 @@
 								</a>
 							</div>
 							<div class="my-lg-0 my-3">
-								<a href="#"	class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Products</a>								
+								<a href="{{url('store' ,[$store->id])}}/items"	class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Products</a>								
 								<a href="{{ url('store') }}" class="btn btn-sm btn-info font-weight-bolder text-uppercase" >Go Back</a>
 							</div>
 						</div>

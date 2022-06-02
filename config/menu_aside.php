@@ -104,6 +104,79 @@ return [
                     'page' => 'store',
                 ],
                 
+                
+            
+            ]
+        ],
+        [
+            'title' => 'Attributes',
+            'icon' => 'media/svg/icons/Home/Book-open.svg',
+            'bullet' => 'line',
+            'root' => true,
+            'submenu' => [
+           
+                [
+                    'title' => 'Attributes',
+                    'bullet' => 'dot',
+                    'page' => 'attribute',
+                ]
+                ,
+
+                [
+                    'title' => 'Attributes Entries',
+                    'bullet' => 'dot',
+                    'page' => 'attribute_entry',
+                ],
+                
+                
+            
+            ]
+        ],
+        [
+            'title' => 'Compulsory Choices',
+            'icon' => 'media/svg/icons/Home/Book-open.svg',
+            'bullet' => 'line',
+            'root' => true,
+            'submenu' => [
+           
+                [
+                    'title' => 'compulsory_choice',
+                    'bullet' => 'dot',
+                    'page' => 'compulsory_choice',
+                ]
+                ,
+
+                [
+                    'title' => 'Compulsory Choice Entries',
+                    'bullet' => 'dot',
+                    'page' => 'compulsory_choice_entry',
+                ],
+                
+                
+            
+            ]
+        ],
+        [
+            'title' => 'Multipule Choice',
+            'icon' => 'media/svg/icons/Home/Book-open.svg',
+            'bullet' => 'line',
+            'root' => true,
+            'submenu' => [
+           
+                [
+                    'title' => 'Multipule Choices',
+                    'bullet' => 'dot',
+                    'page' => 'multipule_choice',
+                ]
+                ,
+
+                [
+                    'title' => 'Multipule Choice Entries',
+                    'bullet' => 'dot',
+                    'page' => 'multipule_choice_entry',
+                ],
+                
+                
             
             ]
         ],

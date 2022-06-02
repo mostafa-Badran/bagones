@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Attributes extends Migration
+class CreateItemImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class Attributes extends Migration
      */
     public function up()
     {
-        Schema::create('attributes', function (Blueprint $table) {
+        Schema::create('item_images', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('type_id', false, true);
             $table->bigInteger('item_id', false, true);
-            $table->string('name', 50);
-            $table->text('thumbnail');
-            $table->timestamps();
+            $table->text('image');
             $table->foreign("item_id")->references("id")->on("items");
-            $table->foreign("type_id")->references("id")->on("attribute_types");
-            $table->unique(['type_id', 'item_id', 'name']);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -33,6 +30,6 @@ class Attributes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attributes');
+        Schema::dropIfExists('item_images');
     }
 }

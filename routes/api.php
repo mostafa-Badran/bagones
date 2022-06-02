@@ -87,6 +87,9 @@ Route::post('/country/cities', [App\Http\Controllers\CityController::class, 'get
 Route::post('/city/areas', [App\Http\Controllers\AreaController::class, 'get_area_select_list']);
 
 
+// Route::resource('item', '\App\Http\Controllers\Api\ContentTypeController')->middleware('locale.check');
+Route::get('item/filter', [\App\Http\Controllers\Api\ItemController::class , 'items'])->middleware('locale.check');
+Route::get('item/{item}', [\App\Http\Controllers\Api\ItemController::class , 'show'])->middleware('locale.check');
 
 // Route::get("/cities", function(){
 //     return City::all();

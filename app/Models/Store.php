@@ -49,6 +49,9 @@ public function deliveryAreas()
     // {
     //     return $this->haveMany(Item::class);
     // }
+    public function items(){
+        return $this->hasMany(Item::class);
+    }
 
 
 

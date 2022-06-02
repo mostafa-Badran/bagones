@@ -178,6 +178,58 @@ Route::get('store/edit/{store}', [StoreController::class, 'edit']);
 Route::put('store/update/{store}', [StoreController::class, 'update']);
 Route::post('store/destroy/{store}', [StoreController::class, 'destroy']);
 
+//Item Routes
+Route::get('store/{store}/items', [ItemController::class, 'index']);
+Route::get('store/{store}/items/create', [ItemController::class, 'create']);
+Route::post('store/{store}/items', [ItemController::class, 'store']);
+
+//Attributes Routes
+Route::get('attribute', [AttributeController::class, 'index']);
+Route::get('attribute/create', [AttributeController::class, 'create']);
+Route::post('attribute', [AttributeController::class, 'store']);
+Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
+Route::get('attribute/edit/{attribute}', [AttributeController::class, 'edit']);
+Route::put('attribute/update/{attribute}', [AttributeController::class, 'update']);
+Route::post('attribute/destroy/{attribute}', [AttributeController::class, 'destroy']);
+
+//Attributes Routes
+Route::get('attribute_entry', [AttributeEntriesController::class, 'index']);
+Route::get('attribute_entry/create', [AttributeEntriesController::class, 'create']);
+Route::post('attribute_entry', [AttributeEntriesController::class, 'store']);
+// Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
+// Route::get('attribute/edit/{attribute}', [AttributeController::class, 'edit']);
+// Route::put('attribute/update/{attribute}', [AttributeController::class, 'update']);
+// Route::post('attribute/destroy/{attribute}', [AttributeController::class, 'de    stroy']);
+
+
+//compulsory_choice Routes
+Route::get('compulsory_choice', [CompulsoryChoiceController::class, 'index']);
+Route::get('compulsory_choice/create', [CompulsoryChoiceController::class, 'create']);
+Route::post('compulsory_choice', [CompulsoryChoiceController::class, 'store']);
+Route::get('compulsory_choice/{compulsory_choice}', [CompulsoryChoiceController::class, 'show']);
+Route::get('compulsory_choice/edit/{compulsory_choice}', [CompulsoryChoiceController::class, 'edit']);
+Route::put('compulsory_choice/update/{compulsory_choice}', [CompulsoryChoiceController::class, 'update']);
+Route::post('compulsory_choice/destroy/{compulsory_choice}', [CompulsoryChoiceController::class, 'destroy']);
+
+//compulsory_choice_entry Routes
+Route::get('compulsory_choice_entry', [CompulsoryChoiceEntriesController::class, 'index']);
+Route::get('compulsory_choice_entry/create', [CompulsoryChoiceEntriesController::class, 'create']);
+Route::post('compulsory_choice_entry', [CompulsoryChoiceEntriesController::class, 'store']);
+
+//multipule_choice Routes
+Route::get('multipule_choice', [MultipuleChoiceController::class, 'index']);
+Route::get('multipule_choice/create', [MultipuleChoiceController::class, 'create']);
+Route::post('multipule_choice', [MultipuleChoiceController::class, 'store']);
+Route::get('multipule_choice/{multipule_choice}', [MultipuleChoiceController::class, 'show']);
+Route::get('multipule_choice/edit/{multipule_choice}', [MultipuleChoiceController::class, 'edit']);
+Route::put('multipule_choice/update/{multipule_choice}', [MultipuleChoiceController::class, 'update']);
+Route::post('multipule_choice/destroy/{multipule_choice}', [MultipuleChoiceController::class, 'destroy']);
+
+//Attributes Routes
+Route::get('multipule_choice_entry', [MultipuleChoiceEntriesController::class, 'index']);
+Route::get('multipule_choice_entry/create', [MultipuleChoiceEntriesController::class, 'create']);
+Route::post('multipule_choice_entry', [MultipuleChoiceEntriesController::class, 'store']);
+
 
 
 // Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
