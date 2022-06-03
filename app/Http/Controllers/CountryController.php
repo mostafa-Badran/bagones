@@ -62,7 +62,7 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
         // die();
         //
         $request->validate([
@@ -72,6 +72,11 @@ class CountryController extends Controller
             'phone' => ['required', 'unique:countries', 'max:6'],
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // var_dump($request->file('image'));
+        // var_dump($_POST);
+        // var_dump($_FILES);
+        // dd($_FILES);
 
         $input = $request->all();
 
