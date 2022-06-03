@@ -54,7 +54,7 @@ class HomeController extends BaseController
                
             }//end for
         
-            return $this->sendResponse($homeRecords, 'home retrieved successfully.');
+            return $this->sendResponse($result, 'home retrieved successfully.');
             
        
     }
