@@ -121,7 +121,7 @@ return [
                 [
                     'title' => 'Multipule Choices',
                     'bullet' => 'dot',
-                    'page' => 'multipule_choice',
+                    'page' => 'multiple_choice',
                 ]
             
             ]
