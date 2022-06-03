@@ -28,9 +28,9 @@ class HomeController extends Controller
             ->leftJoin('categories' , 'homes.sub_category_id','=','categories.id')
             ->leftJoin('items' , 'homes.item_id','=','items.id')
             ->leftJoin('appearances' , 'homes.appearance_number','=','appearances.id')
-            ->get(['homes.id','content_types.name as content_type', 'appearances.appearance_number as appearance_number' , 'categories.name as sub_category_name' , 'items.name as item_name']);
+            ->get(['homes.id','content_types.name as content_type', 'appearances.number as appearance_number' , 'categories.name as sub_category_name' , 'items.name as item_name']);
          
-        
+            // dd($data->toSql());
 
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', 'home.action')
