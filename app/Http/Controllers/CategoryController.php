@@ -177,9 +177,9 @@ class CategoryController extends Controller
         $search = $request->search;
 
         if($search == ''){
-           $categories = Category::orderby('name','asc')->select('id','name')->limit(5)->get();
+           $categories = Category::where('parent_id', null)->orderby('name','asc')->select('id','name')->limit(5)->get();
         }else{
-           $categories = Category::orderby('name','asc')->select('id','name')->where('name', 'like', '%' .$search . '%')->limit(5)->get();
+           $categories = Category::where('parent_id', null)->orderby('name','asc')->select('id','name')->where('name', 'like', '%' .$search . '%')->limit(5)->get();
         }
 
         // $response = array();
