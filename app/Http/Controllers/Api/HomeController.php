@@ -15,7 +15,7 @@ class HomeController extends BaseController
     {
 
             //select all records
-            $homeRecords = Home::paginate(10);
+            $homeRecords = Home::paginate(6);
             $updatedItems = $homeRecords->getCollection();
 
 
