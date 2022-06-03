@@ -37,8 +37,6 @@
                     <th>ID</th>
                     <th>Name_en</th>
                     <th>Name_locale</th>
-                    <th>Description</th>
-                    <th>Description_locale</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -75,8 +73,6 @@
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'name_locale', name: 'name_locale'},
-                    {data: 'description', name: 'description'},
-                    {data: 'description_locale', name: 'description_locale'},
                     {
                         "data": "id",
                         render:function(data, type, row)

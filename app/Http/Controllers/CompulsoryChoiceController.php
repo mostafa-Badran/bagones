@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Compulsory_choice;
+use App\Models\Compulsory_choice_entry;
 
 class CompulsoryChoiceController extends Controller
 {
@@ -21,12 +22,12 @@ class CompulsoryChoiceController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = DB::table('compulsory_choices as a')
-            ->select('a.id','a.name','a.name_locale','a.description','a.description_locale')
+            $data = DB::table('compulsory_choices')
+            ->select('id','name','name_locale')
             ->get();
             return DataTables::of($data)->make(true);
         }
-
+   
         $page_title = 'Compulsory Choices';
         $page_description = 'This page is to show all the records in Compulsory Choices table';
 
@@ -60,16 +61,50 @@ class CompulsoryChoiceController extends Controller
             'name_locale' => ['required', 'max:255'],
         ]);
 
-        Compulsory_choice::create($request->all());
+        
+        DB::beginTransaction();
+        try {
 
+            $compulsory_choice_input = [
+                'name'=> $request->input('name'),
+                'name_locale'=>$request->input('name_locale'),
+            ] ;
+            
+            $compulsory_choice  = Compulsory_choice::create($compulsory_choice_input);    
+            //adding compulsory_choice Components
+            $entry_names = $request->input('entry_name'); // input array
+            $entry_name_locales = $request->input('entry_name_locale');// input array
+            $components=[];
+            foreach ($entry_names as $key => $name) {
+                $data = [
+                    'name'=>$name,
+                    'name_locale'=> $entry_name_locales[$key],
+                    'compulsory_choice_id'=>$compulsory_choice->id
+                ];
+               array_push($components ,$data );
+               
+            }
+           
+            Compulsory_choice_entry::insert($components);
+
+            DB::commit();
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+            return redirect()->action([self::class, 'create'])
+            ->with('error','Error Creating Compulsory Choice.');
+        }
+        
         return redirect()->action([self::class, 'index'])
-                        ->with('success','Compulsory_choice created successfully.');
+                        ->with('success','Compulsory Choice created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Attribute  $attribute
+     * @param  Compulsory_choice  $compulsory_choice
+     * 
      * @return \Illuminate\Contracts\View\View
      */
     public function show(Compulsory_choice $compulsory_choice)
@@ -84,12 +119,15 @@ class CompulsoryChoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Compulsory_choice $compulsory_choice
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Compulsory_choice $compulsory_choice)
     {
-        //
+        $page_title = 'Edit Compulsory Choice';
+        $page_description = 'This page is to Edit compulsory choice details';
+        
+        return view('compulsory_choices.edit',compact('compulsory_choice', 'page_title', 'page_description'));
     }
 
     /**
