@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attribute;
-use App\Models\Attribute_entry;
-use App\Models\Multipule_choice;
+
+use App\Models\multiple_choice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Multiple_choice;
 use App\Models\Multiple_choice_entry;
 
-class MultipuleChoiceController extends Controller
+class MultipleChoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +20,8 @@ class MultipuleChoiceController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = DB::table('multiple_choices as a')
-            ->select('a.id','a.name','a.name_locale','a.description','a.description_locale')
+            $data = DB::table('multiple_choices')
+            ->select('id','name','name_locale')
             ->get();
             return DataTables::of($data)->make(true);
         }
@@ -31,7 +29,7 @@ class MultipuleChoiceController extends Controller
         $page_title = 'Multiple Choices';
         $page_description = 'This page is to show all the records in multiple choices table';
 
-        return view('multipule_choices.index', compact('page_title', 'page_description'));
+        return view('multiple_choices.index', compact('page_title', 'page_description'));
     }
 
     /**
@@ -45,7 +43,7 @@ class MultipuleChoiceController extends Controller
         $page_title = 'Add New Multiple Choices';
         $page_description = 'This page is to add new record in multiple choices table';
         
-        return view('multipule_choices.create', compact('page_title', 'page_description'));
+        return view('multiple_choices.create', compact('page_title', 'page_description'));
     }
 
     /**
@@ -112,7 +110,7 @@ class MultipuleChoiceController extends Controller
         $page_title = 'Show Multipule choice';
         $page_description = 'This page is to Show multiple_choice details';
         //
-        return view('multiple_choice.show',compact('multiple_choice', 'page_title', 'page_description'));
+        return view('multiple_choices.show',compact('multiple_choice', 'page_title', 'page_description'));
     }
 
     /**
@@ -126,19 +124,63 @@ class MultipuleChoiceController extends Controller
         $page_title = 'Edit Multipule Choice';
         $page_description = 'This page is to Edit Multipule choice details';
         
-        return view('multiple_choice.edit',compact('multiple_choice', 'page_title', 'page_description'));
+        return view('multiple_choices.edit',compact('multiple_choice', 'page_title', 'page_description'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  (Multiple_choice $multiple_choice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Multiple_choice $multiple_choice)
     {
-        //
+        $request->validate([
+            'name' => ['required',  'max:255'],
+            'name_locale' => ['required', 'max:255'],
+        ]);
+        
+        DB::beginTransaction();
+        try {
+        $multiple_choice_input = [
+            'name'=> $request->input('name'),
+            'name_locale'=>$request->input('name_locale'),
+        ] ;
+        
+   
+        $multiple_choice->update($multiple_choice_input);
+
+
+        //adding multiple_choice Components
+        $entry_names = $request->input('entry_name'); // input array
+        $entry_name_locales = $request->input('entry_name_locale');// input array
+        $multiple_choice_components=[];
+        foreach ($entry_names as $key => $name) {
+            $data = [
+                'name'=>$name,
+                'name_locale'=> $entry_name_locales[$key],
+                'multiple_choice_id'=>$multiple_choice->id
+            ];
+            array_push($multiple_choice_components ,$data );
+            
+        }
+        //delete previous entries
+        Multiple_choice_entry::where('multiple_choice_id' , $multiple_choice->id)->delete();
+        //insert new entries
+        Multiple_choice_entry::insert($multiple_choice_components);
+
+        DB::commit();
+        // all good
+    } catch (\Exception $e) {
+        DB::rollback();
+        // something went wrong
+        return redirect()->action([self::class, 'edit'])
+        ->with('error','Error Updating Multiple Choice.');
+    }
+    
+    return redirect()->action([self::class, 'index'])
+                    ->with('success','Multiple Choice Updated successfully.');
     }
 
     /**
@@ -147,8 +189,24 @@ class MultipuleChoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if ($request->ajax()) {
+
+            $id = $request->input('id');
+            
+            DB::beginTransaction();
+            try {
+            $com1 = Multiple_choice_entry::where('multiple_choice_id',$id)->delete();
+            $com2 = Multiple_choice::where('id',$id)->delete();
+            DB::commit();
+                // all good
+            } catch (\Exception $e) {
+                DB::rollback();
+                // something went wrong
+                return Response()->json('Error Deleting Multiple Choice');
+            }
+            return Response()->json($com2);
+        }
     }
 }

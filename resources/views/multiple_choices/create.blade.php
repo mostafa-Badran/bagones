@@ -41,7 +41,18 @@
                     <input type="text" name="name_locale" required class="form-control" placeholder="Enter Local Name" />
                     <span class="form-text text-muted">Please enter Local Name, Max 50 character allowed</span>
                 </div>
-             
+                <!-- <div class="col-lg-6">
+                    <label>Description<span class="text-danger">*</span></label>
+                    <input type="text" name="description"  class="form-control"
+                        placeholder="Enter description" />
+                    <span class="form-text text-muted">Please enter description, Max 50 character allowed</span>
+                </div>
+                <div class="col-lg-6">
+                    <label>Description_locale</label>
+                    <input type="text" name="description_locale" class="form-control"
+                        placeholder="Enter Local Description locale" />
+                    <span class="form-text text-muted">Please enter Locale Description, Max 50 character allowed</span>
+                </div> -->
 
 
 

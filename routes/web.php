@@ -193,9 +193,9 @@ Route::put('attribute/update/{attribute}', [AttributeController::class, 'update'
 Route::post('attribute/delete', [AttributeController::class, 'destroy']);
 
 //Attributes Routes
-Route::get('attribute_entry', [AttributeEntriesController::class, 'index']);
-Route::get('attribute_entry/create', [AttributeEntriesController::class, 'create']);
-Route::post('attribute_entry', [AttributeEntriesController::class, 'store']);
+// Route::get('attribute_entry', [AttributeEntriesController::class, 'index']);
+// Route::get('attribute_entry/create', [AttributeEntriesController::class, 'create']);
+// Route::post('attribute_entry', [AttributeEntriesController::class, 'store']);
 // Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
 // Route::get('attribute/edit/{attribute}', [AttributeController::class, 'edit']);
 // Route::put('attribute/update/{attribute}', [AttributeController::class, 'update']);
@@ -212,23 +212,23 @@ Route::put('compulsory_choice/update/{compulsory_choice}', [CompulsoryChoiceCont
 Route::post('compulsory_choice/delete', [CompulsoryChoiceController::class, 'destroy']);
 
 //compulsory_choice_entry Routes
-Route::get('compulsory_choice_entry', [CompulsoryChoiceEntriesController::class, 'index']);
-Route::get('compulsory_choice_entry/create', [CompulsoryChoiceEntriesController::class, 'create']);
-Route::post('compulsory_choice_entry', [CompulsoryChoiceEntriesController::class, 'store']);
+// Route::get('compulsory_choice_entry', [CompulsoryChoiceEntriesController::class, 'index']);
+// Route::get('compulsory_choice_entry/create', [CompulsoryChoiceEntriesController::class, 'create']);
+// Route::post('compulsory_choice_entry', [CompulsoryChoiceEntriesController::class, 'store']);
 
 //multipule_choice Routes
-Route::get('multipule_choice', [MultipuleChoiceController::class, 'index']);
-Route::get('multipule_choice/create', [MultipuleChoiceController::class, 'create']);
-Route::post('multipule_choice', [MultipuleChoiceController::class, 'store']);
-Route::get('multipule_choice/{multipule_choice}', [MultipuleChoiceController::class, 'show']);
-Route::get('multipule_choice/edit/{multipule_choice}', [MultipuleChoiceController::class, 'edit']);
-Route::put('multipule_choice/update/{multipule_choice}', [MultipuleChoiceController::class, 'update']);
-Route::post('multipule_choice/destroy/{multipule_choice}', [MultipuleChoiceController::class, 'destroy']);
+Route::get('multiple_choice', [MultipleChoiceController::class, 'index']);
+Route::get('multiple_choice/create', [MultipleChoiceController::class, 'create']);
+Route::post('multiple_choice', [MultipleChoiceController::class, 'store']);
+Route::get('multiple_choice/{multiple_choice}', [MultipleChoiceController::class, 'show']);
+Route::get('multiple_choice/edit/{multiple_choice}', [MultipleChoiceController::class, 'edit']);
+Route::put('multiple_choice/update/{multiple_choice}', [MultipleChoiceController::class, 'update']);
+Route::post('multiple_choice/delete', [MultipleChoiceController::class, 'destroy']);
 
 //Attributes Routes
-Route::get('multipule_choice_entry', [MultipuleChoiceEntriesController::class, 'index']);
-Route::get('multipule_choice_entry/create', [MultipuleChoiceEntriesController::class, 'create']);
-Route::post('multipule_choice_entry', [MultipuleChoiceEntriesController::class, 'store']);
+// Route::get('multipule_choice_entry', [MultipuleChoiceEntriesController::class, 'index']);
+// Route::get('multipule_choice_entry/create', [MultipuleChoiceEntriesController::class, 'create']);
+// Route::post('multipule_choice_entry', [MultipuleChoiceEntriesController::class, 'store']);
 
 
 
