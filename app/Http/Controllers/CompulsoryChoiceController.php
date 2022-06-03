@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attribute;
-use App\Models\Attribute_entry;
-use App\Models\CompulsoryChoiceItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -134,12 +131,56 @@ class CompulsoryChoiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Compulsory_choice $compulsory_choice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Compulsory_choice $compulsory_choice)
     {
-        //
+        $request->validate([
+            'name' => ['required',  'max:255'],
+            'name_locale' => ['required', 'max:255'],
+        ]);
+        
+        DB::beginTransaction();
+        try {
+        $compulsory_choice_input = [
+            'name'=> $request->input('name'),
+            'name_locale'=>$request->input('name_locale'),
+        ] ;
+        
+   
+        $compulsory_choice->update($compulsory_choice_input);
+
+
+        //adding compulsory_choice Components
+        $entry_names = $request->input('entry_name'); // input array
+        $entry_name_locales = $request->input('entry_name_locale');// input array
+        $compulsory_choice_components=[];
+        foreach ($entry_names as $key => $name) {
+            $data = [
+                'name'=>$name,
+                'name_locale'=> $entry_name_locales[$key],
+                'compulsory_choice_id'=>$compulsory_choice->id
+            ];
+            array_push($compulsory_choice_components ,$data );
+            
+        }
+        //delete previous entries
+        Compulsory_choice_entry::where('compulsory_choice_id' , $compulsory_choice->id)->delete();
+        //insert new entries
+        Compulsory_choice_entry::insert($compulsory_choice_components);
+
+        DB::commit();
+        // all good
+    } catch (\Exception $e) {
+        DB::rollback();
+        // something went wrong
+        return redirect()->action([self::class, 'edit'])
+        ->with('error','Error Updating Compulsory Choice.');
+    }
+    
+    return redirect()->action([self::class, 'index'])
+                    ->with('success','Compulsory Choice Updated successfully.');
     }
 
     /**
@@ -148,8 +189,24 @@ class CompulsoryChoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+            if ($request->ajax()) {
+
+            $id = $request->input('id');
+            
+            DB::beginTransaction();
+            try {
+            $com1 = Compulsory_choice_entry::where('compulsory_choice_id',$id)->delete();
+            $com2 = Compulsory_choice::where('id',$id)->delete();
+            DB::commit();
+                // all good
+            } catch (\Exception $e) {
+                DB::rollback();
+                // something went wrong
+                return Response()->json('Error Deleting Compulsory Choice');
+            }
+            return Response()->json($com2);
+        }   
     }
 }

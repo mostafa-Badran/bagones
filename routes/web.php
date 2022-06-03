@@ -190,7 +190,7 @@ Route::post('attribute', [AttributeController::class, 'store']);
 Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
 Route::get('attribute/edit/{attribute}', [AttributeController::class, 'edit']);
 Route::put('attribute/update/{attribute}', [AttributeController::class, 'update']);
-Route::post('attribute/destroy/{attribute}', [AttributeController::class, 'destroy']);
+Route::post('attribute/delete', [AttributeController::class, 'destroy']);
 
 //Attributes Routes
 Route::get('attribute_entry', [AttributeEntriesController::class, 'index']);
@@ -209,7 +209,7 @@ Route::post('compulsory_choice', [CompulsoryChoiceController::class, 'store']);
 Route::get('compulsory_choice/{compulsory_choice}', [CompulsoryChoiceController::class, 'show']);
 Route::get('compulsory_choice/edit/{compulsory_choice}', [CompulsoryChoiceController::class, 'edit']);
 Route::put('compulsory_choice/update/{compulsory_choice}', [CompulsoryChoiceController::class, 'update']);
-Route::post('compulsory_choice/destroy/{compulsory_choice}', [CompulsoryChoiceController::class, 'destroy']);
+Route::post('compulsory_choice/delete', [CompulsoryChoiceController::class, 'destroy']);
 
 //compulsory_choice_entry Routes
 Route::get('compulsory_choice_entry', [CompulsoryChoiceEntriesController::class, 'index']);

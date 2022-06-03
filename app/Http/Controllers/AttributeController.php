@@ -168,7 +168,7 @@ class AttributeController extends Controller
         Attribute_entry::where('attribute_id' , $attribute->id)->delete();
         //insert new entries
         Attribute_entry::insert($attribute_components);
-        
+
         DB::commit();
         // all good
     } catch (\Exception $e) {
@@ -179,7 +179,7 @@ class AttributeController extends Controller
     }
     
     return redirect()->action([self::class, 'index'])
-                    ->with('success','Attribure created successfully.');
+                    ->with('success','Attribure Updated successfully.');
     }
 
     /**
@@ -188,8 +188,23 @@ class AttributeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+            if ($request->ajax()) {
+                $id = $request->input('id');
+            // dd($id);
+            DB::beginTransaction();
+            try {
+            $com1 = Attribute_entry::where('attribute_id',$id)->delete();
+            $com2 = Attribute::where('id',$id)->delete();
+            DB::commit();
+                // all good
+            } catch (\Exception $e) {
+                DB::rollback();
+                // something went wrong
+                return Response()->json('Error Deleting attribute');
+            }
+            return Response()->json($com2);
+        }   
     }
 }

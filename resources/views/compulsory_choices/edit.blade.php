@@ -26,8 +26,9 @@
         </div>
     @endif
     <!--begin::Form-->
-    <form action="{{ url('compulsory_choice') }}" method="POST">
+    <form action="{{ url('compulsory_choice/update',$compulsory_choice) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="card-body">
             <div class="form-group row">
 
