@@ -130,12 +130,56 @@ class AttributeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param   Attribute $attribute
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,  Attribute $attribute)
     {
-        //
+        $request->validate([
+            'name' => ['required',  'max:255'],
+            'name_locale' => ['required', 'max:255'],
+        ]);
+
+        DB::beginTransaction();
+        try {
+        $attribute_input = [
+            'name'=> $request->input('name'),
+            'name_locale'=>$request->input('name_locale'),
+        ] ;
+        
+   
+        $attribute->update($attribute_input);
+
+
+        //adding Attribute Components
+        $entry_names = $request->input('entry_name'); // input array
+        $entry_name_locales = $request->input('entry_name_locale');// input array
+        $attribute_components=[];
+        foreach ($entry_names as $key => $name) {
+            $data = [
+                'name'=>$name,
+                'name_locale'=> $entry_name_locales[$key],
+                'attribute_id'=>$attribute->id
+            ];
+            array_push($attribute_components ,$data );
+            
+        }
+        //delete previous entries
+        Attribute_entry::where('attribute_id' , $attribute->id)->delete();
+        //insert new entries
+        Attribute_entry::insert($attribute_components);
+        
+        DB::commit();
+        // all good
+    } catch (\Exception $e) {
+        DB::rollback();
+        // something went wrong
+        return redirect()->action([self::class, 'create'])
+        ->with('error','Error Creating Attribute.');
+    }
+    
+    return redirect()->action([self::class, 'index'])
+                    ->with('success','Attribure created successfully.');
     }
 
     /**

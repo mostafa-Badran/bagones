@@ -26,8 +26,9 @@
         </div>
     @endif
     <!--begin::Form-->
-    <form action="{{ url('attribute') }}" method="POST">
+    <form action="{{ url('attribute/update',$attribute) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="card-body">
             <div class="form-group row">
 
