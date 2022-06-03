@@ -15,11 +15,14 @@ class HomeController extends BaseController
     {
 
             //select all records
-            $homeRecords = Home::all();
+            $homeRecords = Home::paginate(10);
+            $updatedItems = $homeRecords->getCollection();
+
+
             // $ = Home::all();
             $result =[];
 
-            foreach ($homeRecords as $key => $homeRecord) {
+            foreach ($updatedItems as $key => $homeRecord) {
                 $data = [];
                if(strtolower( $homeRecord->content_type->name) == 'offer'){
                 $data['content_type'] = 'offer';
@@ -53,8 +56,10 @@ class HomeController extends BaseController
                array_push($result , $data);
                
             }//end for
-        
-            return $this->sendResponse($result, 'home retrieved successfully.');
+          
+
+            $homeRecords->setCollection(collect($result));
+            return $this->sendResponse($homeRecords, 'home retrieved successfully.');
             
        
     }
