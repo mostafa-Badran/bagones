@@ -85,11 +85,11 @@
                     <span class="form-text text-muted">Please enter item new price </span>
                 </div>
                 @if($store->allow_add_hot_price)
-                    <div class="col-lg-4">
+                    <!-- <div class="col-lg-4">
                         <label>Hot Price<span class="text-danger">*</span></label>
                         <input type="number" name="hot_price" class="form-control" placeholder="Enter Item Hot Price" />
                         <span class="form-text text-muted">Please item hot price </span>
-                    </div>
+                    </div> -->
                 @endif
 
             </div>
@@ -127,7 +127,7 @@
                 <div class="col-lg-12">
                     <label>Attributes<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="attributes_select" name="attributes"
+                        <select class="form-control kt-select2 select2" id="attributes_select" name="attributes[]"
                             multiple="multiple">
                             <option></option>
                             @foreach($attributes as $attribute)
@@ -145,7 +145,7 @@
                 <div class="col-lg-12">
                     <label>Compulsory Choices<span class="text-danger">*</span></label>
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="compulsory_choices_select" name="compulsory_choices"
+                        <select class="form-control kt-select2 select2" id="compulsory_choices_select" name="compulsory_choices[]"
                             multiple="multiple">
                             <option></option>
                             @foreach($compulsory_choices as $compulsory_choice)
@@ -163,7 +163,7 @@
                 <div class="col-lg-12">
                     <label>Multipule Choices<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="multipule_choices_select" name="multipule_choices">
+                        <select class="form-control kt-select2 select2" id="multipule_choices_select" name="multipule_choices[]">
                             <option></option>
                             @foreach($multipule_choices as $multipule_choice)
                                 <option value="{{ $multipule_choice['id'] }}">
