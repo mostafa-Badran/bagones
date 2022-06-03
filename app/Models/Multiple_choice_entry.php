@@ -1,9 +1,7 @@
-
 <?php
 
 namespace App\Models;
 
-use App\Models\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +15,7 @@ class Multiple_choice_entry extends Model
         'multiple_choice_id'
     ];
 
-    public function Multipule_choice(){
+    public function multiple_choice(){
         return $this->belongsTo(Multiple_choice::class, 'multiple_choice_id');
     }
 }
