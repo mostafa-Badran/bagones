@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Item extends Model
 {
     use HasFactory;
@@ -44,6 +45,10 @@ class Item extends Model
     public function CompulsoryChoices()
     { 
         return $this->belongsToMany(Compulsory_choice::class, CompulsoryChoiceItem::class);
+    }
+    public function MultipleChoices()
+    { 
+        return $this->belongsToMany(Multiple_choice::class, MultipleChoiceItem::class);
     }
 
 }

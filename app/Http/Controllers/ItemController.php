@@ -76,7 +76,12 @@ class ItemController extends Controller
         //save item
         $item = Item::Create($input);
 
+        $item->attributes()->attach( $input['attributes']);
+        $item->CompulsoryChoices()->attach( $input['compulsory_choices']);
+        $item->MultipleChoices()->attach( $input['multipule_choices']);
 
+        return redirect()->action([ItemController::class, 'index'])
+        ->with('success','Store created successfully.');
 
     }
 
