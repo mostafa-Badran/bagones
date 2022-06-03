@@ -27,7 +27,8 @@ class HomeController extends Controller
             $data = Home::leftJoin('content_types' , 'homes.content_type_id','=','content_types.id')
             ->leftJoin('categories' , 'homes.sub_category_id','=','categories.id')
             ->leftJoin('items' , 'homes.item_id','=','items.id')
-            ->get(['homes.id','content_types.name as content_type', 'homes.appearance_number as appearance_number' , 'categories.name as sub_category_name' , 'items.name as item_name']);
+            ->leftJoin('appearances' , 'homes.appearance_number','=','appearances.id')
+            ->get(['homes.id','content_types.name as content_type', 'appearances.appearance_number as appearance_number' , 'categories.name as sub_category_name' , 'items.name as item_name']);
          
         
 
@@ -49,9 +50,7 @@ class HomeController extends Controller
     public function create() {
         $page_title = 'Add New Home record';
         $page_description = 'This page is to add new record in Home table';
-
-        $content_types = Content_type::all();
-        
+        $content_types = Content_type::all();        
         return view('home.create', compact('page_title', 'page_description' ,'content_types'));
     }
 
