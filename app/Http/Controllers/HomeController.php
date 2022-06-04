@@ -92,7 +92,16 @@ class HomeController extends Controller
     public function show(Home $home)
     {
         // $content_types = Content_type::all();
-        $page_title = 'Show Home  Record';
+        $data = Home::leftJoin('content_types' , 'homes.content_type_id','=','content_types.id')
+            ->leftJoin('categories' , 'homes.sub_category_id','=','categories.id')
+            ->leftJoin('items' , 'homes.item_id','=','items.id')
+            ->leftJoin('appearances' , 'homes.appearance_number','=','appearances.id')
+            ->get(['homes.id','content_types.name as content_type', 'appearances.number as appearance_number' , 'categories.name as sub_category_name' , 'items.name as item_name']);
+        
+            print_r('<pre>');
+            print_r($data);
+            exit;
+            $page_title = 'Show Home  Record';
         $page_description = 'This page is to show Home record details';
         //
         return view('home.show',compact('home', 'page_title', 'page_description'));
