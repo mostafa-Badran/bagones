@@ -23,7 +23,7 @@ class AppearanceController extends Controller
         if ($request->ajax()) {
             
             $data = Appearance::join('content_types', 'appearances.content_type_id', '=', 'content_types.id')              	
-              		->get(['appearances.id', 'appearances.number','content_types.name as content_type', 'appearances.image']);
+              		->get(['appearances.id', 'appearances.number','content_types.name as content_type']);
             
             return DataTables::of($data)->addIndexColumn()            
                 ->addColumn('action', 'appearances.action')
@@ -63,17 +63,17 @@ class AppearanceController extends Controller
         $request->validate([
             'number' => ['required', 'unique:appearances'],
             'content_type_id' => ['required'],
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $input = $request->all();
 
-        if ($image = $request->file('image')) {
-            $destinationPath = 'uploads/appearance/';
-            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $recordImage);
-            $input['image'] = "$recordImage";
-        }
+        // if ($image = $request->file('image')) {
+        //     $destinationPath = 'uploads/appearance/';
+        //     $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //     $image->move($destinationPath, $recordImage);
+        //     $input['image'] = "$recordImage";
+        // }
 
         Appearance::create($input);
 

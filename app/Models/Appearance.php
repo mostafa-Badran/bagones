@@ -9,7 +9,7 @@ class Appearance extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'number' , 'image' , 'content_type_id'
+        'number' , 'content_type_id'
     ];
 
 

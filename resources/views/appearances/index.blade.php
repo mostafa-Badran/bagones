@@ -37,7 +37,7 @@
                     <th>ID</th>
                     <th>Number</th>
                     <th>Content Type</th>  
-                    <th>Image</th>  
+                    <!-- <th>Image</th>   -->
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -75,12 +75,12 @@
                     {data: 'id', name: 'id'},
                     {data: 'number', name: 'number'},  
                     {data: 'content_type', name: 'content_type'},  
-                    {
-                        "data": "image",
-                        "render": function (data) {
-                            return '<img src=" {{asset("uploads/appearance")}}/' + data + '" class="avatar" width="50" height="50"/>';
-                            }
-                    },
+                    // {
+                    //     "data": "image",
+                    //     "render": function (data) {
+                    //         return '<img src=" {{asset("uploads/appearance")}}/' + data + '" class="avatar" width="50" height="50"/>';
+                    //         }
+                    // },
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

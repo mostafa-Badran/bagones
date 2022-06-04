@@ -50,7 +50,7 @@
                 <!-- <div class="form-group row"> -->
                 <div class="col-lg-4">
 
-                    <div class="image-input image-input-empty image-input-outline" id="kt_image_5"
+                    <!-- <div class="image-input image-input-empty image-input-outline" id="kt_image_5"
                         style="background-image: url(/media/categories/category.png)">
                         <div class="image-input-wrapper"></div>
                        
@@ -72,7 +72,7 @@
                             <i class="ki ki-bold-close icon-xs text-muted"></i>
                         </span>
                     </div>
-                </div>
+                </div> -->
                 <!-- </div> -->
             </div>
         </div>
