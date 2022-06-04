@@ -47,10 +47,10 @@ class ItemController extends BaseController
                     ->leftjoin('cities', 'areas.city_id', '=', 'cities.id');
 
         if($lang == 'en'){          
-           $query->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'stores.name as store_name' , 'categories.name as sub_category_name' , 'stores.id as store_id', 'categories.id as sub_category_id' );
+           $query->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image','items.cover_image' , 'items.in_stock' , 'stores.name as store_name' , 'categories.name as sub_category_name' , 'stores.id as store_id', 'categories.id as sub_category_id' );
          
         }elseif($lang == 'ar'){         
-           $query->select('items.id','items.name_locale as name','items.description_locale as description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'stores.name_locale as store_name' , 'categories.name_locale as sub_category_name','stores.id as store_id', 'categories.id as sub_category_id' );
+           $query->select('items.id','items.name_locale as name','items.description_locale as description','items.price','items.new_price', 'items.main_screen_image','items.cover_image' , 'items.in_stock' , 'stores.name_locale as store_name' , 'categories.name_locale as sub_category_name','stores.id as store_id', 'categories.id as sub_category_id' );
         }
 
         if(!empty($request['in_stock']) ){
