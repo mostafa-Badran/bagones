@@ -316,5 +316,26 @@ class ItemController extends BaseController
     }
 
 
+    public function dataAjax(Request $request)
+    {
+        
+        $search = $request->search;
+
+        if($search == ''){
+           $items = Item::orderby('name','asc')->limit(5)->get(['id','name']);
+        }else{
+           $items = Item::orderby('name','asc')->where('name', 'like', '%' .$search . '%')->limit(5)->get(['id','name']);
+        }
+
+        // $response = array();
+        foreach($items as $item){
+           $response[] = array(
+                "id"=>$item->id,
+                "text"=>$item->name
+           );
+        }
+        return response()->json($response);
+    }
+
 
 }

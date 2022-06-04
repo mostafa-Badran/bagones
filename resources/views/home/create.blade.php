@@ -58,7 +58,7 @@
                 </div>
 
             </div>
-            <div class="form-group row " id="subcategory_select">
+            <div class="form-group row" id="subcategory_select">
                 <div class="col-lg-4">
                     <label>sub category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
@@ -69,6 +69,17 @@
                 </div>
 
             </div>
+            <div class="form-group row" id="item_select">
+                <div class="col-lg-4">
+                    <label>Item <span class="text-danger">*</span></label>
+                    <div class=" col-lg-12 col-md-12 col-sm-12">
+                        <select class="form-control kt-select2 select2" id="item_id" name="item_id">
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        
 
         </div>
         <div class="card-footer">
@@ -90,6 +101,8 @@
 @section('scripts')
 <script>
     $('#subcategory_select').hide();
+    $('#item_select').hide();
+
     $('#content_type_id').select2({
         placeholder: "Select a content type",
         allowClear: true
@@ -102,12 +115,19 @@
         placeholder: "Select a sub category",
         allowClear: true
     });
+    $('#item_id').select2({
+        placeholder: "Select Item",
+        allowClear: true
+    });
 
     $('#content_type_id').change(function () {
 
         $("#appearance_id").empty();
         $("#subcategory_id").empty();
+        $("#item_id").empty();
+
         $('#subcategory_select').hide();
+        $('#item_select').hide();
 
         var content_type_id = $('#content_type_id').val();
         var content_type_text = $('#content_type_id option:selected').text();
@@ -126,12 +146,12 @@
                 // $('#subcategory_select').hide();
                 break;
             case 'sub category':
-
                 $('#subcategory_select').show();
                 getSubCategories();
                 break;
             case 'item':
-                // $('#subcategory_select').hide();
+                $('#item_select').show();
+                getItems();
 
                 break;
 
@@ -139,7 +159,7 @@
                 // code block
         }
 
-        console.log(url);
+        // console.log(url);
 
 
     });
@@ -175,6 +195,30 @@
             ajax: {
                 url: subCatUrl,
                 type: "get",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        '_token': '{{ csrf_token() }}',
+                        'search': params.term // search term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+
+        });
+    }
+    function getItems() {
+        let itemsUrl = "{{ url('api/item/dataAjax') }}";
+        $("#item_id").select2({
+            ajax: {
+                url: itemsUrl,
+                type: "post",
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {

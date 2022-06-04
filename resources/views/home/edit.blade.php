@@ -107,11 +107,18 @@ $items = null;
 
             <div class="form-group row" id="item_select">
                 <div class="col-lg-4">
-                    <label>Item <span class="text-danger">*</span></label>
+                    <label> Item <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="item_id" name="item_id">
                             <!-- <option value="">Select subCategory</option> -->
-                            
+                            @if($home->item_id != null)
+                                @foreach($items as $item)
+                                    <option @if ($item['id']==$home->item_id)
+                                        {{ 'selected' }} @endif
+                                        value="{{ $item['id'] }}">{{ $item['name'] }}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -139,8 +146,10 @@ $items = null;
 <script>
     var sub_category = {{$home->sub_category_id  == null ? 0 : 1}};
     var item_id = {{$home->item == null ? 0 : 1}};
+
     console.log(sub_category);
     console.logitem_id
+
     if(sub_category == 0){
         $('#subcategory_select').hide();
     }
@@ -168,6 +177,8 @@ $items = null;
     $('#content_type_id').change(function () {
         $("#appearance_id").empty();
         $("#subcategory_id").empty();        
+        $("#item_id").empty(); 
+
         $('#subcategory_select').hide();
         $('#item_select').hide();
 
@@ -195,6 +206,7 @@ $items = null;
             case 'item':
                 // $('#subcategory_select').hide();
                 $('#item_select').show();
+                getItems();
                 break;
 
             default:
@@ -253,8 +265,29 @@ $items = null;
     }
 
 
-    function getItems(_url){
+    function getItems() {
+        let itemsUrl = "{{ url('api/item/dataAjax') }}";
+        $("#item_id").select2({
+            ajax: {
+                url: itemsUrl,
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        '_token': '{{ csrf_token() }}',
+                        'search': params.term // search term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
 
+        });
     }
 
 
