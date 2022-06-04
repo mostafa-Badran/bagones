@@ -106,16 +106,16 @@ class ItemController extends Controller
             $item->attributes()->attach( $input['attributes']);
         }
         if(!empty($input['compulsory_choices'])){
-            $item->CompulsoryChoices()->attach( $input['compulsory_choices']);
+            $item->compulsoryChoices()->attach( $input['compulsory_choices']);
         }
         if(!empty($input['multipule_choices'])){
-            $item->MultipleChoices()->attach( $input['multipule_choices']);
+            $item->multipleChoices()->attach( $input['multipule_choices']);
         }
     
        
 
         return redirect()->action([self::class, 'index'])
-        ->with('success','Store created successfully.');
+        ->with('success','Item created successfully.');
 
     }
 
@@ -125,7 +125,7 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($item)
     {
         //
     }
@@ -134,11 +134,20 @@ class ItemController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Item $item)
     {
+        $stores = Store::all();
+        $attributes = Attribute::all();
+        $compulsory_choices = Compulsory_choice::all();
+        $multipule_choices = Multiple_choice::all();
+
+        $page_title = 'Edit Item';
+        
+        $page_description = 'This page is to edit item details';
         //
+        return view('items.edit',compact('item', 'page_title', 'page_description','stores' , 'attributes' ,'compulsory_choices' ,'multipule_choices'));
     }
 
     /**
@@ -148,9 +157,44 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Item $item)
     {
-        //
+        dd($request->all());
+        $input =$request->all();
+
+        //check if is open checked     
+        $input['in_stock'] = isset($request->in_stock) ? true : false;
+
+       
+        if ($image = $request->file('main_screen_image')) {
+            $destinationPath = 'uploads/items/';
+            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $recordImage);
+            $input['main_screen_image'] = "$recordImage";
+        }else{
+            unset($input['main_screen_image']);
+        }
+
+        $item->update($input);
+
+        //save many to many relations 
+        
+        if(!empty($input['attributes'])){
+            $item->attributes()->detach();
+            $item->attributes()->attach( $input['attributes']);
+        }
+        if(!empty($input['compulsory_choices'])){
+            $item->compulsoryChoices()->detach();
+            $item->compulsoryChoices()->attach( $input['compulsory_choices']);
+        }
+        if(!empty($input['multipule_choices'])){
+            $item->multipleChoices()->detach();
+            $item->multipleChoices()->attach( $input['multipule_choices']);
+        }
+
+        return redirect()->action([self::class, 'index'])
+        ->with('success','Item updated successfully.');
+
     }
 
     /**
