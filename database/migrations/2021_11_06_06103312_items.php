@@ -24,6 +24,7 @@ class Items extends Migration
             $table->text('description')->nullable();
             $table->text('description_locale')->nullable();
             $table->text('main_screen_image')->nullable();
+            $table->text('cover_image')->nullable();
             $table->decimal('price', 8, 2, true)->nullable();
             $table->decimal('new_price', 8, 2, true)->nullable();
             // $table->decimal('hot_price', 8, 2, true)->nullable();

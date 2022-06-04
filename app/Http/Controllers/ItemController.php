@@ -96,6 +96,13 @@ class ItemController extends Controller
             $image->move($destinationPath, $recordImage);
             $input['main_screen_image'] = "$recordImage";
         }
+
+        if ($image = $request->file('cover_image')) {
+            $destinationPath = 'uploads/items/';
+            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $recordImage);
+            $input['cover_image'] = "$recordImage";
+        }
         // $input['store_id'] = $store->id;
        
         //save item
@@ -174,6 +181,15 @@ class ItemController extends Controller
         }else{
             unset($input['main_screen_image']);
         }
+        
+        if ($image = $request->file('cover_image')) {
+            $destinationPath = 'uploads/items/';
+            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $recordImage);
+            $input['cover_image'] = "$recordImage";
+        }else{
+            unset($input['cover_image']);
+        }
 
         $item->update($input);
 
@@ -207,4 +223,6 @@ class ItemController extends Controller
     {
         //
     }
+
+    
 }

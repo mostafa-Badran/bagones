@@ -121,6 +121,14 @@ class ItemController extends BaseController
         $query->where('stores.is_open' ,1);
        
         $result = $query->paginate(10);
+        $updatedItems = $result->getCollection();
+        foreach ($updatedItems as $key => $item) {
+            if($item->main_screen_image != null){
+                $item->main_screen_image = asset('uploads/items/' . $item->main_screen_image);
+            }
+
+        }
+        $result->setCollection($updatedItems);
         // $result = $query->toSql();        
         // dd(DB::getQueryLog());
       
@@ -140,7 +148,7 @@ class ItemController extends BaseController
             $query ->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'stores.id as store_id','stores.name as store_name' ,'categories.id as sub_category_id' ,'categories.name as sub_category_name' );
          
         }elseif($lang == 'ar'){
-            $query ->select('items.id','items.name_locale as name','items.description_locale as description' , 'items.price','items.new_price', 'items.main_screen_image' ,'items.in_stock','stores.id as store_id' ,'stores.name_locale as store_name' ,'categories.id as sub_category_id' ,'categories.name_locale  as sub_category_name' );
+            $query ->select('items.id','items.name_locale as name','items.description_locale as description' , 'items.price','items.new_price', 'items.main_screen_image'.'items.cover_image' ,'items.in_stock','stores.id as store_id' ,'stores.name_locale as store_name' ,'categories.id as sub_category_id' ,'categories.name_locale  as sub_category_name' );
            
         }
 
@@ -148,6 +156,9 @@ class ItemController extends BaseController
 
         if($item[0] ->main_screen_image != null){
             $item[0]->main_screen_image  = asset('uploads/items/' . $item[0]->main_screen_image);
+        }
+        if($item[0] ->cover_image != null){
+            $item[0]->cover_image  = asset('uploads/items/' . $item[0]->cover_image);
         }
         // ->leftjoin('attribute_item' , 'attribute_item.item_id','=',$id )
         // ->leftjoin('attributes' , 'attributes.id','=','attribute_item.attribute_id')

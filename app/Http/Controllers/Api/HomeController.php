@@ -45,7 +45,11 @@ class HomeController extends BaseController
                 $data['appearance'] = $homeRecord->appearance->number;
                 //item 
                 //Todo bring item
-                $data['item'] = [];
+                $item = $homeRecord->item;
+                $item->cover_image = asset('uploads/item/' . $item->cover_image);
+                $item->main_screen_image = asset('uploads/item/' . $item->main_screen_image);
+                $data['item']=$item;
+            
                }
                elseif(strtolower( $homeRecord->content_type->name) == 'store'){
                 $data['content_type'] = 'store';

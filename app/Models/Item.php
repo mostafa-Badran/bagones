@@ -22,6 +22,7 @@ class Item extends Model
         'price',
         'new_price',
         'main_screen_image',
+        'cover_image',
         'in_stock', //yes or no
         // 'onSale',
         // 'hot_price', //same on sale
