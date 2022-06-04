@@ -41,7 +41,7 @@ class AppearanceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -85,7 +85,7 @@ class AppearanceController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Appearance  $appearance
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(Appearance $appearance)
     {
@@ -99,14 +99,18 @@ class AppearanceController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Appearance  $appearance
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit(Appearance $appearance)
+    public function edit( $id)
     {
+        $appearance = Appearance::find($id);
+        // dd( $appearance ->number);
+        
+        $content_types = Content_type::all();
         $page_title = 'Edit Appearance';
         $page_description = 'This page is to edit record in appearance table';
         //
-        return view('appearances.edit',compact('appearance', 'page_title', 'page_description'));
+        return view('appearances.edit',compact('appearance','content_types', 'page_title', 'page_description'));
     }
 
     /**
@@ -119,13 +123,13 @@ class AppearanceController extends Controller
     public function update(Request $request, Appearance $appearance)
     {
         //
-        $request->validate([
-            'type' => ['required', Rule::unique('appearances', 'type')->ignore($appearance), 'max:50'],
-        ]);
+        // $request->validate([
+        //     'type' => ['required', Rule::unique('appearances', 'type')->ignore($appearance), 'max:50'],
+        // ]);
 
         $appearance->update($request->all());
 
-        return redirect()->route('appearance.index')
+        return redirect()->action([self::class, 'index'])
                         ->with('success','Appearance updated successfully');
     }
 
