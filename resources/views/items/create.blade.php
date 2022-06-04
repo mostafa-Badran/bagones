@@ -64,7 +64,7 @@
 
                 <div class="col-lg-4">
                     <label>Description locale<span class="text-danger">*</span></label>
-                    <textarea cols="30" rows="10" name="description_lcoale" required class="form-control"
+                    <textarea cols="30" rows="10" name="description_locale" required class="form-control"
                         placeholder="Enter Item Description Locale"></textarea>
                     <!-- <input type="text" name="description_lcoale" required class="form-control"
                         placeholder="Enter Item Description Locale" /> -->
@@ -234,7 +234,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-lg-4">
-                    <label>Image to show in main screen<span class="text-danger">*</span></label>
+                    <label>Cover Image<span class="text-danger">*</span></label>
                     <div class="image-input image-input-empty image-input-outline" id="kt_image_4"
                         style="background-image: url(/media/users/blank.png)">
                         <div class="image-input-wrapper"></div>
@@ -360,7 +360,7 @@
             confirmButtonClass: 'btn btn-primary font-weight-bold'
         });
     });
-    
+
     var avatar4 = new KTImageInput('kt_image_4');
 
     avatar4.on('cancel', function (imageInput) {
