@@ -18,7 +18,7 @@ class Item extends Model
         'sub_category_id',
         // '' ,
         'description',
-        'description_lcoale',
+        'description_locale',
         'price',
         'new_price',
         'main_screen_image',
