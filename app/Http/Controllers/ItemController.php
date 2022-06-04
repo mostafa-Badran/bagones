@@ -79,10 +79,10 @@ class ItemController extends Controller
     public function store(Request $request )
     {
         
-    //    print_r('<pre>');
-    //    var_dump( $request->file());
-    //    var_dump( $request->all());
-    //    exit;
+       print_r('<pre>');
+       var_dump( $request->file());
+       var_dump( $request->all());
+       exit;
         //validate
 
         $input =$request->all();
@@ -102,9 +102,17 @@ class ItemController extends Controller
         $item = Item::Create($input);
 
         //save many to many relations
-        $item->attributes()->attach( $input['attributes']);
-        $item->CompulsoryChoices()->attach( $input['compulsory_choices']);
-        $item->MultipleChoices()->attach( $input['multipule_choices']);
+        if(!empty($input['attributes'])){
+            $item->attributes()->attach( $input['attributes']);
+        }
+        if(!empty($input['compulsory_choices'])){
+            $item->CompulsoryChoices()->attach( $input['compulsory_choices']);
+        }
+        if(!empty($input['multipule_choices'])){
+            $item->MultipleChoices()->attach( $input['multipule_choices']);
+        }
+    
+       
 
         return redirect()->action([self::class, 'index'])
         ->with('success','Store created successfully.');

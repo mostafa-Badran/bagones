@@ -74,7 +74,7 @@
             <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Price<span class="text-danger">*</span></label>
-                    <input type="number" step=0.01 name="price" required class="form-control"
+                    <input type="number" step=0.01 name="price"  class="form-control"
                         placeholder="Enter Itme Price" />
                     <span class="form-text text-muted">Please enter item price </span>
                 </div>
@@ -90,23 +90,22 @@
 
 
             <div class="form-group row">
-                <div class="col-lg-12 my-2">
+                <!-- <div class="col-lg-12 my-2">
                     <label>Category<span class="text-danger">*</span></label>
 
-                </div>
+                </div> -->
                 <div class="col-lg-12">
-                    <label>Category<span class="text-danger">*</span></label>
+                    <label>Category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="category_select" name="category_id">
-                            <option> Select Category</option>
                          
                         </select>
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <label>Sub Category</label>
+                    <label>Sub Category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="sub_category_select" name="sub_category_id">
+                        <select class="form-control kt-select2 select2" id="sub_category_select" name="sub_category_id" required>
 
                         </select>
                     </div>
@@ -118,8 +117,7 @@
                 <div class="col-lg-12">
                     <label>Store<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="store_select" name="store_id">
-                            <option></option>
+                        <select class="form-control kt-select2 select2" id="store_select" name="store_id" required>
                             @foreach($stores as $store)
                                 <option value="{{ $store['id'] }}">
                                     {{ $store['name'] }}</option>
@@ -137,7 +135,6 @@
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="attributes_select" name="attributes[]"
                             multiple="multiple">
-                            <option></option>
                             @foreach($attributes as $attribute)
                                 <option value="{{ $attribute['id'] }}">
                                     {{ $attribute['name'] }}</option>
@@ -155,7 +152,6 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="compulsory_choices_select" name="compulsory_choices[]"
                             multiple="multiple">
-                            <option></option>
                             @foreach($compulsory_choices as $compulsory_choice)
                                 <option value="{{ $compulsory_choice['id'] }}">
                                     {{ $compulsory_choice['name'] }}</option>
@@ -172,7 +168,7 @@
                     <label>Multipule Choices<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="multipule_choices_select" name="multipule_choices[]">
-                            <option></option>
+                            
                             @foreach($multipule_choices as $multipule_choice)
                                 <option value="{{ $multipule_choice['id'] }}">
                                     {{ $multipule_choice['name'] }}</option>
@@ -279,7 +275,7 @@
 {{-- page scripts --}}
 <script type="text/javascript">
     // $(document).ready(function () {
-    // $('#subcategory_select').hide();
+ 
     $('#category_select').select2({
         placeholder: "Select Category",
         allowClear: true
@@ -405,7 +401,7 @@
     $('#category_select').change(function () {
         // alert($('#country_select').val());
         var category_id = $('#category_select').val();
-
+        $('#sub_category_select').empty();
         $("#sub_category_select").select2({
             ajax: {
                 url: "{{ url('api/subcategory/dataAjax') }}",
