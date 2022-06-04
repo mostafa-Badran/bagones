@@ -79,10 +79,10 @@ class ItemController extends Controller
     public function store(Request $request )
     {
         
-       print_r('<pre>');
-       var_dump( $request->file());
-       var_dump( $request->all());
-       exit;
+    //    print_r('<pre>');
+    //    var_dump( $request->file());
+    //    var_dump( $request->all());
+    //    exit;
         //validate
 
         $input =$request->all();
