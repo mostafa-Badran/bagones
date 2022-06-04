@@ -159,7 +159,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        dd($request->all());
+        
         $input =$request->all();
 
         //check if is open checked     
