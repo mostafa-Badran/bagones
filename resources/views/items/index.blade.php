@@ -7,13 +7,13 @@
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
-                <h3 class="card-label"> {{$store->name }} , Items
-                    <div class="text-muted pt-2 font-size-sm"> {{$store->name }} : items Datatable</div>
+                <h3 class="card-label">  Items
+                    <div class="text-muted pt-2 font-size-sm"> items Datatable</div>
                 </h3>
             </div>
             <div class="card-toolbar">
                 <!--begin::Button-->
-                <a href="{{ url('store',$store  ) }}/items/create" class="btn btn-primary font-weight-bolder">
+                <a href="{{ url('items/create' ) }}" class="btn btn-primary font-weight-bolder">
                 <i class="la la-plus"></i>New Item</a>
                 <!--end::Button-->
             </div>
@@ -37,7 +37,9 @@
                     <th>ID</th> 
                     <th>Item Image</th>
                     <th>Name</th>
+                    <th>Sub Category</th>
                     <th>Price</th>
+                    <th>New Price</th>
                     <th>In Stock</th>           
                     <th>Actions</th>
                 </tr>
@@ -69,67 +71,95 @@
 
     {{-- page scripts --}}
     <script type="text/javascript">
-        // $(function () {
+        $(function () {
 
-        //     var table = $('.main_datatable').DataTable({
-        //         processing: true,
-        //         serverSide: true,
-        //         ajax: "{{ url('home') }}",
-        //         columns: [
-        //             {data: 'id', name: 'id'},
-        //             {data: 'content_type', name: 'content_type'},
-        //             {data: 'appearance_number', name: 'appearance_number'},
-        //             {data: 'sub_category_name', name: 'sub_category_name'},                    
-        //             {data: 'item_name', name: 'item_name'},                    
+            var table = $('.main_datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ url('items') }}",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    // {data: 'main_screen_image', name: 'main_screen_image'},
+                    {
+                        "data": "main_screen_image",
+                        "render": function (data) {
+                            // $image url(/media/users/blank.png)
+                                if(data ){
+                                    // return '<img src="{{asset("/media/users/blank.png")}}" class="avatar" width="50" height="50"/>';
+                                    return '<img src=" {{asset("uploads/items")}}/' + data + '" class="avatar" width="50" height="50"/>';
+
+                                }else{
+                                    return data;
+                                }
+                            
+                            }
+                    },
+                    {data: 'name', name: 'name'},
+                    {data: 'sub_category_name', name: 'sub_category_name'},                    
+                    {data: 'price', name: 'price'},                    
+                    {data: 'new_price', name: 'new_price'},                    
+                    {
+                        "data": "in_stock",
+                        "render": function (data) {
+                            // $image url(/media/users/blank.png)
+                                if(data === 1){
+                                        return 'Yes';
+                            
+                            
+                             }else {
+                                return 'No'
+                             }
+                            }
+                    } ,                  
                
-        //             {data: 'action', name: 'action', orderable: false, searchable: false},
-        //         ]
-        //     });
-        // });
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        });
 
         
 
-        // $('body').on('click', '.delete', function () {
-        //     var id = $(this).data('id');
-        //     Swal.fire({
-        //         title: "Are you sure?",
-        //         text: "You won't be able to revert this!",
-        //         icon: "warning",
-        //         showCancelButton: true,
-        //         confirmButtonText: "Yes, delete it!"
-        //     }).then(function(result) {
-        //         if (result.value) {
+        $('body').on('click', '.delete', function () {
+            var id = $(this).data('id');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then(function(result) {
+                if (result.value) {
 
-        //             // ajax
-        //             $.ajax({
-        //                 type:"POST",
-        //                 url: "{{ url('home/destroy') }}",
-        //                 data:{
-        //                     'id': id,
-        //                     '_token': '{{ csrf_token() }}',
-        //                 },
-        //                 dataType: 'json',
-        //                 success: function(res){
-        //                 // success: function(res){
-        //                 // success: function(res){
-        //                     $('.main_datatable').DataTable().ajax.reload();
-        //                 }
-        //             });
-        //             Swal.fire(
-        //                 "Deleted!",
-        //                 "Your file has been deleted.",
-        //                 "success"
-        //             );
-        //         }
-            // });
-        // });
+                    // ajax
+                    $.ajax({
+                        type:"POST",
+                        url: "{{ url('home/destroy') }}",
+                        data:{
+                            'id': id,
+                            '_token': '{{ csrf_token() }}',
+                        },
+                        dataType: 'json',
+                        success: function(res){
+                        // success: function(res){
+                        // success: function(res){
+                            $('.main_datatable').DataTable().ajax.reload();
+                        }
+                    });
+                    Swal.fire(
+                        "Deleted!",
+                        "Your file has been deleted.",
+                        "success"
+                    );
+                }
+            });
+        });
     </script>
-    @if ($message = Session::get('success'))
+    <!-- @if ($message = Session::get('success')) -->
     <script>
         // $('#alert').show();
         //     setTimeout(function() {
         //         $('#alert').hide();
         // }, 5000);
-    </script>
-    @endif
+     </script>
+    <!-- @endif -->
 @endsection

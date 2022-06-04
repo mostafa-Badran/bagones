@@ -106,7 +106,7 @@ return [
                 [
                     'title' => 'Item',
                     'bullet' => 'dot',
-                    'page' => '',
+                    'page' => 'items',
                 ],
                 [
                     'title' => 'Attributes',

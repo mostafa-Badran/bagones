@@ -122,20 +122,36 @@ class SubCategoryController extends BaseController
     {
         
         $search = $request->search;
-
-        if($search == ''){
-           $categories = Category::orderby('name','asc')->select('id','name' , 'name_locale') ->where('parent_id','!=', null)->limit(5)->get();
-        }else{
-           $categories = Category::orderby('name','asc')->select('id','name','name_locale')->where('name', 'like', '%' .$search . '%') ->where('parent_id','!=', null)->limit(5)->get();
-        }
-
-        // $response = array();
-        foreach($categories as $category){
-           $response[] = array(
-                "id"=>$category->id,
-                "text"=>$category->name .' - '.$category->name_locale 
-           );
-        }
-        return response()->json($response);
+        $parent_id = isset($request->parent_id) ? $request->parent_id : null ;
+        // if($request->ajax()){
+            if($search == ''){
+                $categories = Category::orderby('name','asc')->
+                select('id','name' , 'name_locale') ;
+        
+             }else{
+                $categories = Category::orderby('name','asc')
+                ->select('id','name','name_locale')
+                ->where('name', 'like', '%' .$search . '%') ;
+           
+             }
+             //filter on parent_id
+             if($parent_id != null){
+                 $categories->where('parent_id','=', $parent_id);
+             }else{
+                 $categories->where('parent_id','!=', null);
+             }
+            
+             $subCats = $categories->limit(10)->get();
+            //  return response()->json($categories->toSql());
+            $response = [];
+             foreach($subCats as $category){
+                $response[] = array(
+                     "id"=>$category->id,
+                     "text"=>$category->name .' - '.$category->name_locale 
+                );
+             }
+             return response()->json($response);
+        // }
+        
     }
 }

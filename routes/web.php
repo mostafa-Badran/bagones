@@ -179,9 +179,12 @@ Route::put('store/update/{store}', [StoreController::class, 'update']);
 Route::post('store/destroy/{store}', [StoreController::class, 'destroy']);
 
 //Item Routes
-Route::get('store/{store}/items', [ItemController::class, 'index']);
-Route::get('store/{store}/items/create', [ItemController::class, 'create']);
-Route::post('store/{store}/items', [ItemController::class, 'store']);
+// Route::get('store/{store}/items', [ItemController::class, 'index']);
+// Route::get('store/{store}/items/create', [ItemController::class, 'create']);
+// Route::post('store/{store}/items', [ItemController::class, 'store']);
+Route::get('items', [ItemController::class, 'index']);
+Route::get('items/create', [ItemController::class, 'create']);
+Route::post('items', [ItemController::class, 'store']);
 
 //Attributes Routes
 Route::get('attribute', [AttributeController::class, 'index']);

@@ -20,7 +20,7 @@
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
-                <a href="{{ url('store',$store) }}/items" class="btn btn-secondary">Go Back</a>
+                <a href="{{ url('items') }}" class="btn btn-secondary">Go Back</a>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
     @endif
 
     <!--begin::Form-->
-    <form action="{{ url('store',$store) }}/items" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('items') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
             <div class="form-group row">
@@ -84,13 +84,7 @@
                         placeholder="Enter Itme New Price" />
                     <span class="form-text text-muted">Please enter item new price </span>
                 </div>
-                @if($store->allow_add_hot_price)
-                    <!-- <div class="col-lg-4">
-                        <label>Hot Price<span class="text-danger">*</span></label>
-                        <input type="number" name="hot_price" class="form-control" placeholder="Enter Item Hot Price" />
-                        <span class="form-text text-muted">Please item hot price </span>
-                    </div> -->
-                @endif
+          
 
             </div>
 
@@ -104,11 +98,8 @@
                     <label>Category<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="category_select" name="category_id">
-                            <option></option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category['id'] }}">
-                                    {{ $category['name'] }}</option>
-                            @endforeach
+                            <option> Select Category</option>
+                         
                         </select>
                     </div>
                 </div>
@@ -120,6 +111,23 @@
                         </select>
                     </div>
                 </div>
+
+            </div>
+            <div class="form-group row">
+
+                <div class="col-lg-12">
+                    <label>Store<span class="text-danger">*</span></label>
+                    <div class=" col-lg-12 col-md-12 col-sm-12">
+                        <select class="form-control kt-select2 select2" id="store_select" name="store">
+                            <option></option>
+                            @foreach($stores as $store)
+                                <option value="{{ $store['id'] }}">
+                                    {{ $store['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
 
             </div>
             <div class="form-group row">
@@ -280,6 +288,10 @@
         placeholder: "Select Sub Category ",
         allowClear: true
     });
+    $('#store_select').select2({
+        placeholder: "Select Store",
+        allowClear: true
+    });
     $('#attributes_select').select2({
         placeholder: "Select Attributes",
         allowClear: true
@@ -368,6 +380,27 @@
     //         }
     //     }
     // });
+    $( "#category_select" ).select2({
+        ajax: {
+          url: "/api/category/dataAjax",
+          type: "post",
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            return {
+                '_token': '{{ csrf_token() }}',
+              'search' : params.term // search term
+            };
+          },
+          processResults: function (response) {
+            return {
+              results: response
+            };
+          },
+          cache: true
+        }     
+
+      });
 
     $('#category_select').change(function () {
         // alert($('#country_select').val());
@@ -376,7 +409,7 @@
         $("#sub_category_select").select2({
             ajax: {
                 url: "{{ url('api/subcategory/dataAjax') }}",
-                type: "post",
+                type: "get",
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {
