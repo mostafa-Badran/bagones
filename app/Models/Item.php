@@ -32,7 +32,7 @@ class Item extends Model
         return $this->belongsTo(Stroe::class,'store_id');
     }
     public function subCategory(){
-        return $this->belongsTo(Category::class,'sub_cateory_id');
+        return $this->belongsTo(Category::class,'sub_category_id');
     }
     public function images(){
         return $this->hasMany(ItemImage::class);
@@ -42,11 +42,11 @@ class Item extends Model
     { 
         return $this->belongsToMany(Attribute::class, AttributeItem::class);
     }
-    public function CompulsoryChoices()
+    public function compulsoryChoices()
     { 
         return $this->belongsToMany(Compulsory_choice::class, CompulsoryChoiceItem::class);
     }
-    public function MultipleChoices()
+    public function multipleChoices()
     { 
         return $this->belongsToMany(Multiple_choice::class, MultipleChoiceItem::class);
     }

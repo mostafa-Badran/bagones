@@ -1,3 +1,8 @@
+
+<?php
+// print_r('<pre>');
+// print_r($item->subCategory);exit;
+?>
 {{-- Extends layout --}}
 @extends('layout.default')
 
@@ -16,7 +21,7 @@
 <div class="card card-custom example example-compact">
     <div class="card-header">
         <h3 class="card-title">
-            Add New Item
+            Edit item - {{$item->name}} details
         </h3>
         <div class="card-toolbar">
             <div class="example-tools justify-content-center">
@@ -36,38 +41,37 @@
     @endif
 
     <!--begin::Form-->
-    <form action="{{ url('items') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('items/update' , $item) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="card-body">
             <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Name<span class="text-danger">*</span></label>
-                    <input type="text" name="name" required class="form-control" placeholder="Enter Item Name" />
+                    <input type="text" name="name" required class="form-control" placeholder="Enter Item Name" value="{{$item->name}}" />
                     <span class="form-text text-muted">Please enter item Name</span>
                 </div>
 
                 <div class="col-lg-4">
                     <label>Name locale<span class="text-danger">*</span></label>
-                    <input type="text" name="name_locale" class="form-control" placeholder="Enter Item Locale Name" />
+                    <input type="text" name="name_locale" class="form-control" placeholder="Enter Item Locale Name" value="{{$item->name_locale}}" />
                     <span class="form-text text-muted">Please enter item Locale Name</span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Description<span class="text-danger">*</span></label>
-                    <textarea cols="30" rows="10" name="description" required class="form-control"
-                        placeholder="Enter Item Description"></textarea>
-                    <!-- <input type="text" name="description" required class="form-control"
-                        placeholder="Enter Item Description" /> -->
+                    <textarea  cols="30" rows="10" name="description" required class="form-control"
+                        placeholder="Enter Item Description">{{$item->description}}</textarea>
+                  
                     <span class="form-text text-muted">Please enter Description</span>
                 </div>
 
                 <div class="col-lg-4">
                     <label>Description locale<span class="text-danger">*</span></label>
-                    <textarea cols="30" rows="10" name="description_lcoale" required class="form-control"
-                        placeholder="Enter Item Description Locale"></textarea>
-                    <!-- <input type="text" name="description_lcoale" required class="form-control"
-                        placeholder="Enter Item Description Locale" /> -->
+                    <textarea  cols="30" rows="10" name="description_lcoale" required class="form-control"
+                        placeholder="Enter Item Description Locale">{{$item->description_lcoale}}</textarea>
+                    
                     <span class="form-text text-muted">Please enter description Locale </span>
                 </div>
             </div>
@@ -75,13 +79,13 @@
                 <div class="col-lg-4">
                     <label>Price<span class="text-danger">*</span></label>
                     <input type="number" step=0.01 name="price"  class="form-control"
-                        placeholder="Enter Itme Price" />
+                        placeholder="Enter Itme Price" value="{{$item->price}}" />
                     <span class="form-text text-muted">Please enter item price </span>
                 </div>
                 <div class="col-lg-4">
                     <label>New Price<span class="text-danger">*</span></label>
                     <input type="number" step=0.01 name="new_price" required class="form-control"
-                        placeholder="Enter Itme New Price" />
+                        placeholder="Enter Itme New Price" value="{{$item->new_price}}" />
                     <span class="form-text text-muted">Please enter item new price </span>
                 </div>
           
@@ -98,7 +102,7 @@
                     <label>Category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="category_select" name="category_id">
-                         
+                        <option value="{{$item->subCategory->parent_id}}">{{$item->subCategory->get_parent->name}}</option>
                         </select>
                     </div>
                 </div>
@@ -106,7 +110,7 @@
                     <label>Sub Category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="sub_category_select" name="sub_category_id" required>
-
+                        <option value="{{$item->sub_category_id}}">{{$item->subCategory['name']}}</option>
                         </select>
                     </div>
                 </div>
@@ -119,7 +123,7 @@
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="store_select" name="store_id" required>
                             @foreach($stores as $store)
-                                <option value="{{ $store['id'] }}">
+                                <option value="{{ $store['id'] }}" <?= $item->store_id == $store['id'] ? 'selected="selected"' :'' ?> >
                                     {{ $store['name'] }}</option>
                             @endforeach
                         </select>
@@ -136,7 +140,7 @@
                         <select class="form-control kt-select2 select2" id="attributes_select" name="attributes[]"
                             multiple="multiple">
                             @foreach($attributes as $attribute)
-                                <option value="{{ $attribute['id'] }}">
+                                <option value="{{ $attribute['id'] }}" @if($item->attributes->containsStrict('id', $attribute['id'])) selected="selected" @endif >
                                     {{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
@@ -153,7 +157,7 @@
                         <select class="form-control kt-select2 select2" id="compulsory_choices_select" name="compulsory_choices[]"
                             multiple="multiple">
                             @foreach($compulsory_choices as $compulsory_choice)
-                                <option value="{{ $compulsory_choice['id'] }}">
+                                <option value="{{ $compulsory_choice['id'] }}" @if($item->compulsoryChoices->containsStrict('id', $compulsory_choice['id'])) selected="selected" @endif>
                                     {{ $compulsory_choice['name'] }}</option>
                             @endforeach
                         </select>
@@ -170,7 +174,7 @@
                         <select class="form-control kt-select2 select2" id="multipule_choices_select" name="multipule_choices[]">
                             
                             @foreach($multipule_choices as $multipule_choice)
-                                <option value="{{ $multipule_choice['id'] }}">
+                                <option value="{{ $multipule_choice['id'] }}" @if($item->multipleChoices->containsStrict('id', $multipule_choice['id'])) selected="selected" @endif>
                                     {{ $multipule_choice['name'] }}</option>
                             @endforeach
                         </select>
@@ -186,7 +190,7 @@
                 <div class="col-3">
                     <span class="switch">
                         <label>
-                            <input type="checkbox" name="in_stock" />
+                            <input type="checkbox" name="in_stock" <?=$item->in_stock ==1 ?'checked="checked"' :'' ?> />
                             <span></span>
                         </label>
                     </span>
@@ -210,7 +214,7 @@
                 <div class="col-lg-4">
                     <label>Image to show in main screen<span class="text-danger">*</span></label>
                     <div class="image-input image-input-empty image-input-outline" id="kt_image_5"
-                        style="background-image: url(/media/users/blank.png)">
+                        style="background-image: url({{$item->main_screen_image != null ?' /uploads/items/'.$item->main_screen_image : '/media/users/blank.png' }})">
                         <div class="image-input-wrapper"></div>
 
                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"

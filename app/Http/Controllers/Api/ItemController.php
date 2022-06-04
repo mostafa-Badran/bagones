@@ -69,7 +69,7 @@ class ItemController extends BaseController
             $query->where('items.new_price' ,'<=' ,   $price_to);
         }       
         
-        if(!empty($request['sub_category_id'] ) ){
+        if(!empty($request->sub_category_id ) ){
             $sub_category_id = $request['sub_category_id'];
             $query->where('items.sub_category_id' ,$sub_category_id);
         }
