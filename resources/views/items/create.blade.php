@@ -118,7 +118,7 @@
                 <div class="col-lg-12">
                     <label>Store<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="store_select" name="store">
+                        <select class="form-control kt-select2 select2" id="store_select" name="store_id">
                             <option></option>
                             @foreach($stores as $store)
                                 <option value="{{ $store['id'] }}">
