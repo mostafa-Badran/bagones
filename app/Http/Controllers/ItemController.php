@@ -97,10 +97,10 @@ class ItemController extends Controller
             $input['main_screen_image'] = "$recordImage";
         }
 
-        if ($image = $request->file('cover_image')) {
+        if ($cover_image = $request->file('cover_image')) {
             $destinationPath = 'uploads/items/';
-            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $recordImage);
+            $recordImage =  time(). "." . $cover_image->getClientOriginalExtension();
+            $cover_image->move($destinationPath, $recordImage);
             $input['cover_image'] = "$recordImage";
         }
         // $input['store_id'] = $store->id;
@@ -181,11 +181,11 @@ class ItemController extends Controller
         }else{
             unset($input['main_screen_image']);
         }
-        
-        if ($image = $request->file('cover_image')) {
+
+        if ($cover_image = $request->file('cover_image')) {
             $destinationPath = 'uploads/items/';
-            $recordImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $recordImage);
+            $recordImage = time(). "." . $cover_image->getClientOriginalExtension();
+            $cover_image->move($destinationPath, $recordImage);
             $input['cover_image'] = "$recordImage";
         }else{
             unset($input['cover_image']);
