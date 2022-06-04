@@ -3,12 +3,12 @@
 $subcategories = null;
 $items = null;
 // $subcategories_visibilty = false;
-if($home->sub_category_id != null ){
+// if($home->sub_category_id != null ){
     $subcategories = App\Models\Category::where('parent_id' , '!=',null )->get();
-}
-if($home->item_id != null ){
+// }
+// if($home->item_id != null ){
     $items = App\Models\Item::all();
-}
+// }
 
 ?>
 {{-- Extends layout --}}
@@ -84,7 +84,7 @@ if($home->item_id != null ){
 
             </div>
 
-            <div class="form-group row <?= $subcategories != null ?'': 'd-none' ?>" id="subcategory_select" >
+            <div class="form-group row " id="subcategory_select" >
                 <div class="col-lg-4">
                     <label>sub category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
@@ -105,7 +105,7 @@ if($home->item_id != null ){
             </div>
         
 
-            <div class="form-group row <?= $items != null ?'': 'd-none' ?>" id="item_select">
+            <div class="form-group row" id="item_select">
                 <div class="col-lg-4">
                     <label>Item <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
@@ -137,6 +137,17 @@ if($home->item_id != null ){
 {{-- Scripts Section --}}
 @section('scripts')
 <script>
+    var sub_category = {{$home->sub_category_id  == null ? 0 : 1}};
+    var item_id = {{$home->item == null ? 0 : 1}};
+    console.log(sub_category);
+    console.logitem_id
+    if(sub_category == 0){
+        $('#subcategory_select').hide();
+    }
+    if(item_id == 0){
+        $('#item_select').hide();
+    }
+
     $('#content_type_id').select2({
     placeholder: "Select a content type",
     allowClear: true
@@ -164,7 +175,7 @@ if($home->item_id != null ){
         var content_type_text = $('#content_type_id option:selected').text();
         
 
-        console.log(content_type_text.trim());
+        console.log(content_type_text.trim().toLocaleLowerCase());
         var url = "{{ url('api/contentTypes') }}" + '/' + content_type_id + '/appearance';
         getAppearances(url);
         //check selection  
