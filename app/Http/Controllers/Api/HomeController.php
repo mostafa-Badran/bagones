@@ -46,8 +46,13 @@ class HomeController extends BaseController
                 //item 
                 //Todo bring item
                 $item = $homeRecord->item;
-                $item->cover_image = asset('uploads/item/' . $item->cover_image);
-                $item->main_screen_image = asset('uploads/item/' . $item->main_screen_image);
+                if($item->cover_image != null ){
+                    $item->cover_image = asset('uploads/item/' . $item->cover_image);
+                }
+                if($item->main_screen_image != null){
+                    $item->main_screen_image = asset('uploads/item/' . $item->main_screen_image);
+                }
+               
                 $data['item']=$item;
             
                }
