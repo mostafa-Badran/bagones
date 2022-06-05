@@ -140,7 +140,7 @@
                         <select class="form-control kt-select2 select2" id="attributes_select" name="attributes[]"
                             multiple="multiple">
                             @foreach($attributes as $attribute)
-                                <option value="{{ $attribute['id'] }}" @if($item->attributes->containsStrict('id', $attribute['id'])) selected="selected" @endif >
+                                <option value="{{ $attribute['id'] }}" @if($item->itemAttributes->containsStrict('id', $attribute['id'])) selected="selected" @endif >
                                     {{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
