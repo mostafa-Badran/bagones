@@ -40,7 +40,7 @@ $items = null;
     @endif
     <!--begin::Form-->
     <form action="{{ url('home/update',$home) }}" method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data" id="edit_home">
         @csrf
         @method('PUT')
         <div class="card-body">
@@ -53,7 +53,7 @@ $items = null;
                             <!-- <option value="">Select Content Type</option> -->
                             @foreach($content_types as $content_type)
                                 <option @if ($content_type['id']==$home->content_type_id)
-                                    {{ 'selected' }} @endif
+                                    {{ 'selected="selected"' }} @endif
                                     value="{{ $content_type['id'] }}">{{ $content_type['name'] }}
                                 </option>
 
@@ -179,6 +179,7 @@ $items = null;
         $("#subcategory_id").empty();        
         $("#item_id").empty(); 
 
+        $('#edit_home').trigger("reset");
         $('#subcategory_select').hide();
         $('#item_select').hide();
 
