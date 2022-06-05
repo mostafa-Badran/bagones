@@ -61,7 +61,7 @@ class Item extends Model
             'id'=>$this->id,
             'name'=> $lang == 'en' ? $this->name : $this->name_locale,
             'sub_category_id' => $this->sub_category_id,
-            'sub_category_name' => $lang == 'en' ? $this->subCategory->name : $this->subCategory->locale ,
+            'sub_category_name' => $lang == 'en' ? $this->subCategory->name : $this->subCategory->name_locale ,
             'description' => $lang == 'en' ? $this->description : $this->description_locale,
             'price'  =>$this->price,
             'new_price' =>$this->new_price,
