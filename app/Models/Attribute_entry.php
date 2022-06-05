@@ -22,4 +22,14 @@ class Attribute_entry extends Model
     public function attribute(){
         return $this->belongsTo(Attribute::class, 'attribute_id');
     }
+
+    public function getByLang($lang){
+        $data = [
+            'id'=>$this->id,
+            'name'=> $lang == 'en' ? $this->name : $this->name_locale,           
+            'attribute_id'=> $this->attribute_id ,
+        ];
+        return $data;
+
+    }
 }

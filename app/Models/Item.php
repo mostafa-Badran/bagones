@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Stroe;
-use App\Models\Attribute;
+// use App\Models\Stroe;
+// use App\Models\Attribute;
 
 
 class Item extends Model
@@ -41,7 +41,8 @@ class Item extends Model
         return $this->hasMany(ItemImage::class);
     }
 
-    public function attributes()
+
+    public function itemAttributes()
     { 
         return $this->belongsToMany(Attribute::class, AttributeItem::class);
     }
@@ -69,9 +70,9 @@ class Item extends Model
             'cover_image' =>$this->cover_image != null ?  asset('uploads/items/'.$this->cover_image) : $this->cover_image,
             'in_stock'=>$this->in_stock,            
             'store' => $this->store->getByLang($lang),
-            // 'attributes' => $this->attributes,
-            // 'compulsory_choices' => $this->compulsoryChoices->getByLang($lang),
-            // 'multiple_choices' => $this->multipleChoices->getByLang($lang),
+            'attributes' => $this->getAttributesByLang($lang),
+            'compulsory_choices' => $this->getCompulsoryChoicesByLang($lang),
+            'multiple_choices' => $this->getMultipleChoicesByLang($lang),
         ];
 
         return $data;
@@ -79,21 +80,39 @@ class Item extends Model
 
     }
 
-   public function  getAttributesByLang($lang){
-    //    $result=[]
-        // return $this->compulsoryChoices[0];
-        // return $this->attributes[0];
-    // $post = Attribute::find(1);
-    // $attribute = Attribute::find(7)->get() ;//->getByLang($lang); //; $attribute->getByLang($lang);
-    // dd($post);
-        // foreach($this->attributes as $attribute){
-        //     // $data=[
-        //         $attribute = Attribute::find($attribute) ;//->getByLang($lang); //; $attribute->getByLang($lang);
-        //         dd($attribute);
-        //         // $attribute['entries']
-        //     // ]
-        // }
-        // return $this->attributes;
+
+
+    public function  getCompulsoryChoicesByLang($lang){
+        $result=[];
+        foreach($this->compulsoryChoices as $compulsoryChoice){
+            $data  = $compulsoryChoice->getByLang($lang);
+            array_push($result ,$data  );
+        }
+
+        return $result;
     }
+    public function  getMultipleChoicesByLang($lang){
+        $result=[];
+        foreach($this->multipleChoices as $multipleChoice){
+            $data  = $multipleChoice->getByLang($lang);
+            array_push($result ,$data  );
+        }
+
+        return $result;
+    }
+
+
+    public function  getAttributesByLang($lang){
+        $result=[];
+        
+        foreach($this->itemAttributes as $key=>$attribute){           
+            $data  = $attribute->getByLang($lang);
+            array_push($result ,$data  );
+          
+        }
+
+        return $result;
+    }
+
 
 }

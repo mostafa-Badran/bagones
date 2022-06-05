@@ -27,4 +27,25 @@ class Attribute extends Model
     {
         return $this->belongsToMany(Item::class , AttributeItem::class);
     }
+
+    public function getByLang($lang){
+        $data = [
+            'id'=>$this->id,
+            'name'=> $lang == 'en' ? $this->name : $this->name_locale,           
+            'entries'=> $this->getEntriesByLang($lang),           
+            
+        ];
+        return $data;
+
+    }
+
+    public function  getEntriesByLang($lang){
+        $result = [];
+        foreach($this->entries as $entry){
+            $data  = $entry->getByLang($lang);
+            array_push($result ,$data  );
+        }
+
+        return $result;
+    }
 }

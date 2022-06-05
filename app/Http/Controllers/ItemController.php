@@ -110,7 +110,7 @@ class ItemController extends Controller
 
         //save many to many relations
         if(!empty($input['attributes'])){
-            $item->attributes()->attach( $input['attributes']);
+            $item->itemAttributes()->attach( $input['attributes']);
         }
         if(!empty($input['compulsory_choices'])){
             $item->compulsoryChoices()->attach( $input['compulsory_choices']);
@@ -196,8 +196,8 @@ class ItemController extends Controller
         //save many to many relations 
         
         if(!empty($input['attributes'])){
-            $item->attributes()->detach();
-            $item->attributes()->attach( $input['attributes']);
+            $item->itemAttributes()->detach();
+            $item->itemAttributes()->attach( $input['attributes']);
         }
         if(!empty($input['compulsory_choices'])){
             $item->compulsoryChoices()->detach();
