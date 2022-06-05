@@ -1,6 +1,3 @@
-<?php
-dd($home);
-?>
 {{-- Extends layout --}}
 @extends('layout.default')
 
