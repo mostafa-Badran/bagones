@@ -73,9 +73,9 @@ $items = null;
                             >
                             <!-- <option value="">Select Appearance number</option> -->
                             @foreach($home->content_type->appearances as $appearance)
-                            <option @if ($appearance['nunmber']==$home->appearance_number)
-                                    {{ 'selected' }} @endif
-                                    value="{{ $appearance['number'] }}">{{ $appearance['number'] }}
+                            <option @if ($appearance['id']==$home->appearance_number)
+                                    {{ 'selected="selected"' }} @endif
+                                    value="{{ $appearance['id'] }}">{{ $appearance['number'] }}
                                 </option>
                             @endforeach
                         </select>
@@ -93,7 +93,7 @@ $items = null;
                             @if($home->sub_category_id != null)
                                 @foreach($subcategories as $sub_category)
                                     <option @if ($sub_category['id']==$home->sub_category_id)
-                                        {{ 'selected' }} @endif
+                                        {{  'selected="selected"' }} @endif
                                         value="{{ $sub_category['id'] }}">{{ $sub_category['name'] }}
                                     </option>
                                 @endforeach
@@ -114,7 +114,7 @@ $items = null;
                             @if($home->item_id != null)
                                 @foreach($items as $item)
                                     <option @if ($item['id']==$home->item_id)
-                                        {{ 'selected' }} @endif
+                                        {{  'selected="selected"' }} @endif
                                         value="{{ $item['id'] }}">{{ $item['name'] }}
                                     </option>
                                 @endforeach
