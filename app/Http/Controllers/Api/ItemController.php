@@ -157,9 +157,9 @@ class ItemController extends BaseController
         if($item[0] ->main_screen_image != null){
             $item[0]->main_screen_image  = asset('uploads/items/' . $item[0]->main_screen_image);
         }
-        if($item[0] ->cover_image != null){
-            $item[0]->cover_image  = asset('uploads/items/' . $item[0]->cover_image);
-        }
+        // if($item[0] ->cover_image != null){
+        //      $item[0]->cover_image  = asset('uploads/items/' . $item[0]->cover_image);
+        // }
         // ->leftjoin('attribute_item' , 'attribute_item.item_id','=',$id )
         // ->leftjoin('attributes' , 'attributes.id','=','attribute_item.attribute_id')
         // var_dump($item);exit;
