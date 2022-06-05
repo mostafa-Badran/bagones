@@ -148,7 +148,7 @@ class ItemController extends BaseController
             $query ->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'stores.id as store_id','stores.name as store_name' ,'categories.id as sub_category_id' ,'categories.name as sub_category_name' );
          
         }elseif($lang == 'ar'){
-            $query ->select('items.id','items.name_locale as name','items.description_locale as description' , 'items.price','items.new_price', 'items.main_screen_image'.'items.cover_image' ,'items.in_stock','stores.id as store_id' ,'stores.name_locale as store_name' ,'categories.id as sub_category_id' ,'categories.name_locale  as sub_category_name' );
+            $query ->select('items.id','items.name_locale as name','items.description_locale as description' , 'items.price','items.new_price', 'items.main_screen_image', 'items.cover_image' ,'items.in_stock','stores.id as store_id' ,'stores.name_locale as store_name' ,'categories.id as sub_category_id' ,'categories.name_locale  as sub_category_name' );
            
         }
 
