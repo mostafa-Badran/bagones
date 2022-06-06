@@ -48,13 +48,10 @@ $items = null;
                 <div class="col-lg-4">
                     <label>Content Type<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
-                        <select class="form-control kt-select2 select2" id="content_type_id" name="content_type_id"
-                          >
-                            <!-- <option value="">Select Content Type</option> -->
+                        <select class="form-control kt-select2 select2" id="content_type_id" name="content_type_id">
+                            <!-- <option></option> -->
                             @foreach($content_types as $content_type)
-                                <option @if ($content_type['id']==$home->content_type_id)
-                                    {{ 'selected="selected"' }} @endif
-                                    value="{{ $content_type['id'] }}">{{ $content_type['name'] }}
+                                <option  value="{{ $content_type->id }}" > {{ $content_type['name'] }}
                                 </option>
 
                             @endforeach
@@ -161,6 +158,7 @@ $items = null;
     placeholder: "Select a content type",
     allowClear: true
     });
+    $('#content_type_id').val(<?php echo $home->content_type_id; ?>).trigger("change");
     $('#appearance_id').select2({
         placeholder: "Select apprearance number ",
         allowClear: true
@@ -174,7 +172,9 @@ $items = null;
         allowClear: true
     });
 
-    $('#content_type_id').change(function () {
+
+$('#content_type_id').on('select2:select', function (e) {
+    // console.log(e.params.data.id);
         $("#appearance_id").empty();
         $("#subcategory_id").empty();        
         $("#item_id").empty(); 
@@ -183,11 +183,11 @@ $items = null;
         $('#subcategory_select').hide();
         $('#item_select').hide();
 
-        var content_type_id = $('#content_type_id').val();
-        var content_type_text = $('#content_type_id option:selected').text();
-        
+        var content_type_id = e.params.data.id ;//$('#content_type_id').val();
+        var content_type_text = e.params.data.text; //$('#content_type_id option:selected').text();
+        // alert(content_type_id);
 
-        console.log(content_type_text.trim().toLocaleLowerCase());
+        // console.log(content_type_text.trim().toLocaleLowerCase());
         var url = "{{ url('api/contentTypes') }}" + '/' + content_type_id + '/appearance';
         getAppearances(url);
         //check selection  
