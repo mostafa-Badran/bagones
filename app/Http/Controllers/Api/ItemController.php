@@ -73,18 +73,20 @@ class ItemController extends BaseController
       
 
 
-        if(!empty($request->sub_category_id ) ){
-            $sub_category_id = $request['sub_category_id'];
-            $query->where('items.sub_category_id' ,$sub_category_id);
-        }
+       
 
         if(!empty($request['category_id'] ) )
         {
             $category_id = $request['category_id'];
             $query->where('categories.id' ,   $category_id);
-            $query->where('categories.parent_id' ,  null);
+            $query->where('sub_category.parent_id' ,   $category_id);
         }
 
+        if(!empty($request->sub_category_id ) ){
+            $sub_category_id = $request['sub_category_id'];
+            $query->where('items.sub_category_id' ,$sub_category_id);
+        }
+        
         if(!empty($request['store_id']) ){
             $store_id = $request['store_id'];            
             $query->where('items.store_id' ,$store_id);
