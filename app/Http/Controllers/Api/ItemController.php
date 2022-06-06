@@ -54,6 +54,20 @@ class ItemController extends BaseController
            $query->select('items.id','items.name_locale as name','items.description_locale as description','items.price','items.new_price', 'items.main_screen_image','items.cover_image' , 'items.in_stock' , 'stores.name_locale as store_name' , 'sub_category.name_locale as sub_category_name','stores.id as store_id', 'sub_category.id as sub_category_id' );
         }
 
+        if(!empty($request['sub_category_id'] ) ){
+            $sub_category_id = $request['sub_category_id'];
+            $query->where('sub_category.id' ,$sub_category_id);
+        }
+        
+        if(!empty($request['category_id'] ) )
+        {
+            $category_id = $request['category_id'];
+
+            // $query->where('categories.id' ,   $category_id);
+            $query->where('sub_category.parent_id' , $category_id);
+        }
+
+
         if(!empty($request['in_stock']) ){
             $in_stock = $request['in_stock'];            
             $query->where('items.in_stock' ,$in_stock);
@@ -71,18 +85,7 @@ class ItemController extends BaseController
         }       
 
        
-        if(!empty($request['sub_category_id'] ) ){
-            $sub_category_id = $request['sub_category_id'];
-            $query->where('sub_category.id' ,$sub_category_id);
-        }
-        if(!empty($request['category_id'] ) )
-        {
-            $category_id = $request['category_id'];
-
-            // $query->where('categories.id' ,   $category_id);
-            $query->where('sub_category.parent_id' , $category_id);
-        }
-
+       
 
         if(!empty($request['store_id']) ){
             $store_id = $request['store_id'];            
