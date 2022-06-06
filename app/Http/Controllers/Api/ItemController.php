@@ -81,7 +81,8 @@ class ItemController extends BaseController
         if(!empty($request['category_id'] ) )
         {
             $category_id = $request['category_id'];
-            $query->where('sub_category.parent_id' ,   $category_id);
+            $query->where('category.id' ,   $category_id);
+            $query->where('parent.id' ,  null);
         }
 
         if(!empty($request['store_id']) ){
