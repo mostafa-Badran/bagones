@@ -49,10 +49,9 @@ $items = null;
                     <label>Content Type<span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="content_type_id" name="content_type_id">
-                            <!-- <option></option> -->
+                          
                             @foreach($content_types as $content_type)
-                                <option  @if ($content_type['id']==$home->content_type_id)
-                                    {{ 'selected="selected"' }} @endif value="{{ $content_type->id }}" > {{ $content_type['name'] }}
+                                <option   value="{{ $content_type['id'] }}" > {{ $content_type['name'] }}
                                 </option>
 
                             @endforeach
@@ -69,10 +68,10 @@ $items = null;
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="appearance_id" name="appearance_number"
                             >
-                            <!-- <option value="">Select Appearance number</option> -->
+                      
                             @foreach($home->content_type->appearances as $appearance)
                             <option @if ($appearance['id']==$home->appearance_number)
-                                    {{ 'selected="selected"' }} @endif
+                                    {{ 'selected' }} @endif
                                     value="{{ $appearance['id'] }}">{{ $appearance['number'] }}
                                 </option>
                             @endforeach
@@ -87,11 +86,10 @@ $items = null;
                     <label>sub category <span class="text-danger">*</span></label>
                     <div class=" col-lg-12 col-md-12 col-sm-12">
                         <select class="form-control kt-select2 select2" id="subcategory_id" name="sub_category_id">
-                            <!-- <option value="">Select subCategory</option> -->
                             @if($home->sub_category_id != null)
                                 @foreach($subcategories as $sub_category)
                                     <option @if ($sub_category['id']==$home->sub_category_id)
-                                        {{  'selected="selected"' }} @endif
+                                        {{  'selected' }} @endif
                                         value="{{ $sub_category['id'] }}">{{ $sub_category['name'] }}
                                     </option>
                                 @endforeach
@@ -112,7 +110,7 @@ $items = null;
                             @if($home->item_id != null)
                                 @foreach($items as $item)
                                     <option @if ($item['id']==$home->item_id)
-                                        {{  'selected="selected"' }} @endif
+                                        {{  'selected' }} @endif
                                         value="{{ $item['id'] }}">{{ $item['name'] }}
                                     </option>
                                 @endforeach
@@ -159,7 +157,7 @@ $items = null;
     placeholder: "Select a content type",
     allowClear: true
     });
-    // $('#content_type_id').val(<?php //echo $home->content_type_id; ?>).trigger("change");
+    $('#content_type_id').val(<?php echo $home->content_type_id; ?>).trigger("change");
     $('#appearance_id').select2({
         placeholder: "Select apprearance number ",
         allowClear: true
@@ -186,9 +184,8 @@ $('#content_type_id').on('select2:select', function (e) {
 
         var content_type_id = e.params.data.id ;//$('#content_type_id').val();
         var content_type_text = e.params.data.text; //$('#content_type_id option:selected').text();
-        // alert(content_type_id);
-
-        // console.log(content_type_text.trim().toLocaleLowerCase());
+        $('#content_type_id').val(content_type_id);
+      
         var url = "{{ url('api/contentTypes') }}" + '/' + content_type_id + '/appearance';
         getAppearances(url);
         //check selection  
