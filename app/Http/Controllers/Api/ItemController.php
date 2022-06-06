@@ -40,8 +40,8 @@ class ItemController extends BaseController
         
         $lang = App::getLocale();
 
-        $query = DB::table('items')            
-                    ->leftjoin('stores', 'stores.id', '=', 'items.store_id')
+        $query = Item::           
+                      leftjoin('stores', 'stores.id', '=', 'items.store_id')
                     ->leftjoin('categories as sub_category', 'sub_category.id', '=', 'items.sub_category_id')
                     ->leftjoin('categories', 'categories.id', '=', 'sub_category.parent_id')
                     ->leftjoin('areas', 'stores.area_id', '=', 'areas.id')
@@ -98,30 +98,9 @@ class ItemController extends BaseController
         }
         
 
-        if(!empty($request['area_id']) ){
-            // $area_ids = explode(",",$request['area_id']); 
-            $area_id = $request['area_id']; 
-                      
-            $query->where('stores.area_id' ,$area_id);
-            // $query->where(function($inner_query) use ($area_ids){
-
-            //     foreach ($$area_ids as $key => $area_id) {
-            //         if($key == 0 ){
-            //             $inner_query->where(function($inner_query) use ($area_id){
-            //                 $query->where('starttime', '<=', $starttime);
-            //             });
-            //         }
-                   
-            //     }
-               
-
-            //     $query->orWhere(function($query) use ($otherStarttime,$otherEndtime){
-            //         $query->where('starttime', '<=', $otherStarttime);
-            //         $query->where('endtime', '>=', $otherEndtime);
-            //     });
-
-                
-            // }
+        if(!empty($request['area_id']) ){        
+            $area_id = $request['area_id'];                       
+            $query->where('stores.area_id' ,$area_id);  
         }
 
         //the store needs to be active
@@ -130,10 +109,11 @@ class ItemController extends BaseController
         $result = $query->paginate(10);
         $updatedItems = $result->getCollection();
         foreach ($updatedItems as $key => $item) {
+
             if($item->main_screen_image != null){
                 $item->main_screen_image = asset('uploads/items/' . $item->main_screen_image);
             }
-
+           $item->store->getByLang($lang);
         }
         $result->setCollection($updatedItems);
         // $result = $query->toSql();        
