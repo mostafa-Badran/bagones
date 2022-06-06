@@ -8,6 +8,7 @@ use App\Models\Home;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\Rule;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -91,17 +92,8 @@ class HomeController extends Controller
      */
     public function show(Home $home)
     {
-        // $content_types = Content_type::all();
-        $data = Home::leftJoin('content_types' , 'homes.content_type_id','=','content_types.id')
-            ->leftJoin('categories' , 'homes.sub_category_id','=','categories.id')
-            ->leftJoin('items' , 'homes.item_id','=','items.id')
-            ->leftJoin('appearances' , 'homes.appearance_number','=','appearances.id')
-            ->get(['homes.id','content_types.name as content_type', 'appearances.number as appearance_number' , 'categories.name as sub_category_name' , 'items.name as item_name']);
-        
-            print_r('<pre>');
-            print_r($data);
-            exit;
-            $page_title = 'Show Home  Record';
+       
+        $page_title = 'Show Home  Record';
         $page_description = 'This page is to show Home record details';
         //
         return view('home.show',compact('home', 'page_title', 'page_description'));
@@ -122,8 +114,13 @@ class HomeController extends Controller
             'content_type_id' => ['required',], //not null
             'appearance_number' => ['required', ], //not null
         ]);
+        $input = $request->all();
+        if( empty($input['item_id'])){
+            $input['item_id']=null;
+        }
+        if( empty($input['sub_category_id'])){ $input['sub_category_id']=null;}
 
-        $home->update($request->all());
+        $home->update($input);
        
         return redirect()->action([HomeController::class, 'index'])
                         ->with('success','Home record updated successfully');
