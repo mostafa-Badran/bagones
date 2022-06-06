@@ -114,7 +114,7 @@ class ItemController extends BaseController
             if($item->main_screen_image != null){
                 $item->main_screen_image = asset('uploads/items/' . $item->main_screen_image);
             }
-            $store = Store::find($item->store_id)->getByLang();
+            $store = Store::find($item->store_id)->getByLang($lang);
            $item->store = $store;
         }
         $result->setCollection($updatedItems);
