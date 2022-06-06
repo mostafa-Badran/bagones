@@ -116,6 +116,8 @@ class ItemController extends BaseController
             }
             $store = Store::find($item->store_id)->getByLang($lang);
             $item->store = $store;
+            unset($item->store_id);
+            unset($item->store_name);
         }
         $result->setCollection($updatedItems);
         // $result = $query->toSql();        
