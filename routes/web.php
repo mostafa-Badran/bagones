@@ -166,7 +166,7 @@ Route::post('home', [HomeController::class, 'store']);
 Route::get('home/{home}', [HomeController::class, 'show']);
 Route::get('home/edit/{home}', [HomeController::class, 'edit']);
 Route::put('home/update/{home}', [HomeController::class, 'update']);
-Route::post('home/destroy/{home}', [HomeController::class, 'destroy']);
+Route::post('home/delete', [HomeController::class, 'destroy']);
 
 
 //Store Routes

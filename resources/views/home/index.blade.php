@@ -1,3 +1,4 @@
+
 {{-- Extends layout --}}
 @extends('layout.default')
 
@@ -101,7 +102,7 @@
                     // ajax
                     $.ajax({
                         type:"POST",
-                        url: "{{ url('home/destroy') }}",
+                        url: "{{ url('home/delete') }}",
                         data:{
                             'id': id,
                             '_token': '{{ csrf_token() }}',

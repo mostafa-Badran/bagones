@@ -114,19 +114,23 @@ class HomeController extends Controller
             'content_type_id' => ['required',], //not null
             'appearance_number' => ['required', ], //not null
         ]);
+       
         $input = $request->all();
         if( empty($input['item_id'])){
             $input['item_id']=null;
         }
-        if( empty($input['sub_category_id'])){ $input['sub_category_id']=null;}
-
+        if( empty($input['sub_category_id'])){ 
+            $input['sub_category_id']=null;
+        }
+    
         $home->update($input);
        
         return redirect()->action([HomeController::class, 'index'])
                         ->with('success','Home record updated successfully');
     }
-    public function destroy() {
-
+    public function destroy(Request $request) {
+        $com = Home::where('id',$request->id)->delete();
+        return Response()->json($com);
     }
 
 
