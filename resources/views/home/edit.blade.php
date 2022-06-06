@@ -51,7 +51,8 @@ $items = null;
                         <select class="form-control kt-select2 select2" id="content_type_id" name="content_type_id">
                             <!-- <option></option> -->
                             @foreach($content_types as $content_type)
-                                <option  value="{{ $content_type->id }}" > {{ $content_type['name'] }}
+                                <option  @if ($content_type['id']==$home->content_type_id)
+                                    {{ 'selected="selected"' }} @endif value="{{ $content_type->id }}" > {{ $content_type['name'] }}
                                 </option>
 
                             @endforeach
@@ -158,7 +159,7 @@ $items = null;
     placeholder: "Select a content type",
     allowClear: true
     });
-    $('#content_type_id').val(<?php echo $home->content_type_id; ?>).trigger("change");
+    // $('#content_type_id').val(<?php //echo $home->content_type_id; ?>).trigger("change");
     $('#appearance_id').select2({
         placeholder: "Select apprearance number ",
         allowClear: true
