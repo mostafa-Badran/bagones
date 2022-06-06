@@ -69,16 +69,12 @@ class ItemController extends BaseController
             $price_to = $request['price_to'];
             $query->where('items.new_price' ,'<=' ,   $price_to);
         }       
-        
-      
-
-
-       
 
         if(!empty($request['category_id'] ) )
         {
             $category_id = $request['category_id'];
-            $query->where('categories.id' ,   $category_id);
+
+            // $query->where('categories.id' ,   $category_id);
             $query->where('sub_category.parent_id' ,   $category_id);
         }
 
@@ -86,7 +82,7 @@ class ItemController extends BaseController
             $sub_category_id = $request['sub_category_id'];
             $query->where('items.sub_category_id' ,$sub_category_id);
         }
-        
+
         if(!empty($request['store_id']) ){
             $store_id = $request['store_id'];            
             $query->where('items.store_id' ,$store_id);
