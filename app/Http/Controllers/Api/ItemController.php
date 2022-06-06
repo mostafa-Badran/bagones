@@ -42,15 +42,16 @@ class ItemController extends BaseController
 
         $query = DB::table('items')            
                     ->leftjoin('stores', 'stores.id', '=', 'items.store_id')
-                    ->leftjoin('categories', 'categories.id', '=', 'items.sub_category_id')
+                    ->leftjoin('categories as sub_category', 'sub_category.id', '=', 'items.sub_category_id')
+                    ->leftjoin('categories', 'categories.id', '=', 'sub_category.parent_id')
                     ->leftjoin('areas', 'stores.area_id', '=', 'areas.id')
                     ->leftjoin('cities', 'areas.city_id', '=', 'cities.id');
 
         if($lang == 'en'){          
-           $query->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image','items.cover_image' , 'items.in_stock' , 'stores.name as store_name' , 'categories.name as sub_category_name' , 'stores.id as store_id', 'categories.id as sub_category_id' );
+           $query->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image','items.cover_image' , 'items.in_stock' , 'stores.name as store_name' , 'sub_category.name as sub_category_name' , 'stores.id as store_id', 'sub_category.id as sub_category_id' );
          
         }elseif($lang == 'ar'){         
-           $query->select('items.id','items.name_locale as name','items.description_locale as description','items.price','items.new_price', 'items.main_screen_image','items.cover_image' , 'items.in_stock' , 'stores.name_locale as store_name' , 'categories.name_locale as sub_category_name','stores.id as store_id', 'categories.id as sub_category_id' );
+           $query->select('items.id','items.name_locale as name','items.description_locale as description','items.price','items.new_price', 'items.main_screen_image','items.cover_image' , 'items.in_stock' , 'stores.name_locale as store_name' , 'sub_category.name_locale as sub_category_name','stores.id as store_id', 'sub_category.id as sub_category_id' );
         }
 
         if(!empty($request['in_stock']) ){
@@ -69,19 +70,20 @@ class ItemController extends BaseController
             $query->where('items.new_price' ,'<=' ,   $price_to);
         }       
         
-        if(!empty($request['category_id'] ) )
-        {
-            $category_id = $request['category_id'];
-            $query->where('categories.id' ,   $category_id);
-        }
+      
 
-        
+
         if(!empty($request->sub_category_id ) ){
             $sub_category_id = $request['sub_category_id'];
             $query->where('items.sub_category_id' ,$sub_category_id);
         }
 
-       
+        if(!empty($request['category_id'] ) )
+        {
+            $category_id = $request['category_id'];
+            $query->where('sub_category.parent_id' ,   $category_id);
+        }
+
         if(!empty($request['store_id']) ){
             $store_id = $request['store_id'];            
             $query->where('items.store_id' ,$store_id);
