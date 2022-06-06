@@ -16,6 +16,7 @@ use App\Models\Compulsory_choice;
 use App\Models\Compulsory_choice_entry;
 use App\Models\Multiple_choice;
 use App\Models\Multiple_choice_entry;
+use App\Models\Store;
 
 class ItemController extends BaseController
 {
@@ -113,7 +114,8 @@ class ItemController extends BaseController
             if($item->main_screen_image != null){
                 $item->main_screen_image = asset('uploads/items/' . $item->main_screen_image);
             }
-           $item->store->getByLang($lang);
+            $store = Store::find($item->store_id)->getByLang();
+           $item->store = $store;
         }
         $result->setCollection($updatedItems);
         // $result = $query->toSql();        
