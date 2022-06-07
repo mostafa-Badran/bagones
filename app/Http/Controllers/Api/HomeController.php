@@ -17,7 +17,7 @@ class HomeController extends BaseController
 
             $lang = App::getLocale();
             //select all records
-            $homeRecords = Home::paginate(6);
+            $homeRecords = Home::paginate(4);
             $updatedItems = $homeRecords->getCollection();
 
 
