@@ -48,13 +48,13 @@ class OrderApiController extends BaseController
             // $order->order_number = uniqid('ORD.');
             // $order->user_id = $request->user_id;
 
-            $order->city_id = $request->city_id;
-            $order->area_id = $request->area_id;
+            $order->city = $request->city;
+            $order->area = $request->area;
 
-            $order->amount = $request->amount;
-            $order->tax = $request->tax;
-            $order->delivery_fee = $request->delivery_fee;
-            $order->total_amount = $request->total_amount;
+            $order->amount = floatval($request->amount);
+            $order->tax = floatval($request->tax);
+            $order->delivery_fee = floatval($request->delivery_fee);
+            $order->total_amount = floatval($request->total_amount);
 
             $order->street_n = $request->street_n;
             $order->building_n = $request->building_n;

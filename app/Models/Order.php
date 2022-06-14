@@ -19,8 +19,8 @@ class Order extends Model
         'in_delivery',
         'deliverd',
 
-        'city_id',
-        'area_id',
+        'city',
+        'area',
 
         'street_n',
         'building_n',
@@ -33,21 +33,7 @@ class Order extends Model
         'device_token'
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function area()
-    {
-        return $this->belongsTo(Area::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function city()
-    {
-        return $this->belongsTo(City::class);
-    }
+  
 
     public function setRecived(){
         $this->recived = 1;
