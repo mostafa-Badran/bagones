@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\AreaController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\OrderApiController;
 // use App\Http\Controllers\CategoryController;
 
 use Database\Seeders\CategorySeeder;
@@ -106,3 +107,5 @@ Route::post('item/dataAjax', [\App\Http\Controllers\Api\ItemController::class , 
 // });
 // Route::get('areasArabic', [AreaController::class,'getAreaArabicNames']);
 // Route::get('areasEnglish', [AreaController::class,'getAreaEnglishNames']);
+
+Route::post('order', [OrderApiController::class, 'store']);
