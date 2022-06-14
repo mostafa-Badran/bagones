@@ -70,6 +70,10 @@ class OrderApiController extends BaseController
 
             $items = $request->items;
             foreach($items as $item){
+            
+                $item['item_id'] = intval($item->item_id);
+                $item['quantity'] = floatval($item->quantity);
+                $item['unit_price'] = floatval($item->unit_price);
                 $item['order_id'] = $order->id;
                 OrderItems::create($item);
             }
