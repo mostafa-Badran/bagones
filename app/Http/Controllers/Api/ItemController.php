@@ -249,13 +249,15 @@ class ItemController extends BaseController
 
 
 
-    public function suggested_items(Request $request ){
+    public function suggested_items(Request $request , int $item_id ){
 
         $lang = App::getLocale();
 
+        $item =  Item::find($item_id);
+
         $query = DB::table('items') 
-                    ->leftjoin('categories', 'categories.id', '=', 'items.sub_category_id');   
-        
+                    ->leftjoin('categories', 'categories.id', '=', 'items.sub_category_id')   
+                    ->leftjoin('stores', 'stores.id', '=', 'items.store_id');
 
         if($lang == 'en'){          
             $query->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'stores.name as store_name' , 'categories.name as sub_category_name','stores.id as store_id', 'categories.id as sub_category_id' );
@@ -266,36 +268,40 @@ class ItemController extends BaseController
             $query_one = $query;
             $query_two = $query;
             $query_three = $query;
-        if(!empty($request['category_id'] ) )
-        {
-            $category_id = $request['category_id'];
+        // if(!empty($request['category_id'] ) )
+        // {
+            $category_id = $item->subCategory->parent_id;
             
-        }
-        if(!empty($request['sub_category_id'] ) ){
-            $sub_category_id = $request['sub_category_id'];
+        // }
+        // if(!empty($request['sub_category_id'] ) ){
+            $sub_category_id =$item->subCategory->id;
            
-        }
+        // }
         if(!empty($request['price_to'] ) )
         {
             $price_to = $request['price_to'];
             
         }
         if(!empty($request['price_from'])  ){        
-            $price_from = $request['price_from'];
-            
+            $price_from = $request['price_from'];            
         }  
+        // print_r($request->all());exit;
         $query_one->where('categories.parent_id' , $category_id);
         $query_one->where('items.sub_category_id' ,$sub_category_id);
         $query_one->where('items.new_price' ,'<=' , $price_to);
         $query_one->where('items.new_price' ,'>=' , $price_from);
+                
+        $query_one->where('items.id' ,'!=' , $item_id);
+
         $result = $query_one->paginate(10);
+
         if(!empty($result['data']['data']) ){
-            return $this->sendResponse($result, 'Suggested Items retrieved successfully.');
-           
+            return $this->sendResponse($result, 'Suggested Items retrieved successfully.');           
         }else{
             $query_two->where('categories.parent_id' , $category_id);
             $query_two->where('items.new_price' ,'<=' , $price_to);
             $query_two->where('items.new_price' ,'>=' , $price_from);
+            $query_one->where('items.id' ,'!=' , $item_id);
 
             $result2 = $query_two->paginate(10);
 
@@ -304,9 +310,12 @@ class ItemController extends BaseController
             }else{
                 $query_three->where('items.new_price' ,'<=' , $price_to);
                 $query_three->where('items.new_price' ,'>=' , $price_from);
+
+                $query_one->where('items.id' ,'!=' , $item_id);
+
                 $result3 = $query_three->paginate(10);
                 if(!empty($result3['data']['data'])){
-                    return $this->sendResponse($result2, 'Suggested Items retrieved successfully.');
+                    return $this->sendResponse($result3, 'Suggested Items retrieved successfully.');
                 }else{
                     return $this->sendResponse([], 'No Suggested Items.');
                 }
