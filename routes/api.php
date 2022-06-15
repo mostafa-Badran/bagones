@@ -91,7 +91,7 @@ Route::post('/city/areas', [App\Http\Controllers\AreaController::class, 'get_are
 // Route::resource('item', '\App\Http\Controllers\Api\ContentTypeController')->middleware('locale.check');
 Route::get('item/filter', [\App\Http\Controllers\Api\ItemController::class , 'items'])->middleware('locale.check');
 Route::get('item/{item}', [\App\Http\Controllers\Api\ItemController::class , 'show'])->middleware('locale.check');
-Route::get('item/suggested_items', [\App\Http\Controllers\Api\ItemController::class , 'suggested_items'])->middleware('locale.check');
+Route::get('item/suggested_items/{id}', [\App\Http\Controllers\Api\ItemController::class , 'suggested_items'])->middleware('locale.check');
 Route::post('item/dataAjax', [\App\Http\Controllers\Api\ItemController::class , 'dataAjax'])->middleware('locale.check');
 
 // Route::get("/cities", function(){
