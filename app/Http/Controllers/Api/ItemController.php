@@ -260,10 +260,10 @@ class ItemController extends BaseController
                     ->leftjoin('stores', 'stores.id', '=', 'items.store_id');
 
         if($lang == 'en'){          
-            $query->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'stores.name as store_name' , 'categories.name as sub_category_name','stores.id as store_id', 'categories.id as sub_category_id' );
+            $query->select('items.id','items.name','items.description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'categories.name as sub_category_name', 'categories.id as sub_category_id','stores.id as store_id' );
             
         }elseif($lang == 'ar'){         
-            $query->select('items.id','items.name_locale as name','items.description_locale as description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' , 'stores.name_locale as store_name' , 'categories.name_locale as sub_category_name','stores.id as store_id', 'categories.id as sub_category_id' );
+            $query->select('items.id','items.name_locale as name','items.description_locale as description','items.price','items.new_price', 'items.main_screen_image' , 'items.in_stock' ,  'categories.name_locale as sub_category_name', 'categories.id as sub_category_id', 'stores.id as store_id');
         }
             $query_one = $query;
             $query_two = $query;
@@ -294,8 +294,19 @@ class ItemController extends BaseController
         $query_one->where('items.id' ,'!=' , $item_id);
 
         $result = $query_one->paginate(10);
-
-        if(!empty($result['data']['data']) ){
+        $updatedItems = $result->getCollection();
+        
+       
+        if($updatedItems->count() > 0 ){
+            foreach ($updatedItems as $key => $item) {
+                if($item->main_screen_image != null){
+                    $item->main_screen_image = asset('uploads/items/' . $item->main_screen_image);
+                }
+                $store = Store::find($item->store_id)->getByLang($lang);
+                $item->store = $store;    
+                unset($item->store_id);        
+            }
+            $result->setCollection($updatedItems);
             return $this->sendResponse($result, 'Suggested Items retrieved successfully.');           
         }else{
             $query_two->where('categories.parent_id' , $category_id);
@@ -304,8 +315,20 @@ class ItemController extends BaseController
             $query_one->where('items.id' ,'!=' , $item_id);
 
             $result2 = $query_two->paginate(10);
-
-            if(!empty($result2['data']['data'])){
+            $updatedItems = $result2->getCollection();
+            
+            
+            if($updatedItems->count() > 0){
+                foreach ($updatedItems as $key => $item) {
+    
+                    if($item->main_screen_image != null){
+                        $item->main_screen_image = asset('uploads/items/' . $item->main_screen_image);
+                    }
+                    $store = Store::find($item->store_id)->getByLang($lang);
+                    $item->store = $store;       
+                    unset($item->store_id);     
+                }
+                $result2->setCollection($updatedItems);
                 return $this->sendResponse($result2, 'Suggested Items retrieved successfully.');
             }else{
                 $query_three->where('items.new_price' ,'<=' , $price_to);
@@ -314,7 +337,19 @@ class ItemController extends BaseController
                 $query_one->where('items.id' ,'!=' , $item_id);
 
                 $result3 = $query_three->paginate(10);
-                if(!empty($result3['data']['data'])){
+                $updatedItems = $result3->getCollection();
+              
+                if($updatedItems->count() > 0){
+                    foreach ($updatedItems as $key => $item) {
+    
+                        if($item->main_screen_image != null){
+                            $item->main_screen_image = asset('uploads/items/' . $item->main_screen_image);
+                        }
+                        $store = Store::find($item->store_id)->getByLang($lang);
+                        $item->store = $store;      
+                        unset($item->store_id);      
+                    }
+                    $result3->setCollection($updatedItems);
                     return $this->sendResponse($result3, 'Suggested Items retrieved successfully.');
                 }else{
                     return $this->sendResponse([], 'No Suggested Items.');
