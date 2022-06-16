@@ -4,6 +4,11 @@
 {{-- Content --}}
 @section('content')
 
+<style>
+    .embed-responsive .card-img-top {
+    object-fit: cover;
+}
+</style>
 <div class="card card-custom example example-compact">
     <div class="card-header">
         <h3 class="card-title">
@@ -156,7 +161,7 @@
                                 <div class="col-lg-4">
                                     <div class="card" style="width: 18rem;">
 
-                                        <img class="card-img-top"
+                                        <img class="embed-responsive card-img-top"
                                             src="{{ url($item->main_screen_image != null ?'uploads/items/'.$item->main_screen_image : '/media/users/blank.png' ) }}"
                                             alt="Card image cap">
                                             <div class="card-body">
