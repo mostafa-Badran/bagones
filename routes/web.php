@@ -233,6 +233,8 @@ Route::post('multiple_choice/delete', [MultipleChoiceController::class, 'destroy
 
 //Oders Routes
 Route::get('orders', [OrderController::class, 'index']);
+Route::get('orders/{order}', [OrderController::class, 'show']);
+Route::post('orders/change_status', [OrderController::class, 'change_status']);
 // Route::get('multipule_choice_entry/create', [MultipuleChoiceEntriesController::class, 'create']);
 // Route::post('multipule_choice_entry', [MultipuleChoiceEntriesController::class, 'store']);
 

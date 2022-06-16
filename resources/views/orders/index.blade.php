@@ -36,8 +36,8 @@
             <nav class="user-tabs mb-4">
                 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active" onclick="new_orders()" href="#new_orders"
-                            data-toggle="tab">New Orders</a>
+                        <a class="nav-link active" onclick="new_orders_table()" href="#new_orders" data-toggle="tab">New
+                            Orders</a>
                     </li>
 
                     <li class="nav-item">
@@ -47,13 +47,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" onclick="in_process_table()" href="#in_process"
-                            data-toggle="tab"><span>In Process</span></a>
+                        <a class="nav-link" onclick="in_process_table()" href="#in_process" data-toggle="tab"><span>In
+                                Process</span></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" onclick="in_delivery_table()" href="#in_delivery"
-                            data-toggle="tab"><span>In Delevery</span></a>
+                        <a class="nav-link" onclick="in_delivery_table()" href="#in_delivery" data-toggle="tab"><span>In
+                                Delevery</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="deliverd_table()" href="#deliverd"
@@ -73,18 +73,16 @@
                     <div class="card card-table mb-0">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="appoinment_table" class="table table-hover table-center mb-0">
+                                <table id="new_orders_table" class="table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-
                                             <th>Order Id </th>
-                                            <th>Items Qty</th>
+                                            <th>Phone number</th>
+                                            <th>City</th>
+                                            <th>Area</th>
                                             <th>Total Amount</th>
                                             <th>Created At</th>
-                                            <th>Type</th>
-                                            <th>Total Price</th>
                                             <th>Status</th>
-                                            <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -101,12 +99,15 @@
                     <div class="card card-table mb-0">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="order_table" class="table table-hover table-center mb-0">
+                                <table id="recived_table" class="table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Pharmacy</th>
-                                            <th>Order Date</th>
-                                            <th>Price</th>
+                                            <th>Order Id </th>
+                                            <th>Phone number</th>
+                                            <th>City</th>
+                                            <th>Area</th>
+                                            <th>Total Amount</th>
+                                            <th>Created At</th>
                                             <th>Status</th>
                                             <th>Action</th>
 
@@ -125,16 +126,16 @@
                     <div class="card card-table mb-0">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="pat_lab_request_table" class="table table-hover table-center mb-0">
+                                <table id="in_process_table" class="table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Request Id </th>
-                                            <th>Labratory</th>
-                                            <th>appointment Date</th>
-                                            <th>Type</th>
-                                            <th>Total Price</th>
-                                            <th>Status</th>
+                                            <th>Order Id </th>
+                                            <th>Phone number</th>
+                                            <th>City</th>
+                                            <th>Area</th>
+                                            <th>Total Amount</th>
                                             <th>Created At</th>
+                                            <th>Status</th>
                                             <th>Action</th>
 
                                         </tr>
@@ -154,11 +155,18 @@
                     <div class="card card-table mb-0">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="measurement_table" style="width:100%"
+                                <table id="in_delivery_table" style="width:100%"
                                     class="table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-
+                                             <th>Order Id </th>
+                                            <th>Phone number</th>
+                                            <th>City</th>
+                                            <th>Area</th>
+                                            <th>Total Amount</th>
+                                            <th>Created At</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -176,11 +184,18 @@
                     <div class="card card-table mb-0">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="prescription_table" style="width:100%"
+                                <table id="deliverd_table" style="width:100%"
                                     class="table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
-
+                                             <th>Order Id </th>
+                                            <th>Phone number</th>
+                                            <th>City</th>
+                                            <th>Area</th>
+                                            <th>Total Amount</th>
+                                            <th>Created At</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -222,179 +237,226 @@
 
 {{-- page scripts --}}
 <script type="text/javascript">
+
     var new_orders = $('#new_orders_table').DataTable({
-                processing: true,
-                serverSide: true,
-                // ajax: "{{ url('orders') }}",
-                ajax: {
-                    "url": "{{ url('orders') }}",
-                    "type": "POST",
-                    "data": function (data) {},
-                },
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'name_locale',
-                            name: 'name_locale'
-                        },
-                        {
-                            data: 'multipule_choice',
-                            name: 'multipule_choice'
-                        },
+        processing: true,
+        serverSide: true,       
+        ajax: {
+            "url": "{{ url('orders') }}",
+            "type": "get",
+            "data": function (data) {
+                data.recived = 0
+            },
+        },
+        columns: [
+            {
+                data: 'id', name: 'id'
+            },
+            {
+                data: 'phone_number', name: 'phone_number'
+            },
+            {
+                data: 'city', name: 'city'
+            },
+            {
+                data: 'area', name: 'area'
+            },
+            {
+                data: 'total_amount', name: 'total_amount'
+            },
+            {
+                data: 'created_at', name: 'created_at'
+            },
+            {
+                "render": function () {
+                                return 'kkkk';
+                            }
+            },
+            {data: 'action', name: 'action', orderable: false, searchable: false},
 
-                    ],
-                });
+        ],
+        order: [[0, 'desc']],
+    });
 
-            function new_orders_table() {
-                new_orders.ajax.reload(null, false);
-            }
+    function new_orders_table() {
+        new_orders.ajax.reload(null, false);
+    }
     //-----------------------------------------------        
-    var recived = $('#').DataTable({
-                processing: true,
-                serverSide: true,
-                // ajax: "{{ url('orders') }}",
-                ajax: {
-                    "url": "{{ url('orders') }}",
-                    "type": "POST",
-                    "data": function (data) {
-                        data.recived = 1
-                    },
-                },
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'name_locale',
-                            name: 'name_locale'
-                        },
-                        {
-                            data: 'multipule_choice',
-                            name: 'multipule_choice'
-                        },
+    var recived = $('#recived_table').DataTable({
+        processing: true,
+        serverSide: true,
+        // ajax: "{{ url('orders') }}",
+        ajax: {
+            "url": "{{ url('orders') }}",
+            "type": "get",
+            "data": function (data) {
+                data.recived = 1
+            },
+        },
+        columns: [{
+                data: 'id', name: 'id'
+            },
+            {
+                data: 'phone_number', name: 'phone_number'
+            },
+            {
+                data: 'city', name: 'city'
+            },
+            {
+                data: 'area', name: 'area'
+            },
+            {
+                data: 'total_amount', name: 'total_amount'
+            },
+            {
+                data: 'created_at', name: 'created_at'
+            },
+            {
+                "render": function () {
+                                return 'kkkk';
+                            }
+            },
+            {data: 'action', name: 'action', orderable: false, searchable: false},
 
-                    ],
-                });
+        ],
+        order: [[0, 'desc']],
+    });
 
-            function recived_table() {
-                recived.ajax.reload(null, false);
-            }
+    function recived_table() {
+        recived.ajax.reload(null, false);
+    }
     //-----------------------------------------------        
-    var in_process = $('#').DataTable({
-                processing: true,
-                serverSide: true,
-                // ajax: "{{ url('orders') }}",
-                ajax: {
-                    "url": "{{ url('orders') }}",
-                    "type": "POST",
-                    "data": function (data) {
-                        data.in_process = 1
-                    },
-                },
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'name_locale',
-                            name: 'name_locale'
-                        },
-                        {
-                            data: 'multipule_choice',
-                            name: 'multipule_choice'
-                        },
+    var in_process = $('#in_process_table').DataTable({
+        processing: true,
+        serverSide: true,
+        // ajax: "{{ url('orders') }}",
+        ajax: {
+            "url": "{{ url('orders') }}",
+            "type": "get",
+            "data": function (data) {
+                data.in_process = 1
+            },
+        },
+        columns: [{
+                data: 'id', name: 'id'
+            },
+            {
+                data: 'phone_number', name: 'phone_number'
+            },
+            {
+                data: 'city', name: 'city'
+            },
+            {
+                data: 'area', name: 'area'
+            },
+            {
+                data: 'total_amount', name: 'total_amount'
+            },
+            {
+                data: 'created_at', name: 'created_at'
+            },
+            {
+                "render": function () {
+                                return 'kkkk';
+                            }
+            },
+            {data: 'action', name: 'action', orderable: false, searchable: false},
 
-                    ],
-                });
+        ],
+        order: [[0, 'desc']],
+    });
 
-            function in_process_table() {
-                in_process.ajax.reload(null, false);
-            }
-     //----------------------------------------------------------       
-    var in_delivery = $('#').DataTable({
-                processing: true,
-                serverSide: true,
-                // ajax: "{{ url('orders') }}",
-                ajax: {
-                    "url": "{{ url('orders') }}",
-                    "type": "POST",
-                    "data": function (data) {
-                        data.in_delivery = 1
-                    },
-                },
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'name_locale',
-                            name: 'name_locale'
-                        },
-                        {
-                            data: 'multipule_choice',
-                            name: 'multipule_choice'
-                        },
+    function in_process_table() {
+        in_process.ajax.reload(null, false);
+    }
+    //----------------------------------------------------------       
+    var in_delivery = $('#in_delivery_table').DataTable({
+        processing: true,
+        serverSide: true,
+        // ajax: "{{ url('orders') }}",
+        ajax: {
+            "url": "{{ url('orders') }}",
+            "type": "get",
+            "data": function (data) {
+                data.in_delivery = 1
+            },
+        },
+        columns: [{
+                data: 'id', name: 'id'
+            },
+            {
+                data: 'phone_number', name: 'phone_number'
+            },
+            {
+                data: 'city', name: 'city'
+            },
+            {
+                data: 'area', name: 'area'
+            },
+            {
+                data: 'total_amount', name: 'total_amount'
+            },
+            {
+                data: 'created_at', name: 'created_at'
+            },
+            {
+                "render": function () {
+                                return 'kkkk';
+                            }
+            },
+            {data: 'action', name: 'action', orderable: false, searchable: false},
 
-                    ],
-                });
+        ],
+        order: [[0, 'desc']],
+    });
 
-            function in_delivery_table() {
-                in_delivery.ajax.reload(null, false);
-            }
-//----------------------------------
-            var deliverd = $('#').DataTable({
-                processing: true,
-                serverSide: true,
-                // ajax: "{{ url('orders') }}",
-                ajax: {
-                    "url": "{{ url('orders') }}",
-                    "type": "POST",
-                    "data": function (data) {
-                        data.deliverd = 1
-                    },
-                },
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'name_locale',
-                            name: 'name_locale'
-                        },
-                        {
-                            data: 'multipule_choice',
-                            name: 'multipule_choice'
-                        },
+    function in_delivery_table() {
+        in_delivery.ajax.reload(null, false);
+    }
+    //----------------------------------
+    var deliverd = $('#deliverd_table').DataTable({
+        processing: true,
+        serverSide: true,
+        // ajax: "{{ url('orders') }}",
+        ajax: {
+            "url": "{{ url('orders') }}",
+            "type": "get",
+            "data": function (data) {
+                data.deliverd = 1
+            },
+        },
+        columns: [{
+                data: 'id', name: 'id'
+            },
+            {
+                data: 'phone_number', name: 'phone_number'
+            },
+            {
+                data: 'city', name: 'city'
+            },
+            {
+                data: 'area', name: 'area'
+            },
+            {
+                data: 'total_amount', name: 'total_amount'
+            },
+            {
+                data: 'created_at', name: 'created_at'
+            },
+            {
+                "render": function () {
+                                return 'kkkk';
+                            }
+            },
+            {data: 'action', name: 'action', orderable: false, searchable: false},
 
-                    ],
-                });
+        ],
+        order: [[0, 'desc']],
+    });
 
-            function deliverd_table() {
-                deliverd.ajax.reload(null, false);
-            }
-
+    function deliverd_table() {
+        deliverd.ajax.reload(null, false);
+    }
 
 </script>
 @if($message = Session::get('success'))

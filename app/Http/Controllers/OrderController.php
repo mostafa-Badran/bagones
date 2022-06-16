@@ -5,40 +5,64 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $status='recived'; $status_value = 0;
+            $status='recived';
+            $status_value = 0;
 
-            if(!empty($request->recieved ) ){
-                $status= 'recived';
-                $status_value = $request->recived;
+            $query = DB::table('orders')
+            ->select('id','phone_number' , 'city' , 'area' ,'gps_link','created_at','updated_at', 'total_amount');
+          
+
+            if(!empty($request->recived ) ){
+               $query->where('recived' , 1);
+               $query->where('in_process' , 0);
+               $query->where('in_delivery' , 0);
+               $query->where('deliverd' , 0);
             }elseif(!empty($request->in_process ) ){
-                $status= 'in_process';
-                $status_value = $request->in_process;
+                $query->where('recived' , 1);
+                $query->where('in_process' , 1);
+                $query->where('in_delivery' , 0);
+                $query->where('deliverd' , 0);
             }elseif(!empty($request->in_delivery ) ){
-                $status= 'in_delivery';
-                $status_value = $request->in_delivery;
+                $query->where('recived' , 1);
+                $query->where('in_process' , 1);
+                $query->where('in_delivery' , 1);
+                $query->where('deliverd' , 0);
             }elseif(!empty($request->deliverd ) ){
-                $status= 'deliverd';
-                $status_value = $request->deliverd;
+                $query->where('recived' , 1);
+                $query->where('in_process' , 1);
+                $query->where('in_delivery' , 1);
+                $query->where('deliverd' , 1);
+            }else{
+                $query->where('recived' , 0);
+                $query->where('in_process' , 0);
+                $query->where('in_delivery' , 0);
+                $query->where('deliverd' , 0);
             }
+            
            
-
-            $data = DB::table('orders')
-            ->select('id','name','name_locale')
-            ->where($status , $status_value )
+            // print_r($status.'-'.$status_value) ;exit;
+           
+            $query->orderByDesc('id')       
             ->get();
-
-            return DataTables::of($data)->make(true);
+            // print_r($data);
+            // exit;
+            return DataTables::of($query)->addIndexColumn()
+            ->addColumn('action', 'orders.action')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
         }
         $page_title = 'Orders';
         $page_description = 'This page is to show all orders';
@@ -71,12 +95,15 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Order  $order
+     * @return \Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(Order $order)
     {
+        $page_title = 'Show Order ';
+        $page_description = 'This page is to show order details';
         //
+        return view('orders.show',compact('order', 'page_title', 'page_description'));
     }
 
     /**
@@ -112,4 +139,34 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function change_status(Request $request)
+    {
+        $id = $request->id;
+        $status = $request->status;
+        $order = Order::find($id);
+
+        if($status == 'deliverd'){
+            $order->setDeliverd();
+            $order->setInDelivery();
+            $order->setInProcess();
+            $order->setRecived();
+        }
+
+        elseif($status == 'in_delivery'){
+            $order->setInDelivery();
+            $order->setInProcess();
+            $order->setRecived();
+        }
+        elseif($status == 'in_process'){
+            $order->setInProcess();
+            $order->setRecived();
+        }
+        elseif($status == 'recived'){
+            $order->setRecived();
+        }
+        // $order->update([$status => 1]);
+        return Response()->json('success');
+    }
+
 }
