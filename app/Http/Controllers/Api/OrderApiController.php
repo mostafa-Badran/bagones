@@ -65,6 +65,7 @@ class OrderApiController extends BaseController
             $order->gps_link = $request->gps_link;
             $order->device_type = $request->device_type;
             $order->device_token = $request->device_token;
+            $order->note = $request->note;
             
             $order->save();
 

@@ -55,6 +55,11 @@ class Item extends Model
         return $this->belongsToMany(Multiple_choice::class, MultipleChoiceItem::class);
     }
 
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class , OrderItems::class);
+    }
+
     public function getByLang($lang)
     {
         

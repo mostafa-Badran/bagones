@@ -30,8 +30,15 @@ class Order extends Model
         'phone_number',
         'gps_link',
         'device_type',
-        'device_token'
+        'device_token',
+        'customer_note'
     ];
+
+    public function items()
+    {
+            return $this->belongsToMany(Item::class, OrderItems::class);
+   
+    }
 
   
 
