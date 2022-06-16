@@ -65,7 +65,7 @@ class OrderApiController extends BaseController
             $order->gps_link = $request->gps_link;
             $order->device_type = $request->device_type;
             $order->device_token = $request->device_token;
-            $order->note = $request->note;
+            $order->customer_note = $request->customer_note;
             
             $order->save();
 
@@ -83,7 +83,7 @@ class OrderApiController extends BaseController
         } catch (\Exception $e) {
             DB::rollback();
             // something went wrong
-            return $this->sendError('Error creating your order.');
+            return $this->sendError($e);
         }
         return $this->sendResponse($order, 'Order created successfully.');
        
