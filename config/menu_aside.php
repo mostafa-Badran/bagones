@@ -126,6 +126,23 @@ return [
             
             ]
         ],
+
+        [
+            'title' => 'Orders',
+            'icon' => 'media/svg/icons/Home/Book-open.svg',
+            'bullet' => 'line',
+            'root' => true,
+            'submenu' => [
+           
+                [
+                    'title' => 'Orders List',
+                    'bullet' => 'dot',
+                    'page' => 'orders',
+                ],
+                
+           
+            ]
+        ],
     
         // [
         //     'title' => 'Item',
