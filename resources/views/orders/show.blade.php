@@ -5,8 +5,11 @@
 @section('content')
 
 <style>
-    .embed-responsive .card-img-top {
-    object-fit: cover;
+.card-img-top {
+width: 100%;
+height: 40vh;
+object-fit: cover;
+
 }
 </style>
 <div class="card card-custom example example-compact">
