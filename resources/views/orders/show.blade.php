@@ -115,18 +115,18 @@
                                             {{ $order->street_n }}, {{ $order->building_n }},
                                             {{ $order->floor_n }}, {{ $order->appartment_n }} </p>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <label class="badge badge-secondary">GPS Location </label>
                                         <p class="badge badge-light">{{ $order->gps_link }} </p>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-12">
                                         <label class="badge badge-secondary">Phone number </label>
                                         <p class="badge badge-light">{{ $order->phone_number }} </p>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <label class="badge badge-secondary">Device Type </label>
                                         <p class="badge badge-light">{{ $order->device_type }} </p>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-12">
                                         <label class="badge badge-secondary">Customer Note</label>
                                         <p class="badge badge-light">{{ $order->customer_note }} </p>
