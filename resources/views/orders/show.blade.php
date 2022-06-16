@@ -157,7 +157,7 @@
                                     <div class="card" style="width: 18rem;">
 
                                         <img class="card-img-top"
-                                            src="{{ url($item->main_screen_image != null ?' /uploads/items/'.$item->main_screen_image : '/media/users/blank.png' ) }}"
+                                            src="{{ url($item->main_screen_image != null ?'uploads/items/'.$item->main_screen_image : '/media/users/blank.png' ) }}"
                                             alt="Card image cap">
                                             <div class="card-body">
                                             <h5 class="card-title"> {{ $item->name }}</h5>
