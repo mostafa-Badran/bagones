@@ -168,7 +168,7 @@ object-fit: cover;
                                             src="{{ url($item->main_screen_image != null ?'uploads/items/'.$item->main_screen_image : '/media/users/blank.png' ) }}"
                                             alt="Card image cap">
                                             <div class="card-body">
-                                            <h5 class="card-title"> {{ $item->name }}</h5>
+                                            <h5 class="card-title">{{ (int)$item->pivot->quantity.' X ' . $item->name }}</h5>
                                             
                                         @if($item->compulsoryChoices->count() )    
                                         
@@ -211,7 +211,7 @@ object-fit: cover;
 {{-- Scripts Section --}}
 @section('scripts')
 <script>
-    var order = {!!$order-> toJson() !!};
+    var order = {!! $order->toJson() !!};
 
     $("#recived").on("click", function () {
         // alert('order_id');
