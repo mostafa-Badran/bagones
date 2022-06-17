@@ -211,7 +211,7 @@ class OrderController extends Controller
             'order_id'=>$order->id
           ],
           [
-             
+            'title' => $title,
           ]
       );
     }
