@@ -212,6 +212,7 @@ class OrderController extends Controller
           ],
           [
             'title' => $title,
+            'body' =>$body
           ]
       );
     }
