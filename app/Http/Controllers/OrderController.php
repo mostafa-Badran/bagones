@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Order;
+use App\Services\FCMService;
 
 class OrderController extends Controller
 {
@@ -151,22 +152,63 @@ class OrderController extends Controller
             $order->setInDelivery();
             $order->setInProcess();
             $order->setRecived();
+            $this->sendNotificationrToUser($order->device_token ,$status );
         }
 
         elseif($status == 'in_delivery'){
             $order->setInDelivery();
             $order->setInProcess();
             $order->setRecived();
+            $this->sendNotificationrToUser($order->device_token ,$status );
         }
         elseif($status == 'in_process'){
             $order->setInProcess();
             $order->setRecived();
+            $this->sendNotificationrToUser($order->device_token ,$status );
         }
         elseif($status == 'recived'){
             $order->setRecived();
+            $this->sendNotificationrToUser($order->device_token ,$status );
         }
         // $order->update([$status => 1]);
         return Response()->json('success');
+    }
+
+
+    private function sendNotificationrToUser($device_token , $status )
+    {
+       // get a user to get the fcm_token that already sent.               from mobile apps 
+    //    $user = User::findOrFail($id);
+    $title = '';
+    $body= '';
+    if($status == 'deliverd'){
+        $title = 'Order status';
+        $body= ' Deliverd';
+    }
+
+    elseif($status == 'in_delivery'){
+        $title = 'Order status';
+        $body= ' On the way';
+    }
+    elseif($status == 'in_process'){
+        $title = 'Order status';
+        $body= ' In Process';
+    }
+    elseif($status == 'recived'){
+        $title = 'Order status';
+        $body= ' Order Received';
+    }
+        if($device_token==null ||  $device_token == '' ){
+            return;
+        }
+
+      FCMService::send(
+          $device_token,
+          [
+              'title' => $title,
+              'body' => $body,
+          ]
+      );
     }
 
 }
