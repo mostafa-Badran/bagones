@@ -58,13 +58,13 @@ object-fit: cover;
                     {{ $order->recived == 0 ? '' : 'disabled' }}>
                     Recieved </button>
                 <button id="in_process" type="button" class="btn btn-warning"
-                    {{ $order->in_process == 0 ? '' : 'disabled' }}>
+                    {{ $order->recived == 1 && $order->in_process == 0 ? '' : 'disabled' }}>
                     In Process </button>
                 <button id="in_delivery" type="button" class="btn btn-warning"
-                    {{ $order->in_delivery == 0 ? '' : 'disabled' }}>
+                    {{ $order->recived == 1 && $order->in_process == 1 && $order->in_delivery == 0 ? '' : 'disabled' }}>
                     In Delivery </button>
                 <button id="deliverd" type="button" class="btn btn-success"
-                    {{ $order->deliverd == 0 ? '' : 'disabled' }}>
+                    {{ $order->recived == 1 && $order->in_process == 1 && $order->in_delivery == 1 && $order->deliverd == 0 ? '' : 'disabled' }}>
                     Deliverd </button>
             </div>
         </div>
@@ -232,7 +232,7 @@ object-fit: cover;
 
     });
     $("#in_process").on("click", function () {
-        alert(order.id);
+       
         $.ajax({
             type: "POST",
             url: "{{ url('orders/change_status') }}",
