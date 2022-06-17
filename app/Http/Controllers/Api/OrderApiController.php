@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\OrderItems;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
+use App\Services\FCMService;
 
 class OrderApiController extends BaseController
 {
@@ -80,6 +81,7 @@ class OrderApiController extends BaseController
             }
 
             DB::commit();
+            $this->sendNotificationrToUser($order->device_token);
         } catch (\Exception $e) {
             DB::rollback();
             // something went wrong
@@ -132,5 +134,22 @@ class OrderApiController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    private function sendNotificationrToUser($device_token)
+    {
+       // get a user to get the fcm_token that already sent.               from mobile apps 
+    //    $user = User::findOrFail($id);
+        if($device_token==null ||  $device_token == '' ){
+            return;
+        }
+
+      FCMService::send(
+          $device_token,
+          [
+              'title' => 'New order',
+              'body' => 'Your order sent successfully',
+          ]
+      );
     }
 }
