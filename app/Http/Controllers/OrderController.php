@@ -152,33 +152,34 @@ class OrderController extends Controller
             $order->setInDelivery();
             $order->setInProcess();
             $order->setRecived();
-            $this->sendNotificationrToUser($order->device_token ,$status );
+            $this->sendNotificationrToUser($order->device_token ,$status,$order );
         }
 
         elseif($status == 'in_delivery'){
             $order->setInDelivery();
             $order->setInProcess();
             $order->setRecived();
-            $this->sendNotificationrToUser($order->device_token ,$status );
+            $this->sendNotificationrToUser($order->device_token ,$status,$order );
         }
         elseif($status == 'in_process'){
             $order->setInProcess();
             $order->setRecived();
-            $this->sendNotificationrToUser($order->device_token ,$status );
+            $this->sendNotificationrToUser($order->device_token ,$status,$order );
         }
         elseif($status == 'recived'){
             $order->setRecived();
-            $this->sendNotificationrToUser($order->device_token ,$status );
+            $this->sendNotificationrToUser($order->device_token ,$status,$order );
         }
         // $order->update([$status => 1]);
         return Response()->json('success');
     }
 
 
-    private function sendNotificationrToUser($device_token , $status )
+    private function sendNotificationrToUser($device_token , $status , $order )
     {
        // get a user to get the fcm_token that already sent.               from mobile apps 
     //    $user = User::findOrFail($id);
+    // dd($device_token);
     $title = '';
     $body= '';
     if($status == 'deliverd'){
@@ -207,6 +208,7 @@ class OrderController extends Controller
           [
               'title' => $title,
               'body' => $body,
+              'order_id'=>$order->id
           ]
       );
     }
