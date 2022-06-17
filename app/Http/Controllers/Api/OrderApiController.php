@@ -152,7 +152,7 @@ class OrderApiController extends BaseController
               'order_id'=>$order->id
           ],
           [
-
+            'title' => 'New order',
           ]
       );
     }
