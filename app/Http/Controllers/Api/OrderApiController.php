@@ -81,7 +81,7 @@ class OrderApiController extends BaseController
             }
 
             DB::commit();
-            $this->sendNotificationrToUser($order->device_token);
+            $this->sendNotificationrToUser($order->device_token , $order);
         } catch (\Exception $e) {
             DB::rollback();
             // something went wrong
@@ -136,7 +136,7 @@ class OrderApiController extends BaseController
         //
     }
 
-    private function sendNotificationrToUser($device_token)
+    private function sendNotificationrToUser($device_token,$order)
     {
        // get a user to get the fcm_token that already sent.               from mobile apps 
     //    $user = User::findOrFail($id);
@@ -149,6 +149,10 @@ class OrderApiController extends BaseController
           [
               'title' => 'New order',
               'body' => 'Your order sent successfully',
+              'order_id'=>$order->id
+          ],
+          [
+
           ]
       );
     }

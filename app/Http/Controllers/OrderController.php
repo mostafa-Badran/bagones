@@ -206,9 +206,12 @@ class OrderController extends Controller
       FCMService::send(
           $device_token,
           [
-              'title' => $title,
-              'body' => $body,
-              'order_id'=>$order->id
+            'title' => $title,
+            'body' => $body,
+            'order_id'=>$order->id
+          ],
+          [
+             
           ]
       );
     }
