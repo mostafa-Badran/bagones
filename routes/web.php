@@ -241,3 +241,4 @@ Route::post('orders/change_status', [OrderController::class, 'change_status']);
 
 
 // Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+Route::get('privacy', [PrivacyController::class, 'index']);
