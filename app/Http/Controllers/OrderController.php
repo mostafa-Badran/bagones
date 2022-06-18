@@ -209,11 +209,8 @@ class OrderController extends Controller
             'title' => $title,
             'body' => $body,
             'order_id'=>$order->id
-          ],
-          [
-            'title' => $title,
-            'body' =>$body
           ]
+  
       );
     }
 

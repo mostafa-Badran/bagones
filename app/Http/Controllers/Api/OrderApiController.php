@@ -150,10 +150,8 @@ class OrderApiController extends BaseController
               'title' => 'New order',
               'body' => 'Your order sent successfully',
               'order_id'=>$order->id
-          ],
-          [
-            'title' => 'New order',
           ]
+         
       );
     }
 }
