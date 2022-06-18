@@ -14,6 +14,7 @@
             <!-- <a href="#" target="_blank" class="nav-link pr-3 pl-0">About</a>
             <a href="#" target="_blank" class="nav-link px-3">Team</a>
             <a href="#" target="_blank" class="nav-link pl-3 pr-0">Contact</a> -->
+            <a href="{{url('privacy')}}" target="_blank" class="nav-link pl-3 pr-0">Privacy Policy</a> 
         </div>
     </div>
 </div>
