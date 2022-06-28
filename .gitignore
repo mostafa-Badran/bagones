@@ -3,6 +3,7 @@
 /public/js
 /public/media
 /public/plugins
+/resources/metronic/js/components
 /storage/*.key
 /vendor
 .env
