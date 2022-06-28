@@ -30,7 +30,7 @@ mix.js('resources/js/app.js', 'public/js')
 // 3rd party plugins css/js
 mix.sass('resources/plugins/plugins.scss', 'public/plugins/global/plugins.bundle.css').then(() => {
     // remove unused preprocessed fonts folder
-    rimraf(path.resolve('public/fonts'), () => {});
+    rimraf(path.resolve('public/global/fonts'), () => {});
     rimraf(path.resolve('public/images'), () => {});
 }).sourceMaps(!mix.inProduction())
     // .setResourceRoot('./')
@@ -52,15 +52,15 @@ mix.sass('resources/metronic/sass/style.scss', 'public/css/style.bundle.css', {
 });
 
 // Metronic css pages (single page use)
-(glob.sync('resources/metronic/sass/pages/**/!(_)*.scss') || []).forEach(file => {
-    file = file.replace(/[\\\/]+/g, '/');
-    mix.sass(file, file.replace('resources/metronic/sass', 'public/css').replace(/\.scss$/, '.css'));
-});
+// (glob.sync('resources/metronic/sass/pages/**/!(_)*.scss') || []).forEach(file => {
+//     file = file.replace(/[\\\/]+/g, '/');
+//     mix.sass(file, file.replace('resources/metronic/sass', 'public/css').replace(/\.scss$/, '.css'));
+// });
 
 // Metronic js pages (single page use)
-(glob.sync('resources/metronic/js/pages/**/*.js') || []).forEach(file => {
-    mix.js(file, `public/${file.replace('resources/metronic/', '')}`);
-});
+// (glob.sync('resources/metronic/js/pages/**/*.js') || []).forEach(file => {
+//     mix.js(file, `public/${file.replace('resources/metronic/', '')}`);
+// });
 
 // Metronic media
 mix.copyDirectory('resources/metronic/media', 'public/media');
