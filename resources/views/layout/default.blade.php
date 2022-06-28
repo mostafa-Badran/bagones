@@ -47,9 +47,9 @@ License: You must have a valid license purchased only from themeforest(the above
         @if (config('layout.page-loader.type') != '')
             @include('layout.partials._page-loader')
         @endif
-
-        @include('layout.base._layout')
-
+       
+         @include('layout.base._layout')
+       
         <script>var HOST_URL = "{{ route('quick-search') }}";</script>
 
         {{-- Global Config (global config for global JS scripts) --}}
@@ -64,11 +64,14 @@ License: You must have a valid license purchased only from themeforest(the above
 
         {{-- Includable JS --}}
         @yield('scripts')
+        
         <script>
             $('#kt_select2_1').select2({
                 placeholder: "Select a state"
             });
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.min.js" integrity="sha512-8EbzTdONoihxrKJqQUk1W6Z++PXPHexYlmSfizYg7eUqz8NgScujWLqqSdni6SRxx8wS4Z9CQu0eakmPLtq0HA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     </body>
 </html>
