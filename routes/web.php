@@ -133,7 +133,7 @@ Route::post('subCategory/store', [SubCategoryController::class, 'store'])->name(
 Route::get('subCategory/{category}', [SubCategoryController::class, 'show']);
 Route::get('subCategory/edit/{category}', [SubCategoryController::class, 'edit']);
 Route::put('subCategory/update/{category}', [SubCategoryController::class, 'update']);
-Route::post('subCategory/desrtoy/{category}', [SubCategoryController::class, 'destroy']);
+Route::post('subCategory/delete', [SubCategoryController::class, 'destroy']);
 // Route::post('category/dataAjax', [CategoryController::class, 'dataAjax']);
 // Route::post('category/test', [CategoryController::class, 'test']);
 
@@ -188,7 +188,7 @@ Route::get('items/create', [ItemController::class, 'create']);
 Route::post('items', [ItemController::class, 'store']);
 Route::get('items/edit/{item}', [ItemController::class, 'edit']);
 Route::put('items/update/{item}', [ItemController::class, 'update']);
-
+Route::post('items/delete', [ItemController::class, 'destroy']);
 //Attributes Routes
 Route::get('attribute', [AttributeController::class, 'index']);
 Route::get('attribute/create', [AttributeController::class, 'create']);

@@ -11,6 +11,7 @@ use App\Models\Compulsory_choice;
 use App\Models\Multiple_choice;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Models\ItemImage;
 
 class ItemController extends Controller
 {
@@ -79,11 +80,22 @@ class ItemController extends Controller
     public function store(Request $request )
     {
         
-    //    print_r('<pre>');
-    //    var_dump( $request->file());
-    //    var_dump( $request->all());
-    //    exit;
-        //validate
+   
+        //    $images = $request->file('item_images');
+        //    foreach ($images as $imagefile) {
+        //     $image = new ItemImage;
+        //     // // $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
+        //     $recordImage = date('YmdHis') . "." . $imagefile->getClientOriginalExtension();
+        //     $destinationPath = 'uploads/items/';
+        //     $imagefile->move($destinationPath, $recordImage);
+        //     // // $input['main_screen_image'] = "$recordImage";
+        //     $image->item_id = 5;
+        //     $image->image =  "$recordImage";
+        //     $image->save();
+        //     // print_r($imagefile->getClientOriginalExtension());
+        //     // print_r('<hr>');
+        //   }
+ 
 
         $input =$request->all();
 
@@ -219,9 +231,10 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $com = Item::where('id',$request->id)->delete();
+        return Response()->json($com);
     }
 
     

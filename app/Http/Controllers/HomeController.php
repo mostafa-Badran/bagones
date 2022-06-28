@@ -130,7 +130,7 @@ class HomeController extends Controller
     }
     public function destroy(Request $request) {
         $com = Home::where('id',$request->id)->delete();
-        return Response()->json($com);
+        return Response()->json();
     }
 
 

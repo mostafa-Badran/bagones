@@ -133,7 +133,7 @@
                     // ajax
                     $.ajax({
                         type:"POST",
-                        url: "{{ url('home/destroy') }}",
+                        url: "{{ url('items/delete') }}",
                         data:{
                             'id': id,
                             '_token': '{{ csrf_token() }}',
